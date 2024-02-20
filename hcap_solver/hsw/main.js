@@ -1,4 +1,4 @@
-const { readFile } = require('fs').promises;
+const fetch = require('node-fetch');
 const { JSDOM, ResourceLoader } = require('jsdom');
 
 const { window } = new JSDOM('', {
@@ -11,8 +11,13 @@ const { window } = new JSDOM('', {
     resources: new ResourceLoader({ agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36' }),
 });
 
-readFile(`${__dirname}/hsw.js`, 'utf-8').then(hsw => {
-    global.window = window;
-    window.eval(hsw);
-    window.test(process.argv[2]).then(console.log);
-});
+fetch('https://newassets.hcaptcha.com/c/0fb9fb5/hsw.js')
+    .then(response => response.text())
+    .then(data => {
+        global.window = window;
+        window.eval(data);
+        window.run = function(token) {
+            return window.hsw(token);
+        }
+        window.run(process.argv[2]).then(console.log);
+    })
