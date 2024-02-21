@@ -1,6 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
 from python_ghost_cursor import path
-from hcap_solver.gpt import binggpt
 from subprocess import check_output
 from hcap_solver.logger import log
 from tls_client import Session
@@ -8,30 +7,34 @@ from datetime import datetime
 from json import dumps
 from re import findall
 from time import time
+import requests
 import random
+import ctypes
 import json
+import g4f
 
 class Hcaptcha:
     def __init__(self, sitekey: str, host: str, proxy: str = None) -> None:
-        self.session = Session(client_identifier='chrome_118')
+        self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
         self.session.headers = {
-            "host": "hcaptcha.com",
-            "connection": "keep-alive",
-            "accept": "application/json",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
-            "sec-ch-ua": "\"Chromium\";v=\"118\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"118\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "origin": "https://newassets.hcaptcha.com",
-            "referer": "https://newassets.hcaptcha.com/",
-            "sec-fetch-site": "same-site",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-dest": "empty",
-            "accept-encoding": "gzip, deflate, br",
-            "accept-language": "en-US,en-SE;q=0.9,sv-SE;q=0.6"
+            "host": 'hcaptcha.com',
+            "connection": 'keep-alive',
+            "accept": 'application/json',
+            "user-agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36',
+            "sec-ch-ua": '"Chromium";v="118", "Not A(Brand";v="24", "Google Chrome";v="118"',
+            "sec-ch-ua-mobile": '?0',
+            "sec-ch-ua-platform": '"Windows"',
+            "origin": 'https://newassets.hcaptcha.com',
+            "referer": 'https://newassets.hcaptcha.com/',
+            "sec-fetch-site": 'same-site',
+            "sec-fetch-mode": 'cors',
+            "sec-fetch-dest": 'empty',
+            "accept-encoding": 'gzip, deflate, br',
+            "accept-language": 'en-US,en;q=0.9,sv-SE;q=0.8,sv;q=0.7'
         }
 
-        self.session.proxies = { 'http': f'http://{proxy}', 'https': f'http://{proxy}'} if proxy else None
+        self.proxy = proxy
+        self.session.proxies = {'http': f'http://{self.proxy}', 'https': f'http://{self.proxy}'} if proxy else None
         self.api_js = self.session.get('https://hcaptcha.com/1/api.js?render=explicit&onload=hcaptchaOnLoad').text
         self.version = findall(r'v1\/([A-Za-z0-9]+)\/static', self.api_js)[1]
         self.sitekey = sitekey
@@ -50,7 +53,7 @@ class Hcaptcha:
             'swa': '1', 
             'spst': '1'
         })
-        log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
+        #log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
         return siteconfig.json()
 
     def get_captcha1(self) -> dict:
@@ -60,13 +63,13 @@ class Hcaptcha:
             'sitekey': self.sitekey,
             'host': self.host,
             'hl': 'en',
-            'motionData': json.dumps(self.motion_data()),
+            'motionData': dumps(self.motion_data()),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
             'n': self.hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
         })
-        log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
+        #log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
         return getcaptcha.json()
     
     def get_captcha2(self) -> dict:
@@ -80,13 +83,13 @@ class Hcaptcha:
             'action': 'challenge-refresh',
             'old_ekey'  : self.captcha1['key'],
             'extraData': self.captcha1,
-            'motionData': json.dumps(self.motion_data()),
+            'motionData': dumps(self.motion_data()),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
             'n': self.hsw(self.captcha1['c']['req']),
             'c': dumps(self.captcha1['c']),
             'pst': False
         })
-        log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
+        #log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
 
     def motion_data(self):
@@ -114,16 +117,20 @@ class Hcaptcha:
             'topLevel': top_level}
 
     def hsw(self, req: str) -> str:
-        return check_output(["node", 'hcap_solver/hsw/main.js', req]).decode('utf-8').strip()
+        r = requests.post(f"http://localhost:6969/hsw", json={"req": req})
+        return r.text
 
     def text(self, task: dict):
         s = time()
         q = task["datapoint_text"]["en"]
-        response = binggpt().ask(q)
+        response = g4f.ChatCompletion.create(
+            model=g4f.models.llama2_70b,
+            messages=[{"role": "user", "content": f"srictly respond to the following question with only and only one single word, number, or phrase : {q}"}],
+        )
         if response:
-            log.captcha(f"Solved Question -> {q} -> {response}", s, time())
+            #log.captcha(f"Solved Question -> {q} -> {response}", s, time())
             return task['task_key'], {'text': response}
-        else: log.failure(f"Failed To Solve Question -> {q}", s, time()); return None
+        return None
 
     def solve(self) -> str:
         s = time()
@@ -145,7 +152,7 @@ class Hcaptcha:
                     'sitekey': self.sitekey,
                     'v': self.version,
                 })
-            
+
             if 'UUID' in submit.text:
                 log.captcha(f"Solved Captcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
                 return submit.json()['generated_pass_UUID']
