@@ -7,11 +7,14 @@ from json import dumps
 from re import findall
 from time import time
 import requests
+import hashlib
 import json
+import csv
 import g4f
 
 class Hcaptcha:
     def __init__(self, sitekey: str, host: str, proxy: str = None) -> None:
+        self.answers = self.load_answers()
         self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
         self.session.headers = {
             "host": 'hcaptcha.com',
@@ -27,7 +30,7 @@ class Hcaptcha:
             "sec-fetch-mode": 'cors',
             "sec-fetch-dest": 'empty',
             "accept-encoding": 'gzip, deflate, br',
-            "accept-language": 'sv-SE;q=0.9'
+            "accept-language": 'nl-NL;q=0.9'
         }
 
         self.proxy = proxy
@@ -61,7 +64,7 @@ class Hcaptcha:
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
-            'hl': 'sv',
+            'hl': 'nl',
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
             'n': self.hsw(self.siteconfig['c']['req']),
@@ -77,7 +80,7 @@ class Hcaptcha:
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
-            'hl': 'sv',
+            'hl': 'nl',
             'a11y_tfe': 'true',
             'action': 'challenge-refresh',
             'old_ekey'  : self.captcha1['key'],
@@ -119,24 +122,24 @@ class Hcaptcha:
 
             answers = {key: value for key, value in results}
             motiondata = self.motion.check_captcha(answers, 'text_free_entry')
-            #submit = self.session.post(
-            #    f"https://api.hcaptcha.com/checkcaptcha/{self.sitekey}/{cap['key']}",
-            #    json={
-            #        'answers': answers,
-            #        'c': dumps(cap['c']),
-            #        'job_mode': 'text_free_entry',
-            #        'motionData': json.dumps(self.motiondata),
-            #        'n': self.hsw(cap['c']['req']),
-            #        'serverdomain': self.host,
-            #        'sitekey': self.sitekey,
-            #        'v': self.version,
-            #    })
-            #
-            #if 'UUID' in submit.text:
-            #    log.captcha(f"Solved hCaptcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
-            #    return submit.json()['generated_pass_UUID']
-            #
-            #log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
+            submit = self.session.post(
+                f"https://api.hcaptcha.com/checkcaptcha/{self.sitekey}/{cap['key']}",
+                json={
+                    'answers': answers,
+                    'c': dumps(cap['c']),
+                    'job_mode': 'text_free_entry',
+                    'motionData': json.dumps(motiondata),
+                    'n': self.hsw(cap['c']['req']),
+                    'serverdomain': self.host,
+                    'sitekey': self.sitekey,
+                    'v': self.version,
+                })
+            
+            if 'UUID' in submit.text:
+                log.captcha(f"Solved hCaptcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
+                return submit.json()['generated_pass_UUID']
+            
+            log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
             return "None"
         except Exception as e:
             log.failure(e)
