@@ -30,7 +30,7 @@ class logger:
     def failure(self, message: str, start: int = None, end: int = None, level: str = "Failure") -> None:
         print(self.message(f"{self.RED}{level}", f"{self.RED}{message}", start, end))
     
-    def captcha(self, message: str, start: int = None, end: int = None, level: str = "Captcha") -> None:
+    def captcha(self, message: str, start: int = None, end: int = None, level: str = "hCaptcha") -> None:
         print(self.message(f"{self.CYAN}{level}", f"{self.CYAN}{message}", start, end))
 
 log = logger()

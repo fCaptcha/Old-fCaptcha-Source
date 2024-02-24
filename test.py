@@ -1,11 +1,27 @@
-import g4f
+def remove_dupes():
+    counts = {}
 
-g4f.debug.logging = False
-g4f.debug.version_check = False
+    with open("scraped.txt", 'r', encoding="utf-8") as f:
+        lines = f.readlines()
 
-response = g4f.ChatCompletion.create(
-    model=g4f.models.llama2_70b,
-    messages=[{"role": "user", "content": "srictly respond to the following question with only a single word, number, or phrase : What legendary beast bears a horn?"}],
-)
+    for line in lines:
+        if line in counts:
+            counts[line] += 1
+        else:
+            counts[line] = 1
 
-print(response)
+    dupes = [line for line, count in counts.items() if count > 1]
+    non = [line for line, count in counts.items() if count == 1]
+
+    for line in dupes:
+        print(line)
+
+    with open("questions.txt", 'w', encoding="utf-8") as f:
+        for line in non:
+            if '>>' in line and (line.lower().endswith('ja\n') or line.lower().endswith('nej\n')):
+                f.write(line)
+
+    print(f"non dupes: {len(non)} / dupes: {len(lines) - len(non)}")
+
+remove_dupes()
+input()

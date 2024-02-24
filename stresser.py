@@ -9,5 +9,5 @@ def solve_captcha():
         ).solve()
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-    for _ in range(20):
+    for _ in range(2000000):
         executor.submit(solve_captcha)

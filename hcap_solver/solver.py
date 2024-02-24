@@ -1,7 +1,5 @@
 from concurrent.futures import ThreadPoolExecutor
-from python_ghost_cursor import path
 from hcap_solver.motiondata import *
-from subprocess import check_output
 from hcap_solver.logger import log
 from tls_client import Session
 from datetime import datetime
@@ -29,7 +27,7 @@ class Hcaptcha:
             "sec-fetch-mode": 'cors',
             "sec-fetch-dest": 'empty',
             "accept-encoding": 'gzip, deflate, br',
-            "accept-language": 'en-US,en;q=0.9,sv-SE;q=0.8,sv;q=0.7'
+            "accept-language": 'sv-SE;q=0.9'
         }
 
         self.proxy = proxy
@@ -38,7 +36,8 @@ class Hcaptcha:
         self.version = findall(r'v1\/([A-Za-z0-9]+)\/static', self.api_js)[1]
         self.sitekey = sitekey
         self.host = host
-        self.motiondata = MotionData(self.session.headers["user-agent"], f"https://{host}").get_captcha()
+        self.motion = MotionData(self.session.headers["user-agent"], f"https://{host}")
+        self.motiondata = self.motion.get_captcha()
         self.siteconfig = self.get_siteconfig()
         self.captcha1 = self.get_captcha1()
         self.captcha2 = self.get_captcha2()
@@ -53,7 +52,7 @@ class Hcaptcha:
             'swa': '1', 
             'spst': '1'
         })
-        #log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
+        log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
         return siteconfig.json()
 
     def get_captcha1(self) -> dict:
@@ -62,14 +61,14 @@ class Hcaptcha:
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
-            'hl': 'en',
+            'hl': 'sv',
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
             'n': self.hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
         })
-        #log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
+        log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
         return getcaptcha.json()
     
     def get_captcha2(self) -> dict:
@@ -78,7 +77,7 @@ class Hcaptcha:
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
-            'hl': 'en',
+            'hl': 'sv',
             'a11y_tfe': 'true',
             'action': 'challenge-refresh',
             'old_ekey'  : self.captcha1['key'],
@@ -89,7 +88,7 @@ class Hcaptcha:
             'c': dumps(self.captcha1['c']),
             'pst': False
         })
-        #log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
+        log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
 
     def hsw(self, req: str) -> str:
@@ -98,16 +97,19 @@ class Hcaptcha:
 
     def text(self, task: dict):
         s = time()
-        q = task["datapoint_text"]["en"]
+        q = task["datapoint_text"]["sv"]
         response = g4f.ChatCompletion.create(
             model=g4f.models.llama2_70b,
-            messages=[{"role": "user", "content": f"srictly respond to the following question with only and only one single word, number, or phrase : {q}"}],
+            messages=[{"role": "user", "content": f"srictly respond to the following question with only and only one single word, number, or phrase :  Question: {q} Response options: ja, nej"}],
         )
         if response:
-            #log.captcha(f"Solved Question -> {q} -> {response}", s, time())
+            response = response.replace('.', '')
+            log.captcha(f"Solved Question -> {q} -> {response}", s, time())
+            with open('scraped.txt', 'a', encoding='utf-8') as f:
+                f.write(f"{q}>>{response}\n")
             return task['task_key'], {'text': response}
         return None
-
+    
     def solve(self) -> str:
         s = time()
         try:
@@ -116,24 +118,25 @@ class Hcaptcha:
                 results = list(e.map(self.text, cap['tasklist']))
 
             answers = {key: value for key, value in results}
-            submit = self.session.post(
-                f"https://api.hcaptcha.com/checkcaptcha/{self.sitekey}/{cap['key']}",
-                json={
-                    'answers': answers,
-                    'c': dumps(cap['c']),
-                    'job_mode': 'text_free_entry',
-                    'motionData': json.dumps(self.motiondata),
-                    'n': self.hsw(cap['c']['req']),
-                    'serverdomain': self.host,
-                    'sitekey': self.sitekey,
-                    'v': self.version,
-                })
-
-            if 'UUID' in submit.text:
-                log.captcha(f"Solved Captcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
-                return submit.json()['generated_pass_UUID']
-
-            log.failure(f"Failed To Solve Captcha", s, time(), level="Captcha")
+            motiondata = self.motion.check_captcha(answers, 'text_free_entry')
+            #submit = self.session.post(
+            #    f"https://api.hcaptcha.com/checkcaptcha/{self.sitekey}/{cap['key']}",
+            #    json={
+            #        'answers': answers,
+            #        'c': dumps(cap['c']),
+            #        'job_mode': 'text_free_entry',
+            #        'motionData': json.dumps(self.motiondata),
+            #        'n': self.hsw(cap['c']['req']),
+            #        'serverdomain': self.host,
+            #        'sitekey': self.sitekey,
+            #        'v': self.version,
+            #    })
+            #
+            #if 'UUID' in submit.text:
+            #    log.captcha(f"Solved hCaptcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
+            #    return submit.json()['generated_pass_UUID']
+            #
+            #log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
             return "None"
         except Exception as e:
             log.failure(e)
