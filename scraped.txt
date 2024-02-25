@@ -1,0 +1,6 @@
+betekent een buffel een hert?>>Nej
+is een stier gewerveld?>>Nej
+is een buffel een rivier?>>Nej
+is een kalf een mineraal?>>Nee
+een stier een levend organisme is?>>Ja
+is een buffel een vrucht?>>Nee

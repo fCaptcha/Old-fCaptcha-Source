@@ -11,10 +11,15 @@ import hashlib
 import json
 import csv
 import g4f
+from redis.client import Redis
+
+database = Redis("147.189.168.82", 6379, 0, "4wHQaoenQxqk4E@FC8")
 
 class Hcaptcha:
+     
+
     def __init__(self, sitekey: str, host: str, proxy: str = None) -> None:
-        self.answers = self.load_answers()
+        self.answers = {}
         self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
         self.session.headers = {
             "host": 'hcaptcha.com',
@@ -95,21 +100,24 @@ class Hcaptcha:
         return getcaptcha2.json()
 
     def hsw(self, req: str) -> str:
-        r = requests.post(f"http://localhost:6969/hsw", json={"req": req})
-        return r.text
+        return requests.get(f"http://localhost:1001/hsw", params={"req": req}).text
 
     def text(self, task: dict):
         s = time()
-        q = task["datapoint_text"]["sv"]
+        q = task["datapoint_text"]["nl"]
+        hashed_q = hashlib.sha1(q.encode()).hexdigest()
+        if response := database.get(hashed_q):
+            log.captcha(f"Got question from database -> {q} -> {response.decode()}", s, time())
+            return task['task_key'], {'text': response.decode()}
+        
         response = g4f.ChatCompletion.create(
             model=g4f.models.llama2_70b,
-            messages=[{"role": "user", "content": f"srictly respond to the following question with only and only one single word, number, or phrase :  Question: {q} Response options: ja, nej"}],
+            messages=[{"role": "user", "content": f"srictly respond to the following question with only and only one single word, number, or phrase :  Question: {q} Response options: ja, nee"}],
         )
         if response:
             response = response.replace('.', '')
             log.captcha(f"Solved Question -> {q} -> {response}", s, time())
-            with open('scraped.txt', 'a', encoding='utf-8') as f:
-                f.write(f"{q}>>{response}\n")
+            self.answers[hashed_q] = response
             return task['task_key'], {'text': response}
         return None
     
@@ -137,9 +145,14 @@ class Hcaptcha:
             
             if 'UUID' in submit.text:
                 log.captcha(f"Solved hCaptcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
+                for q, r in self.answers.items():
+                    database.set(q, r)
+                # for x in answers:
+                #     database.set(x, answers[x])
                 return submit.json()['generated_pass_UUID']
             
             log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
             return "None"
         except Exception as e:
+            print(e)
             log.failure(e)
