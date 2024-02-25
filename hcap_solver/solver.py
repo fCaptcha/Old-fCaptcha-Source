@@ -98,9 +98,10 @@ class Hcaptcha:
         })
         log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
-
+    
     def hsw(self, req: str) -> str:
-        return requests.get(f"http://localhost:1001/hsw", params={"req": req}).text
+        r = requests.get(f"http://70.30.13.105:23280/proof/hsw?jwt={req}").json()
+        return r["proof"]
 
     def text(self, task: dict):
         s = time()
