@@ -127,4 +127,4 @@ def get_req():
     ).json()['c']["req"]
 
 threading.Thread(target=lambda: app.run(host='0.0.0.0', port="6969", debug=False, use_reloader=False)).start()
-HSW().run("undet")
+HSW().run("anty")

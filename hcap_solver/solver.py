@@ -9,15 +9,12 @@ from time import time
 import requests
 import hashlib
 import json
-import csv
 import g4f
 from redis.client import Redis
 
 database = Redis("147.189.168.82", 6379, 0, "4wHQaoenQxqk4E@FC8")
 
 class Hcaptcha:
-     
-
     def __init__(self, sitekey: str, host: str, proxy: str = None) -> None:
         self.answers = {}
         self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
@@ -60,7 +57,7 @@ class Hcaptcha:
             'swa': '1', 
             'spst': '1'
         })
-        log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
+        #log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
         return siteconfig.json()
 
     def get_captcha1(self) -> dict:
@@ -76,7 +73,7 @@ class Hcaptcha:
             'c': dumps(self.siteconfig['c']),
             'pst': False
         })
-        log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
+        #log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
         return getcaptcha.json()
     
     def get_captcha2(self) -> dict:
@@ -96,11 +93,11 @@ class Hcaptcha:
             'c': dumps(self.captcha1['c']),
             'pst': False
         })
-        log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
+        #yyylog.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
     
     def hsw(self, req: str) -> str:
-        r = requests.get(f"http://70.30.13.105:23280/proof/hsw?jwt={req}").json()
+        r = requests.get(f"http://70.26.114.181:23280/proof/hsw?jwt={req}").json()
         return r["proof"]
 
     def text(self, task: dict):
@@ -108,7 +105,7 @@ class Hcaptcha:
         q = task["datapoint_text"]["nl"]
         hashed_q = hashlib.sha1(q.encode()).hexdigest()
         if response := database.get(hashed_q):
-            log.captcha(f"Got question from database -> {q} -> {response.decode()}", s, time())
+            #log.captcha(f"Got question from database -> {q} -> {response.decode()}", s, time())
             return task['task_key'], {'text': response.decode()}
         
         response = g4f.ChatCompletion.create(
@@ -117,7 +114,7 @@ class Hcaptcha:
         )
         if response:
             response = response.replace('.', '')
-            log.captcha(f"Solved Question -> {q} -> {response}", s, time())
+            #log.captcha(f"Solved Question -> {q} -> {response}", s, time())
             self.answers[hashed_q] = response
             return task['task_key'], {'text': response}
         return None
@@ -137,7 +134,7 @@ class Hcaptcha:
                     'answers': answers,
                     'c': dumps(cap['c']),
                     'job_mode': 'text_free_entry',
-                    'motionData': json.dumps(motiondata),
+                    'motionData': dumps(motiondata),
                     'n': self.hsw(cap['c']['req']),
                     'serverdomain': self.host,
                     'sitekey': self.sitekey,
@@ -155,5 +152,4 @@ class Hcaptcha:
             log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
             return "None"
         except Exception as e:
-            print(e)
-            log.failure(e)
+            pass
