@@ -61,20 +61,7 @@ class Hcaptcha:
         return siteconfig.json()
 
     def get_captcha1(self) -> dict:
-        s = time()
-        getcaptcha = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
-            'v': self.version,
-            'sitekey': self.sitekey,
-            'host': self.host,
-            'hl': 'nl',
-            'motionData': dumps(self.motiondata),
-            'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': self.hsw(self.siteconfig['c']['req']),
-            'c': dumps(self.siteconfig['c']),
-            'pst': False
-        })
-        #log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
-        return getcaptcha.json()
+        pass
     
     def get_captcha2(self) -> dict:
         s = time()
@@ -85,19 +72,17 @@ class Hcaptcha:
             'hl': 'nl',
             'a11y_tfe': 'true',
             'action': 'challenge-refresh',
-            'old_ekey'  : self.captcha1['key'],
-            'extraData': self.captcha1,
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': self.hsw(self.captcha1['c']['req']),
-            'c': dumps(self.captcha1['c']),
+            'n': self.hsw(self.siteconfig['c']['req']),
+            'c': dumps(self.siteconfig['c']),
             'pst': False
         })
         #yyylog.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
     
     def hsw(self, req: str) -> str:
-        r = requests.get(f"http://70.26.114.181:23280/proof/hsw?jwt={req}").json()
+        r = requests.get(f"http://70.30.13.141:23280/proof/hsw?jwt={req}").json()
         return r["proof"]
 
     def text(self, task: dict):
