@@ -1,8 +1,10 @@
 from concurrent.futures import ThreadPoolExecutor
 from hcap_solver.motiondata import *
 from hcap_solver.logger import log
+from redis.client import Redis
 from tls_client import Session
 from datetime import datetime
+from bs4 import BeautifulSoup
 from json import dumps
 from re import findall
 from time import time
@@ -10,7 +12,7 @@ import requests
 import hashlib
 import json
 import g4f
-from redis.client import Redis
+import re
 
 database = Redis("147.189.168.82", 6379, 0, "4wHQaoenQxqk4E@FC8")
 
@@ -76,9 +78,17 @@ class Hcaptcha:
         })
         #yyylog.info(f"Got Captcha / ({getcaptcha2.status_code})", s, time())
         return getcaptcha.json()
+
+    def ardata(self):
+        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
+        soup = BeautifulSoup(r.text, 'html.parser')
+        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
+        ardata = tag['src'].split('#i=')[1]
+        return ardata
     
     def hsw(self, req: str) -> str:
-        r = requests.get(f"http://70.30.13.141:23280/proof/hsw?jwt={req}").json()
+        ardata = self.ardata()
+        r = requests.get(f"http://70.26.113.238:23280/proof/hsw?jwt={req}&ardata={ardata}").json()
         return r["proof"]
 
     def text(self, task: dict):
