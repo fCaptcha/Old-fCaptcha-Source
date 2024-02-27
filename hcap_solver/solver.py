@@ -44,8 +44,7 @@ class Hcaptcha:
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{host}")
         self.motiondata = self.motion.get_captcha()
         self.siteconfig = self.get_siteconfig()
-        self.captcha1 = self.get_captcha1()
-        self.captcha2 = self.get_captcha2()
+        self.captcha = self.get_captcha()
 
     def get_siteconfig(self) -> dict:
         s = time()
@@ -59,13 +58,10 @@ class Hcaptcha:
         })
         #log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
         return siteconfig.json()
-
-    def get_captcha1(self) -> dict:
-        pass
     
-    def get_captcha2(self) -> dict:
+    def get_captcha(self) -> dict:
         s = time()
-        getcaptcha2 = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
+        getcaptcha = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
@@ -78,8 +74,8 @@ class Hcaptcha:
             'c': dumps(self.siteconfig['c']),
             'pst': False
         })
-        #yyylog.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
-        return getcaptcha2.json()
+        #yyylog.info(f"Got Captcha / ({getcaptcha2.status_code})", s, time())
+        return getcaptcha.json()
     
     def hsw(self, req: str) -> str:
         r = requests.get(f"http://70.30.13.141:23280/proof/hsw?jwt={req}").json()
@@ -107,7 +103,7 @@ class Hcaptcha:
     def solve(self) -> str:
         s = time()
         try:
-            cap = self.captcha2
+            cap = self.captcha
             with ThreadPoolExecutor() as e:
                 results = list(e.map(self.text, cap['tasklist']))
 
