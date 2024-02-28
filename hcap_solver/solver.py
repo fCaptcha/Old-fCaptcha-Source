@@ -105,17 +105,14 @@ class Hcaptcha:
         ardata = tag['src'].split('#i=')[1]
         return ardata
     
-    def ardata(self):
-        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
-        soup = BeautifulSoup(r.text, 'html.parser')
-        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
-        ardata = tag['src'].split('#i=')[1]
-        return ardata
-    
     #def hsw(self, req: str) -> str:
     #    ardata = self.ardata()
     #    r = requests.get(f"http://70.26.113.238:23280/proof/hsw?jwt={req}&ardata={ardata}").json()
     #    return r["proof"]
+
+    def hsw(self, req: str) -> str:
+        r = requests.post(f"http://localhost:6969/hsw", json={"req": req})
+        return r.text
 
     def text(self, task: dict):
         s = time()
