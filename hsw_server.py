@@ -77,7 +77,7 @@ class HSW:
             browser_id = list(requests.get("http://127.0.0.1:25325/list").json()["data"])[0]
             link = requests.get(f"http://127.0.0.1:25325/profile/start/{browser_id}", timeout=20.0).json()["data"]["websocket_link"]
         if brow == "anty":
-            automation = requests.get(f"http://localhost:3001/v1.0/browser_profiles/291007412/start?automation=1", timeout=10.0, headers={"Authorization": dolphin_key}).json()
+            automation = requests.get(f"http://localhost:3001/v1.0/browser_profiles/290770855/start?automation=1", timeout=10.0, headers={"Authorization": dolphin_key}).json()
             link = f"ws://127.0.0.1:{automation['automation']['port']}{automation['automation']['wsEndpoint']}"
 
         self.browser = self.playwright.chromium.connect_over_cdp(link).contexts[0]

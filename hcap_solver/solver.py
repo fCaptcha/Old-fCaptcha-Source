@@ -46,7 +46,8 @@ class Hcaptcha:
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{host}")
         self.motiondata = self.motion.get_captcha()
         self.siteconfig = self.get_siteconfig()
-        self.captcha = self.get_captcha()
+        self.captcha1 = self.get_captcha1()
+        self.captcha2 = self.get_captcha2()
 
     def get_siteconfig(self) -> dict:
         s = time()
@@ -58,26 +59,44 @@ class Hcaptcha:
             'swa': '1', 
             'spst': '1'
         })
-        #log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
+        log.info(f"Got Site Config / ({siteconfig.status_code})", s, time())
         return siteconfig.json()
-    
-    def get_captcha(self) -> dict:
+
+    def get_captcha1(self) -> dict:
         s = time()
         getcaptcha = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
             'hl': 'nl',
-            'a11y_tfe': 'true',
-            'action': 'challenge-refresh',
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
             'n': self.hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
         })
-        #yyylog.info(f"Got Captcha / ({getcaptcha2.status_code})", s, time())
+        log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
         return getcaptcha.json()
+    
+    def get_captcha2(self) -> dict:
+        s = time()
+        getcaptcha2 = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
+            'v': self.version,
+            'sitekey': self.sitekey,
+            'host': self.host,
+            'hl': 'nl',
+            'a11y_tfe': 'true',
+            'action': 'challenge-refresh',
+            'old_ekey'  : self.captcha1['key'],
+            'extraData': self.captcha1,
+            'motionData': dumps(self.motiondata),
+            'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
+            'n': self.hsw(self.captcha1['c']['req']),
+            'c': dumps(self.captcha1['c']),
+            'pst': False
+        })
+        log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
+        return getcaptcha2.json()
 
     def ardata(self):
         r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
@@ -87,16 +106,20 @@ class Hcaptcha:
         return ardata
     
     def hsw(self, req: str) -> str:
-        ardata = self.ardata()
-        r = requests.get(f"http://70.26.113.238:23280/proof/hsw?jwt={req}&ardata={ardata}").json()
-        return r["proof"]
+        try:
+            ardata = self.ardata()
+            r = requests.get(f"http://70.29.74.56:23280/proof/hsw?jwt={req}&ardata={ardata}").json()
+            return r["proof"]
+        except:
+            r = requests.post(f"http://localhost:6969/hsw", json={"req": req})
+            return r.text
 
     def text(self, task: dict):
         s = time()
         q = task["datapoint_text"]["nl"]
         hashed_q = hashlib.sha1(q.encode()).hexdigest()
         if response := database.get(hashed_q):
-            #log.captcha(f"Got question from database -> {q} -> {response.decode()}", s, time())
+            log.captcha(f"Got question from database -> {q} -> {response.decode()}", s, time())
             return task['task_key'], {'text': response.decode()}
         
         response = g4f.ChatCompletion.create(
@@ -105,7 +128,7 @@ class Hcaptcha:
         )
         if response:
             response = response.replace('.', '')
-            #log.captcha(f"Solved Question -> {q} -> {response}", s, time())
+            log.captcha(f"Solved Question -> {q} -> {response}", s, time())
             self.answers[hashed_q] = response
             return task['task_key'], {'text': response}
         return None
@@ -113,7 +136,7 @@ class Hcaptcha:
     def solve(self) -> str:
         s = time()
         try:
-            cap = self.captcha
+            cap = self.captcha2
             with ThreadPoolExecutor() as e:
                 results = list(e.map(self.text, cap['tasklist']))
 
@@ -143,4 +166,4 @@ class Hcaptcha:
             log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
             return "None"
         except Exception as e:
-            pass
+            print(e)
