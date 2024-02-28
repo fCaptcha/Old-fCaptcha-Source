@@ -111,7 +111,7 @@ class Hcaptcha:
     #    return r["proof"]
 
     def hsw(self, req: str) -> str:
-        r = requests.post(f"http://localhost:6969/hsw", json={"req": req})
+        r = requests.post(f"http://solver.dexv.lol:6969/hsw", json={"req": req})
         return r.text
 
     def text(self, task: dict):
