@@ -17,7 +17,7 @@ import re
 database = Redis("147.189.168.82", 6379, 0, "4wHQaoenQxqk4E@FC8")
 
 class Hcaptcha:
-    def __init__(self, sitekey: str, host: str, proxy: str = None) -> None:
+    def __init__(self, sitekey: str, host: str, proxy: str = None, rqdata: str = None) -> None:
         self.answers = {}
         self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
         self.session.headers = {
@@ -43,6 +43,7 @@ class Hcaptcha:
         self.version = findall(r'v1\/([A-Za-z0-9]+)\/static', self.api_js)[1]
         self.sitekey = sitekey
         self.host = host
+        self.rqdata = rqdata
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{host}")
         self.motiondata = self.motion.get_captcha()
         self.siteconfig = self.get_siteconfig()
@@ -64,7 +65,7 @@ class Hcaptcha:
 
     def get_captcha1(self) -> dict:
         s = time()
-        getcaptcha = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
+        data = {
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
@@ -74,13 +75,15 @@ class Hcaptcha:
             'n': self.hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
-        })
+        }
+        if self.rqdata is not None: data['rqdata'] = self.rqdata
+        getcaptcha = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data=data)
         log.info(f"Got Captcha Number 1 / ({getcaptcha.status_code})", s, time())
         return getcaptcha.json()
-    
+
     def get_captcha2(self) -> dict:
         s = time()
-        getcaptcha2 = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data={
+        data = {
             'v': self.version,
             'sitekey': self.sitekey,
             'host': self.host,
@@ -94,7 +97,9 @@ class Hcaptcha:
             'n': self.hsw(self.captcha1['c']['req']),
             'c': dumps(self.captcha1['c']),
             'pst': False
-        })
+        }
+        if self.rqdata is not None: data['rqdata'] = self.rqdata
+        getcaptcha2 = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data=data)
         log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
 
