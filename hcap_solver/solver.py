@@ -14,7 +14,7 @@ import json
 import g4f
 import re
 
-database = Redis("147.189.168.82", 6379, 0, "4wHQaoenQxqk4E@FC8")
+database = Redis("37.114.63.21", 6379, 0, "dexysexyfr69")
 
 class Hcaptcha:
     def __init__(self, sitekey: str, host: str, proxy: str = None, rqdata: str = None) -> None:
