@@ -164,8 +164,6 @@ class Hcaptcha:
                 log.captcha(f"Solved hCaptcha {submit.json()['generated_pass_UUID'][:70]}", s, time())
                 for q, r in self.answers.items():
                     database.set(q, r)
-                # for x in answers:
-                #     database.set(x, answers[x])
                 return submit.json()['generated_pass_UUID']
             
             log.failure(f"Failed To Solve hCaptcha", s, time(), level="hCaptcha")
