@@ -35,7 +35,7 @@ def solve_captcha():
             api_key="DEXV-ADMIN-D1IWNf-ZBMl8m-TutuyP",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com', 
-            proxy="g5hltixerdytvio:g7w9oxoov0b8jsz@rp.proxyscrape.com:6060"
+            proxy="vmOP5Ks2DeIn:ijWtcsMd9YWP@att.proxies.fo:5000"
         ).solve()
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
