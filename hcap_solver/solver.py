@@ -110,14 +110,14 @@ class Hcaptcha:
         ardata = tag['src'].split('#i=')[1]
         return ardata
     
-    #def hsw(self, req: str) -> str:
-    #    ardata = self.ardata()
-    #    r = requests.get(f"http://70.26.113.238:23280/proof/hsw?jwt={req}&ardata={ardata}").json()
-    #    return r["proof"]
-
     def hsw(self, req: str) -> str:
-        r = requests.post(f"http://solver.dexv.lol:6969/hsw", json={"req": req})
-        return r.text
+        ardata = self.ardata()
+        r = requests.get(f"http://70.29.24.86:23280/proof/hsw?jwt={req}&auth=4043eb1&ardata={ardata}").json()
+        return r["proof"]
+
+    #def hsw(self, req: str) -> str:
+    #    r = requests.post(f"http://solver.dexv.lol:6969/hsw", json={"req": req})
+    #    return r.text
 
     def text(self, task: dict):
         s = time()
