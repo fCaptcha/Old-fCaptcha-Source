@@ -5,11 +5,7 @@ import math
 import time
 import string
 
-# Code by body, modified by dort
-# i got consent by body to use this.
-
 class Helpers:
-    # shitty randint fix
     @staticmethod
     def randint(a, b):
         if a < b:
@@ -104,7 +100,6 @@ class Helpers:
                     answer_list.append(answer)
             return answer_list
 
-
 class Rectangle:
     def __init__(self, width, height):
         self.width = width
@@ -120,7 +115,6 @@ class Rectangle:
         return [(relative_x, relative_y), (relative_x + self.width, relative_y), (relative_x, relative_y + self.height),
                 (relative_x + self.width, relative_y + self.height)]
 
-
 class WidgetCheckBox:
     def __init__(self, relative_position):
         self.widget = Rectangle(300, 75)
@@ -134,10 +128,6 @@ class WidgetCheckBox:
         corners = self.widget.get_corners(self.relative_position[0], self.relative_position[1])
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
-
-
-# TODO: widget inheritence
-# TODO: retry option
 
 class WidgetChallengeText:
     def __init__(self, check_box_centre_position, screen_size):
@@ -173,7 +163,6 @@ class WidgetChallengeText:
         corners = self.widget.get_corners(self.widget_position[0], self.widget_position[1])
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
-
 
 class WidgetChallengeBinary:
     def __init__(self, check_box_centre_position, screen_size):
@@ -226,60 +215,6 @@ class WidgetChallengeBinary:
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
 
-
-class WidgetChallengeMultipleChoice:
-    class Size:
-        class DEFAULT:
-            WIDTH = 500
-            HEIGHT = 520
-            BUTTON_HEIGHT = 80
-            BUTTON_WIDTH = 200
-
-        WIDTH = 400
-        HEIGHT = 600
-
-    def __init__(self, check_box_centre_position, screen_size):
-        x: int
-        y: int
-        if check_box_centre_position[0] > screen_size[0] - 510:
-            x = screen_size[0] / 2 - 250
-        else:
-            x = check_box_centre_position[0] + 25
-        if check_box_centre_position[1] <= 270:
-            y = 10
-        elif check_box_centre_position[1] >= screen_size[1] - 310:
-            y = screen_size[1] - 530
-        else:
-            y = check_box_centre_position[1] - 260
-        widget_position = x, y
-        self.widget_position = widget_position
-
-        self.widget = Rectangle(500, 520)
-
-        self.button = Rectangle(80, 35)
-
-        self.answer_box = Rectangle(200, 80)
-        i = 0
-        self.answer = {}
-        ay = 10
-        for _ in range(4):
-            ay += 80
-            self.answer[str(i)] = (290, ay)
-            i += 1
-
-    def get_answer_bounding_box(self, index):
-        x, y = self.answer.get(str(index))
-        return self.answer_box.get_bounding_box(x, y)
-
-    def get_button_bounding_box(self):
-        return self.button.get_bounding_box(410, 475)
-
-    def get_closest_face(self, position):
-        corners = self.widget.get_corners(self.widget_position[0], self.widget_position[1])
-        sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
-        return sorted_corners[0], sorted_corners[1]
-
-
 COMMON_SCREEN_SIZES = [
     (1024, 768),
     (1280, 720),
@@ -308,10 +243,6 @@ COMMON_CORE_COUNTS = [
     32
 ]
 
-
-##
-# might implement windowed mode later; for now we assume that the frame takes 100% of the screen space
-##
 class _GetCaptchaMotionData:
     global COMMON_SCREEN_SIZES, COMMON_CORE_COUNTS
 
@@ -346,7 +277,7 @@ class _GetCaptchaMotionData:
             'widgetList': [widget_id],
             'widgetId': widget_id,
             'href': href,
-            'prev': {  # previous data
+            'prev': {
                 'escaped': False,
                 'passed': False,
                 'expiredChallenge': False,
@@ -394,7 +325,7 @@ class _GetCaptchaMotionData:
                 'mozOrientation': 'landscape-primary',
                 'onmozorientationchange': None
             },
-            'nv': {  # (window.navigator) removed alot of depricated items
+            'nv': {
                 'permissions': {},
                 'pdfViewerEnabled': True,
                 'doNotTrack': 'unspecified',
@@ -417,7 +348,7 @@ class _GetCaptchaMotionData:
                 'locks': {},
                 'onLine': True,
                 'storage': {},
-                'plugins': [  # internal-pdf-viewer
+                'plugins': [
                     'internal-pdf-viewer',
                     'internal-pdf-viewer',
                     'internal-pdf-viewer',
@@ -427,20 +358,20 @@ class _GetCaptchaMotionData:
             },
             'dr': '',
             'exec': False,
-            'wn': [  # assume the screen is not resized
+            'wn': [
                 [
                     self.screen_size[0],
                     self.screen_size[1],
-                    1,  # screen DPR
+                    1,
                     Helpers.get_milliseconds_as_int()
                 ]
             ],
             'wn-mp': 0,
             'xy': [
                 [
-                    0,  # scroll X
-                    0,  # scroll Y
-                    1,  # document.documentElement.clientWidth / tt.Browser.width()
+                    0,
+                    0,
+                    1,
                     Helpers.get_milliseconds_as_int()
                 ]
             ],
@@ -467,7 +398,6 @@ class _GetCaptchaMotionData:
 
         return data
 
-
 class _CheckCaptchaMotionData:
     global COMMON_SCREEN_SIZES, COMMON_CORE_COUNTS
 
@@ -481,7 +411,6 @@ class _CheckCaptchaMotionData:
         widget = {
             'image_label_binary': WidgetChallengeBinary,
             'text_free_entry': WidgetChallengeText,
-            'image_label_multiple_choice': WidgetChallengeMultipleChoice
         }.get(captcha_type)(
             Helpers.get_center(previous_motion_data.widget.get_check_box_bounding_box()),
             screen_size
@@ -490,16 +419,16 @@ class _CheckCaptchaMotionData:
         self.widget = widget
 
         data = {
-            'st': Helpers.get_milliseconds_as_int(),  # start time
-            'dct': Helpers.get_milliseconds_as_int(),  # same as start time
-            'mm': [],  # mouse movement (inside the widget)
-            'mm-mp': 0,  # mouse movement mean period (inside the widget)
-            'md': [],  # mouse down
-            'md-mp': 0,  # mouse down mean period (assume that there is only one click; the mean period is 0)
-            'mu': [],  # mouse up
-            'mu-mp': 0,  # mouse up mean period (assume that there is only one click; the mean period is 0)
-            'v': 1,  # some constant, probably motion data version
-            'topLevel': self.top_level()  # top level (tracking for outside of the widget)
+            'st': Helpers.get_milliseconds_as_int(),
+            'dct': Helpers.get_milliseconds_as_int(),
+            'mm': [],
+            'mm-mp': 0,
+            'md': [],
+            'md-mp': 0,
+            'mu': [],
+            'mu-mp': 0,
+            'v': 1,
+            'topLevel': self.top_level()
         }
 
         relative_position = (self.position[0] - widget.widget_position[0], self.position[1] - widget.widget_position[1])
@@ -571,39 +500,6 @@ class _CheckCaptchaMotionData:
                 time.sleep(1 / Helpers.randint(7, 9))
                 data['mu'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
 
-        elif captcha_type == 'image_label_multiple_choice':
-            for _ in range(3):
-                goal = Helpers.get_random_point(widget.get_answer_bounding_box(Helpers.randint(0, 3)))
-                data['mm'] += Helpers.simulate_cursor_movement(
-                    relative_position,
-                    goal,
-                    screen_size,
-                    40,
-                    3,
-                    17
-                )
-                relative_position = goal
-                data['md'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
-                time.sleep(1 / Helpers.randint(4, 9))
-                data['mu'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
-                goal = Helpers.get_random_point(widget.get_button_bounding_box())
-                data['mm'] += Helpers.simulate_cursor_movement(
-                    relative_position,
-                    goal,
-                    screen_size,
-                    40,
-                    3,
-                    17
-                )
-                relative_position = goal
-                data['md'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
-                time.sleep(1 / Helpers.randint(7, 15))
-                data['mu'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
-        for x in ['m', 'd', 'u']:
-            data[f'm{x}-mp'] = Helpers.mean_period([x[-1] for x in data['m' + x]])
-
-        self.data = data
-
     def top_level(self):
 
         data = self.previous_motion_data.data['topLevel']
@@ -625,7 +521,6 @@ class _CheckCaptchaMotionData:
         self.position = tuple(data['mm'][-1][:-1])
 
         return data
-
 
 class MotionData:
     def __init__(self, user_agent, url):

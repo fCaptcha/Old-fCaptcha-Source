@@ -42,7 +42,7 @@ class Hcaptcha:
         self.api_js = self.session.get('https://hcaptcha.com/1/api.js?render=explicit&onload=hcaptchaOnLoad').text
         self.version = findall(r'v1\/([A-Za-z0-9]+)\/static', self.api_js)[1]
         self.sitekey = sitekey
-        self.host = host
+        self.host = host.split("//")[-1].split("/")[0]
         self.rqdata = rqdata
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{host}")
         self.motiondata = self.motion.get_captcha()
@@ -112,7 +112,7 @@ class Hcaptcha:
     
     def hsw(self, req: str) -> str:
         ardata = self.ardata()
-        r = requests.get(f"http://70.29.24.86:23280/proof/hsw?jwt={req}&auth=4043eb1&ardata={ardata}").json()
+        r = requests.get(f"http://70.30.23.139:23280/proof/hsw?jwt={req}&auth=4043eb1&ardata={ardata}").json()
         return r["proof"]
 
     #def hsw(self, req: str) -> str:
