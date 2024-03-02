@@ -3,6 +3,7 @@ from hcap_solver.motiondata import *
 from hcap_solver.logger import log
 from redis.client import Redis
 from tls_client import Session
+from hcap_solver.hsw import *
 from datetime import datetime
 from bs4 import BeautifulSoup
 from json import dumps
@@ -10,6 +11,7 @@ from re import findall
 from time import time
 import requests
 import hashlib
+import base64
 import json
 import g4f
 import re
@@ -109,15 +111,13 @@ class Hcaptcha:
         tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
         ardata = tag['src'].split('#i=')[1]
         return ardata
-    
+
     def hsw(self, req: str) -> str:
         ardata = self.ardata()
-        r = requests.get(f"http://70.30.23.139:23280/proof/hsw?jwt={req}&auth=4043eb1&ardata={ardata}").json()
-        return r["proof"]
-
-    #def hsw(self, req: str) -> str:
-    #    r = requests.post(f"http://solver.dexv.lol:6969/hsw", json={"req": req})
-    #    return r.text
+        s = req.split(".")[1].encode()
+        s += b'=' * (-len(s) % 4)
+        data = json.loads(base64.b64decode(s, validate=False).decode())
+        return pull(data['s'], data['d'], ardata)
 
     def text(self, task: dict):
         s = time()

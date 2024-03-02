@@ -500,6 +500,8 @@ class _CheckCaptchaMotionData:
                 time.sleep(1 / Helpers.randint(7, 9))
                 data['mu'].append(list(goal) + [Helpers.get_milliseconds_as_int()])
 
+        self.data = data
+
     def top_level(self):
 
         data = self.previous_motion_data.data['topLevel']
