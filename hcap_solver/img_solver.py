@@ -96,10 +96,30 @@ class Hcaptcha:
         self.key = captcha['key']
         log.captcha(f"Solving Captcha -> {captcha_type}...")
         if captcha_type == "image_label_binary":
-            images = {f"image{i+1}": captcha['tasklist'][i]["datapoint_uri"] for i in range(9)}
+            images = {
+                "image1":captcha['tasklist'][0]["datapoint_uri"],
+                "image2":captcha['tasklist'][1]["datapoint_uri"],
+                "image3":captcha['tasklist'][2]["datapoint_uri"],
+                "image4":captcha['tasklist'][3]["datapoint_uri"],
+                "image5":captcha['tasklist'][4]["datapoint_uri"],
+                "image6":captcha['tasklist'][5]["datapoint_uri"],
+                "image7":captcha['tasklist'][6]["datapoint_uri"],
+                "image8":captcha['tasklist'][7]["datapoint_uri"],
+                "image9":captcha['tasklist'][8]["datapoint_uri"]           
+            }
             solution = solve_grid(target, images, self.sitekey, self.host)["solution"]
             self.job = "image_label_binary"
-            return {captcha['tasklist'][i]["task_key"]: str(i in solution).lower() for i in range(9)}
+            return {
+                captcha['tasklist'][0]["task_key"]: str(0 in solution).lower(),
+                captcha['tasklist'][1]["task_key"]: str(1 in solution).lower(),
+                captcha['tasklist'][2]["task_key"]: str(2 in solution).lower(),
+                captcha['tasklist'][3]["task_key"]: str(3 in solution).lower(),
+                captcha['tasklist'][4]["task_key"]: str(4 in solution).lower(),
+                captcha['tasklist'][5]["task_key"]: str(5 in solution).lower(),
+                captcha['tasklist'][6]["task_key"]: str(6 in solution).lower(),
+                captcha['tasklist'][7]["task_key"]: str(7 in solution).lower(),
+                captcha['tasklist'][8]["task_key"]: str(8 in solution).lower()
+            }
 
         elif captcha_type == "image_label_area_select":
             self.job = "image_label_area_select"
@@ -107,7 +127,7 @@ class Hcaptcha:
 
         else:
             log.failure(f"Unsupported Captcha Type -> {captcha_type}", level="hCaptcha")
-
+        
     def ardata(self):
         r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
         soup = BeautifulSoup(r.text, 'html.parser')
