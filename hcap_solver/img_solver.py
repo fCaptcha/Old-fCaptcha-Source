@@ -51,7 +51,6 @@ class Hcaptcha:
             
             if captcha:
                 answers = self.get_answers(got_captcha)
-                print(answers)
 
                 if answers:
                     solve_time1 = round(time.time()-self.before,2)
@@ -61,7 +60,6 @@ class Hcaptcha:
                         time.sleep(sleep_total)
                         
                     hsw2 = HSW().make_post_hsw(self.c2["req"])
-                    print(hsw2)
                     response = self.submit_captcha(answers, hsw2)
 
                     if response:

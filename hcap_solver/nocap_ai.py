@@ -51,11 +51,11 @@ def solve_area_select(target, tasklist, sitekey, host):
             timeout=100000
         )
         time.sleep(2)
-        result__ = httpx.get(
-            task.json()['url'],
-            headers=headers
-        )
-        poses = result__.json()['answers']
+        # result__ = httpx.get(
+        #     task.json()['url'],
+        #     headers=headers
+        # )
+        poses = task.json()['answers']
         return {
             tasklist[0]["task_key"]: [
                 {
