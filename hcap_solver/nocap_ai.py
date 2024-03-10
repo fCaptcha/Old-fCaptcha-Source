@@ -5,7 +5,7 @@ import time
 
 headers = {
     "Content-type": "application/json",
-    "apikey": "bobfa77-63ccda61-339a-c87a-0104-eb9e931f60f6",
+    "apikey": "qoftlol-12e689b3-5deb-c7f8-a092-e650b54b22e9",
 }
 
 def encode_img(url):
@@ -30,7 +30,7 @@ def solve_grid(target, images, sitekey, host):
         "site": host,
         "ln": "en",
         "softid": "UserScript3.7.0"
-        },timeout=10000).json()
+        },timeout=100000).json()
     return response
 
 def solve_area_select(target, tasklist, sitekey, host):
@@ -48,7 +48,7 @@ def solve_area_select(target, tasklist, sitekey, host):
                 "sitekey": sitekey,
                 "site": host,
             },
-            timeout=10000
+            timeout=100000
         )
         time.sleep(2)
         result__ = httpx.get(

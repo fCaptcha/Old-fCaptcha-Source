@@ -6,6 +6,7 @@ from tls_client import Session
 from hcap_solver.hsw import *
 from datetime import datetime
 from bs4 import BeautifulSoup
+from hcap_solver.gg import *
 from json import dumps
 from re import findall
 from time import time
@@ -74,7 +75,7 @@ class Hcaptcha:
             'hl': 'nl',
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': self.hsw(self.siteconfig['c']['req']),
+            'n': HSW().make_get_hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
         }
@@ -96,7 +97,7 @@ class Hcaptcha:
             'extraData': self.captcha1,
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': self.hsw(self.captcha1['c']['req']),
+            'n': HSW().make_get_hsw(self.captcha1['c']['req']),
             'c': dumps(self.captcha1['c']),
             'pst': False
         }
@@ -104,20 +105,6 @@ class Hcaptcha:
         getcaptcha2 = self.session.post(f"https://hcaptcha.com/getcaptcha/{self.sitekey}", data=data)
         log.info(f"Got Captcha Number 2 / ({getcaptcha2.status_code})", s, time())
         return getcaptcha2.json()
-
-    def ardata(self):
-        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
-        soup = BeautifulSoup(r.text, 'html.parser')
-        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
-        ardata = tag['src'].split('#i=')[1]
-        return ardata
-
-    def hsw(self, req: str) -> str:
-        ardata = self.ardata()
-        s = req.split(".")[1].encode()
-        s += b'=' * (-len(s) % 4)
-        data = json.loads(base64.b64decode(s, validate=False).decode())
-        return pull(data['s'], data['d'], ardata)
 
     def text(self, task: dict):
         s = time()
@@ -154,7 +141,7 @@ class Hcaptcha:
                     'c': dumps(cap['c']),
                     'job_mode': 'text_free_entry',
                     'motionData': dumps(motiondata),
-                    'n': self.hsw(cap['c']['req']),
+                    'n': HSW().make_post_hsw(cap['c']['req']),
                     'serverdomain': self.host,
                     'sitekey': self.sitekey,
                     'v': self.version,

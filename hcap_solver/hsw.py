@@ -12,7 +12,7 @@ from time import strftime, localtime, time
 def mint(resource, bits=2, now=None, ext='', salt_chars=8):
     timestamp = strftime("%Y-%M-%d", localtime(now))
     challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
-    return challenge + _mint_stamp(challenge, bits)
+    return challenge + ':' +_mint_stamp(challenge, bits)
 
 
 def _get_salt(data_in):
@@ -41,19 +41,14 @@ client = httpx.Client()
 
 
 def decrypt(data):
-    return client.post("http://83.143.112.20:8080/decrypt", headers={
-        "key": "nigger321993021"
-    }, json={
-        "data": data
-    }, timeout=93824).json().get("data")
-
+    url = "http://solver.dexv.lol:1500/encrypt"
+    json = {"data": data}
+    return client.post(url, json=json).text
 
 def encrypt(data):
-    return client.post("http://83.143.112.20:8080/encrypt", headers={
-        "key": "nigger321993021"
-    }, json={
-        "data": data
-    }, timeout=93824).json().get("data")
+    url = "http://solver.dexv.lol:1500/encrypt"
+    json = {"data": data}
+    return client.post(url, json=json).text
 
 
 def pull(hc_diff: int, hc_data: str, ardata: str):

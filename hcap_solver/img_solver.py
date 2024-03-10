@@ -4,6 +4,7 @@ from hcap_solver.logger import *
 from datetime import datetime
 from bs4 import BeautifulSoup
 from hcap_solver.hsw import *
+from hcap_solver.gg import *
 import requests
 import base64
 import time
@@ -41,15 +42,16 @@ class Hcaptcha:
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{self.host}")
         self.motiondata = self.motion.get_captcha()
 
-    def solve(self) -> None:
+    def solve(self) -> str:
         captcha = self.siteconfig()
 
         if captcha:
-            hsw = self.get_hsw(captcha["req"])
+            hsw = HSW().make_get_hsw(captcha["req"])
             got_captcha = self.getcaptcha(hsw, captcha)
             
             if captcha:
                 answers = self.get_answers(got_captcha)
+                print(answers)
 
                 if answers:
                     solve_time1 = round(time.time()-self.before,2)
@@ -58,7 +60,8 @@ class Hcaptcha:
                     if sleep_total >= 0:
                         time.sleep(sleep_total)
                         
-                    hsw2 = self.get_hsw(self.c2["req"])
+                    hsw2 = HSW().make_post_hsw(self.c2["req"])
+                    print(hsw2)
                     response = self.submit_captcha(answers, hsw2)
 
                     if response:
