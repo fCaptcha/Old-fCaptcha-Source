@@ -4,7 +4,6 @@ from hcap_solver.logger import *
 from datetime import datetime
 from bs4 import BeautifulSoup
 from hcap_solver.hsw import *
-from hcap_solver.gg import *
 import requests
 import base64
 import time
@@ -42,11 +41,25 @@ class Hcaptcha:
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{self.host}")
         self.motiondata = self.motion.get_captcha()
 
+    def ardata(self):
+        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
+        soup = BeautifulSoup(r.text, 'html.parser')
+        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
+        ardata = tag['src'].split('#i=')[1]
+        return ardata
+
+    def hsw(self, req: str) -> str:
+        ardata = self.ardata()
+        s = req.split(".")[1].encode()
+        s += b'=' * (-len(s) % 4)
+        data = json.loads(base64.b64decode(s, validate=False).decode())
+        return pull(data['s'], data['d'], ardata)
+    
     def solve(self) -> str:
         captcha = self.siteconfig()
 
         if captcha:
-            hsw = HSW().make_get_hsw(captcha["req"])
+            hsw = self.hsw(captcha["req"])
             got_captcha = self.getcaptcha(hsw, captcha)
             
             if captcha:
@@ -59,7 +72,7 @@ class Hcaptcha:
                     if sleep_total >= 0:
                         time.sleep(sleep_total)
                         
-                    hsw2 = HSW().make_post_hsw(self.c2["req"])
+                    hsw2 = self.hsw(self.c2["req"])
                     response = self.submit_captcha(answers, hsw2)
 
                     if response:
