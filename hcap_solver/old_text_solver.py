@@ -88,7 +88,7 @@ class Hcaptcha:
             'hl': 'nl',
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': hsw(self.siteconfig['c']['req']),
+            'n': self.hsw(self.siteconfig['c']['req']),
             'c': dumps(self.siteconfig['c']),
             'pst': False
         }
@@ -110,7 +110,7 @@ class Hcaptcha:
             'extraData': self.captcha1,
             'motionData': dumps(self.motiondata),
             'pdc':  {"s": round(datetime.now().timestamp() * 1000), "n":0, "p":0, "gcs":10},
-            'n': hsw(self.captcha1['c']['req']),
+            'n': self.hsw(self.captcha1['c']['req']),
             'c': dumps(self.captcha1['c']),
             'pst': False
         }
@@ -154,7 +154,7 @@ class Hcaptcha:
                     'c': dumps(cap['c']),
                     'job_mode': 'text_free_entry',
                     'motionData': dumps(motiondata),
-                    'n': HSW().make_post_hsw(cap['c']['req']),
+                    'n': self.hsw(cap['c']['req']),
                     'serverdomain': self.host,
                     'sitekey': self.sitekey,
                     'v': self.version,
