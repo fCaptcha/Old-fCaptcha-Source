@@ -118,8 +118,8 @@ def pull(hc_diff: int, hc_data: str, ardata: str):
                 ], separators=(",", ":"))
             if x[0] == 1825909650:
                 x[1] = "[[\"loadTimes\",\"csi\",\"app\"],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\",\"image_label_binary\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
-            if x[0] == 308248000:
-                x[1] = f"[[[\"https://newassets.hcaptcha.com/captcha/v1/fadb9c6/hcaptcha.js#i={ardata}\",0,5]],[[\"*\",84,9]]]"
+            #if x[0] == 308248000:
+            #    x[1] = f"[[[\"https://newassets.hcaptcha.com/captcha/v1/fadb9c6/hcaptcha.js#i={ardata}\",0,5]],[[\"*\",84,9]]]"
             if x[0] == 1213335269:
                 x[1] = f"[[\"img:imgs.hcaptcha.com\",0,{random.random() * 100}],[\"img:imgs3.hcaptcha.com\",0,{random.random() * 100}],[\"navigation:newassets.hcaptcha.com\",{random.random() * 100},{random.random() * 100}],[\"script:newassets.hcaptcha.com\",{random.random() * 100},{random.random() * 100}],[\"xmlhttprequest:api.hcaptcha.com\",0,{random.random() * 100}]]"
             if x[0] == 1304795084:
