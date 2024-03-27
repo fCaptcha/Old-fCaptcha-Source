@@ -1,4 +1,5 @@
 import concurrent.futures
+from hcap_solver.logger import *
 import requests
 import time
 
@@ -11,7 +12,7 @@ class Captcha:
         self.rqdata = rqdata
 
     def solve(self) -> str:
-        print("Solving Captcha...")
+        #log.info("Solving Captcha...")
         start = time.time()
 
         payload = {"api_key": self.api_key, "url": self.url, "sitekey": self.sitekey, "proxy": self.proxy}
@@ -22,22 +23,23 @@ class Captcha:
                 result = requests.post("http://solver.dexv.lol:1000/api/solve_hcap", json=payload)
                 data = result.json()
                 if data.get("success"):
-                    print(f"Solved Captcha / {data['message'][:70]} / In {str(time.time() - start)[:5]} Seconds")
+                    log.captcha(f"Solved Captcha / {data['message'][:70]} / In {str(time.time() - start)[:5]} Seconds")
                     return data['message']
-                print(f"Failed To Solve Captcha -> {data.get('message')}")
+                #log.failure(f"Failed To Solve Captcha -> {data.get('message')}")
                 break
             except Exception as e:
-                print(f"Failed To Solve Captcha -> {e}")
+                pass
+                #log.failure(f"Failed To Solve Captcha -> {e}")
 
 def solve_captcha():
     while True:
         Captcha(
-            api_key="DEXV-ADMIN-D1IWNf-ZBMl8m-TutuyP",
+            api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com', 
-            proxy="vmOP5Ks2DeIn:ijWtcsMd9YWP@att.proxies.fo:5000"
+            proxy="22ujtl8x9pqc9jg-odds-5+100:3cc232m47zd7ftr@rp.proxyscrape.com:6060"
         ).solve()
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
+with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
     for _ in range(100):
         executor.submit(solve_captcha)

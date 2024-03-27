@@ -60,7 +60,7 @@ def pull(hc_diff: int, hc_data: str, ardata: str):
         data["components"]["inv_unique_keys"] = "sessionStorage,hsw,image_label_binary,__wdata,_sharedLibs,localStorage"
         data["components"]["common_keys_tail"] = "webkitCancelAnimationFrame,webkitRequestAnimationFrame,chrome,fence,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,sharedStorage,documentPictureInPicture,getScreenDetails,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
         data["stack_data"] = ["new Promise (<anonymous>)"]
-        data["ardata"] = ardata
+        data["ardata"] = None
         data["href"] = "https://discord.com/"
         data["proof_spec"]["data"] = hc_data
         data["proof_spec"]["difficulty"] = hc_diff
