@@ -143,20 +143,6 @@ class Hcaptcha:
 
         else:
             log.failure(f"Unsupported Captcha Type -> {captcha_type}", level="hCaptcha")
-        
-    def ardata(self):
-        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
-        soup = BeautifulSoup(r.text, 'html.parser')
-        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
-        ardata = tag['src'].split('#i=')[1]
-        return ardata
-
-    def get_hsw(self, req: str) -> str:
-        ardata = self.ardata()
-        s = req.split(".")[1].encode()
-        s += b'=' * (-len(s) % 4)
-        data = json.loads(base64.b64decode(s, validate=False).decode())
-        return pull(data['s'], data['d'], ardata)
 
     def getcaptcha(self, hsw:str, c:dict) -> dict:
         self.session.headers.update({'content-type': 'application/x-www-form-urlencoded'})
