@@ -19,13 +19,15 @@ client = httpx.Client()
 
 
 def mint(resource, bits=2, ext='', salt_chars=8):
-    timestamp = strftime("%Y-%m-%d", localtime(time()))
+    timestamp = strftime("%Y-%m-%d", localtime(time.time()))
     challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
-    return f"{challenge}{_mint_stamp(challenge, bits)}"
+    return f"{challenge}:{_mint_stamp(challenge, bits)}"
+
 
 def _get_salt(data_in):
     charset = ascii_letters + "+/="
     return ''.join([choice(charset) for _ in [None] * data_in])
+
 
 def _mint_stamp(challenge, bits):
     counter = 0
@@ -38,13 +40,13 @@ def _mint_stamp(challenge, bits):
         counter += 1
 
 def decrypt(data):
-    url = "http://solver.dexv.lol:1500/encrypt"
-    json = {"data": data, "key": "realasffrfr10384"}
+    url = "http://172.93.105.232:8000/hsw/encrypt?key=199283472bcd281105edbaf31960281c"
+    json = {"data": data}
     return client.post(url, json=json).text
 
 def encrypt(data):
-    url = "http://solver.dexv.lol:1500/encrypt"
-    json = {"data": data, "key": "realasffrfr10384"}
+    url = "http://172.93.105.232:8000/hsw/encrypt?key=199283472bcd281105edbaf31960281c"
+    json = {"data": data}
     return client.post(url, json=json).text
 
 
@@ -53,9 +55,7 @@ def pull(hc_diff: int, hc_data: str, ardata: str):
         data["stamp"] = mint(hc_data, hc_diff)
         data["rand"] = [random.random()]
         data["components"]["canvas_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
-        data["components"]["parent_win_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
         data["components"]["performance_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
-        data["components"]["common_keys_hash"] = str(random.randint(1000000000000, 9999999999999))
         data["components"]["unique_keys"] = "otStubData,dataLayer,initDownloadButton,ttPolicy,tram,GLOBAL_ENV,Localize,initSignUpOrOpenButtons,0,_,Webflow,OptanonActiveGroups,WebFont,hcaptcha,gaGlobal,google_tag_data,IntlPolyfill,OnetrustActiveGroups,onYouTubeIframeAPIReady,webpackChunkdiscord_marketing,grecaptcha,2,OneTrust,__skippedLocalizeInit,google_tag_manager,1,hcaptchaOnLoad,clearImmediate,setImmediate,_babelPolyfill,initLogInOrOpenDiscordButton,YTConfig,Optanon,$,onYTReady,pageUsesReact,scriptUrl,objectFitPolyfill,OneTrustStub,regeneratorRuntime,jQuery,platform,YT,core"
         data["components"]["inv_unique_keys"] = "sessionStorage,hsw,image_label_binary,__wdata,_sharedLibs,localStorage"
         data["components"]["common_keys_tail"] = "webkitCancelAnimationFrame,webkitRequestAnimationFrame,chrome,fence,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,sharedStorage,documentPictureInPicture,getScreenDetails,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
@@ -65,8 +65,6 @@ def pull(hc_diff: int, hc_data: str, ardata: str):
         data["proof_spec"]["data"] = hc_data
         data["proof_spec"]["difficulty"] = hc_diff
         for x in data["events"]:
-            if x[0] == 1019165209 or x[0] == 2762634007 or x[0] == 2952842224 or x[0] == 2578092907:
-                x[1] = str(random.randint(10000000000000000000, 99999999999999999999))
             if x[0] == 284488784:
                 x[1] = json.dumps([
                     [
