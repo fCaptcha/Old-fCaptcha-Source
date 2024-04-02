@@ -15,4 +15,3 @@ def show(mouse_data):
     pyplot.title('')
 
     pyplot.show()
-

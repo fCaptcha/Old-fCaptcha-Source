@@ -87,6 +87,8 @@ class Hcaptcha:
         
     def submit_captcha(self, answers: dict, hsw2: str) -> dict:
         self.session.headers.update({'content-type': 'application/json;charset=UTF-8'})
+        motion = self.motion.check_captcha(answers, "image_label_binary")
+        print(motion)
         try:
             return self.session.post(
                 f'https://hcaptcha.com/checkcaptcha/{self.sitekey}/{self.key}',
@@ -96,7 +98,7 @@ class Hcaptcha:
                     'answers': answers,
                     'serverdomain': self.host,
                     'sitekey': self.sitekey,
-                    'motionData': json.dumps(self.motiondata),
+                    'motionData': json.dumps(motion),
                     'n': hsw2,
                     'c': json.dumps(self.c2),
                 },
