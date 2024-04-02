@@ -1,13 +1,13 @@
 import json
-
 import httpx
 from redis import Redis
 import hashlib
+import time
 from math import ceil
-from random import choice
+from random import choice,random
 from string import ascii_letters
-from time import strftime, localtime, time
-import random
+from time import strftime, localtime
+
 
 database_fps = Redis(
     "80.75.212.79",
@@ -19,7 +19,7 @@ client = httpx.Client()
 
 
 def mint(resource, bits=2, ext='', salt_chars=8):
-    timestamp = strftime("%Y-%m-%d", localtime(time.time()))
+    timestamp = strftime("%Y-%m-%d", localtime(time()))
     challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
     return f"{challenge}:{_mint_stamp(challenge, bits)}"
 
