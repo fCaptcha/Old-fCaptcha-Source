@@ -4,9 +4,10 @@ from redis import Redis
 import hashlib
 import time
 from math import ceil
-from random import choice,random
+from random import choice
 from string import ascii_letters
 from time import strftime, localtime
+import random
 
 
 database_fps = Redis(
@@ -19,7 +20,7 @@ client = httpx.Client()
 
 
 def mint(resource, bits=2, ext='', salt_chars=8):
-    timestamp = strftime("%Y-%m-%d", localtime(time()))
+    timestamp = strftime("%Y-%m-%d", localtime(time.time()))
     challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
     return f"{challenge}:{_mint_stamp(challenge, bits)}"
 
@@ -40,13 +41,13 @@ def _mint_stamp(challenge, bits):
         counter += 1
 
 def decrypt(data):
-    url = "http://172.93.105.232:8000/hsw/encrypt?key=199283472bcd281105edbaf31960281c"
-    json = {"data": data}
+    url = "http://solver.dexv.lol:1500/decrypt"
+    json = {"data": data, "key": "realassssffrfr10384"}
     return client.post(url, json=json).text
 
 def encrypt(data):
-    url = "http://172.93.105.232:8000/hsw/encrypt?key=199283472bcd281105edbaf31960281c"
-    json = {"data": data}
+    url = "http://solver.dexv.lol:1500/encrypt"
+    json = {"data": data, "key": "realassssffrfr10384"}
     return client.post(url, json=json).text
 
 
