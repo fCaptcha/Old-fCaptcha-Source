@@ -42,47 +42,32 @@ class Hcaptcha:
         self.motion = MotionData(self.session.headers["user-agent"], f"https://{self.host}")
         self.motiondata = self.motion.get_captcha()
 
-    def ardata(self):
-        #r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
-        #soup = BeautifulSoup(r.text, 'html.parser')
-        #tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
-        #ardata = tag['src'].split('#i=')[1]
-        return None
-
     def hsw(self, req: str) -> str:
-        ardata = self.ardata()
         s = req.split(".")[1].encode()
         s += b'=' * (-len(s) % 4)
         data = json.loads(base64.b64decode(s, validate=False).decode())
-        return pull(data['s'], data['d'], ardata)
+        return pull(data['s'], data['d'])
     
     def solve(self) -> str:
         try:
             captcha = self.siteconfig()
-
-            if captcha:
-                hsw = self.hsw(captcha["req"])
-                got_captcha = self.getcaptcha(hsw, captcha)
-                if captcha:
-                    answers = self.get_answers(got_captcha)
-
-                    if answers:
-                        solve_time1 = round(time.time()-self.before,2)
-                        sleep_total = 3.9 - solve_time1
-
-                        if sleep_total >= 0:
-                            time.sleep(sleep_total)
-
-                        hsw2 = self.hsw(self.c2["req"])
-                        response = self.submit_captcha(answers, hsw2)
-
-                        if response:
-                            try:
-                                capkey = response["generated_pass_UUID"]
-                                log.captcha(f"Solved hCaptcha {capkey[:70]}", self.before, time.time())
-                                return capkey
-                            except Exception:
-                                log.failure(f"Failed To Solve hCaptcha", self.before, time.time(), level="hCaptcha")
+            hsw = self.hsw(captcha["req"])
+            got_captcha = self.getcaptcha(hsw, captcha)
+            answers = self.get_answers(got_captcha)
+            if answers:
+                solve_time1 = round(time.time()-self.before,2)
+                sleep_total = 3.9 - solve_time1
+                if sleep_total >= 0:
+                    time.sleep(sleep_total)
+                hsw2 = self.hsw(self.c2["req"])
+                response = self.submit_captcha(answers, hsw2)
+                if response:
+                    try:
+                        capkey = response["generated_pass_UUID"]
+                        log.captcha(f"Solved hCaptcha {capkey[:70]}", self.before, time.time())
+                        return capkey
+                    except Exception:
+                        log.failure(f"Failed To Solve hCaptcha", self.before, time.time(), level="hCaptcha")
         except Exception as e:
             log.failure(f"Failed To Solve hCaptcha -> {e}", self.before, time.time(), level="hCaptcha")
             traceback.print_exc()
