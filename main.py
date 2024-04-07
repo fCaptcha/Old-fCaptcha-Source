@@ -12,7 +12,7 @@ class Captcha:
         self.rqdata = rqdata
 
     def solve(self) -> str:
-        log.info("Solving Captcha...")
+        #log.info("Solving Captcha...")
         start = time.time()
 
         payload = {"api_key": self.api_key, "url": self.url, "sitekey": self.sitekey, "proxy": self.proxy}
@@ -25,11 +25,11 @@ class Captcha:
                 if data.get("success"):
                     log.captcha(f"Solved Captcha / {data['message'][:70]} / In {str(time.time() - start)[:5]} Seconds")
                     return data['message']
-                log.failure(f"Failed To Solve Captcha -> {data.get('message')}")
+                #log.failure(f"Failed To Solve Captcha -> {data.get('message')}")
                 break
             except Exception as e:
                 pass
-                log.failure(f"Failed To Solve Captcha -> {e}")
+                #log.failure(f"Failed To Solve Captcha -> {e}")
 
 def solve_captcha():
     while True:
@@ -37,7 +37,7 @@ def solve_captcha():
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com', 
-            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
+            proxy="22ujtl8x9pqc9jg-odds-5+100:3cc232m47zd7ftr@rp.proxyscrape.com:6060"
         ).solve()
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
