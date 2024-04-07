@@ -8,8 +8,10 @@ headers = {
     "apikey": "bobfa77-fc12e347-77f3-980a-066d-f7ff03209f51",
 }
 
+
 def encode_img(url):
     return base64.b64encode(httpx.get(url).content).decode()
+
 
 def solve_grid(target, images, sitekey, host):
     response = httpx.post("https://pro.nocaptchaai.com/solve", headers=headers, json={
@@ -30,12 +32,14 @@ def solve_grid(target, images, sitekey, host):
         "site": host,
         "ln": "en",
         "softid": "UserScript3.7.0"
-        },timeout=100000).json()
+    }, timeout=100000).json()
     return response
+
 
 def solve_area_select(target, tasklist, sitekey, host):
     try:
-        imgB64 = {str(i): base64.b64encode(httpx.get(str(img["datapoint_uri"])).content).decode('utf-8') for i, img in enumerate(tasklist)}
+        imgB64 = {str(i): base64.b64encode(httpx.get(str(img["datapoint_uri"])).content).decode('utf-8') for i, img in
+                  enumerate(tasklist)}
 
         task = httpx.post(
             'https://pro.nocaptchaai.com/solve',
@@ -72,7 +76,6 @@ def solve_area_select(target, tasklist, sitekey, host):
                 }
             ]
         }
-    
+
     except:
         pass
-    

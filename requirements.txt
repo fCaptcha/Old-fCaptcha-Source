@@ -2,3 +2,4 @@ tls_client
 g4f
 redis
 flask
+httpx

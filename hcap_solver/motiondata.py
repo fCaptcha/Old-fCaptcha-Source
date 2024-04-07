@@ -5,6 +5,7 @@ import math
 import time
 import string
 
+
 class Helpers:
     @staticmethod
     def randint(a, b):
@@ -100,6 +101,7 @@ class Helpers:
                     answer_list.append(answer)
             return answer_list
 
+
 class Rectangle:
     def __init__(self, width, height):
         self.width = width
@@ -115,6 +117,7 @@ class Rectangle:
         return [(relative_x, relative_y), (relative_x + self.width, relative_y), (relative_x, relative_y + self.height),
                 (relative_x + self.width, relative_y + self.height)]
 
+
 class WidgetCheckBox:
     def __init__(self, relative_position):
         self.widget = Rectangle(300, 75)
@@ -128,6 +131,7 @@ class WidgetCheckBox:
         corners = self.widget.get_corners(self.relative_position[0], self.relative_position[1])
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
+
 
 class WidgetChallengeText:
     def __init__(self, check_box_centre_position, screen_size):
@@ -163,6 +167,7 @@ class WidgetChallengeText:
         corners = self.widget.get_corners(self.widget_position[0], self.widget_position[1])
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
+
 
 class WidgetChallengeBinary:
     def __init__(self, check_box_centre_position, screen_size):
@@ -215,6 +220,7 @@ class WidgetChallengeBinary:
         sorted_corners = sorted(corners, key=lambda c: Helpers.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
 
+
 COMMON_SCREEN_SIZES = [
     (1024, 768),
     (1280, 720),
@@ -242,6 +248,7 @@ COMMON_CORE_COUNTS = [
     16,
     32
 ]
+
 
 class _GetCaptchaMotionData:
     global COMMON_SCREEN_SIZES, COMMON_CORE_COUNTS
@@ -398,6 +405,7 @@ class _GetCaptchaMotionData:
 
         return data
 
+
 class _CheckCaptchaMotionData:
     global COMMON_SCREEN_SIZES, COMMON_CORE_COUNTS
 
@@ -523,6 +531,7 @@ class _CheckCaptchaMotionData:
         self.position = tuple(data['mm'][-1][:-1])
 
         return data
+
 
 class MotionData:
     def __init__(self, user_agent, url):
