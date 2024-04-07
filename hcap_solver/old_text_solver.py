@@ -16,7 +16,7 @@ import json
 import g4f
 import re
 
-database = Redis("37.114.63.21", 6379, 0, "dexysexyfr69")
+database = Redis("37.114.63.21", 6379, 0)
 
 class Hcaptcha:
     def __init__(self, sitekey: str, host: str, proxy: str = None, rqdata: str = None) -> None:
@@ -52,19 +52,11 @@ class Hcaptcha:
         self.captcha1 = self.get_captcha1()
         self.captcha2 = self.get_captcha2()
 
-    def ardata(self):
-        r = self.session.get("https://newassets.hcaptcha.com/captcha/v1/fadb9c6/static/hcaptcha.html?_v=n2igxf14d2i")
-        soup = BeautifulSoup(r.text, 'html.parser')
-        tag = soup.find('script', {'src': re.compile(r'hcaptcha\.js#i=')})
-        ardata = tag['src'].split('#i=')[1]
-        return ardata
-
     def hsw(self, req: str) -> str:
-        ardata = self.ardata()
         s = req.split(".")[1].encode()
         s += b'=' * (-len(s) % 4)
         data = json.loads(base64.b64decode(s, validate=False).decode())
-        return pull(data['s'], data['d'], ardata)
+        return pull(data['s'], data['d'])
     
     def get_siteconfig(self) -> dict:
         s = time()
