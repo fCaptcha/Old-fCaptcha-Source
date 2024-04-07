@@ -58,7 +58,7 @@ def pull(hc_diff: int, hc_data: str):
         for event in data["events"]:
             match event[0]:
                 case 2228825458:
-                    event[1] = round(time.time() / 1000, 1)
+                    event[1] = str(round(time.time() / 1000, 1))
         d = encrypt(json.dumps(data, separators=(",", ":")))
         return d
     return None
