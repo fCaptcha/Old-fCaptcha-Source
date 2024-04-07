@@ -40,7 +40,7 @@ class HCaptcha:
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         }
         self.proxy = proxy
-        self.session.proxies = {'http': f'http://{self.proxy}', 'https': f'http://{self.proxy}'} if proxy else None
+        self.session.proxies = proxy if proxy else None
         self.site_key = site_key
         self.host = host.split("//")[-1].split("/")[0]
         self.rq_data = rq_data
