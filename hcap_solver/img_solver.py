@@ -70,12 +70,11 @@ class Hcaptcha:
                         log.failure(f"Failed To Solve hCaptcha", self.before, time.time(), level="hCaptcha")
         except Exception as e:
             log.failure(f"Failed To Solve hCaptcha -> {e}", self.before, time.time(), level="hCaptcha")
-            traceback.print_exc()
+            #traceback.print_exc()
         
     def submit_captcha(self, answers: dict, hsw2: str) -> dict:
         self.session.headers.update({'content-type': 'application/json;charset=UTF-8'})
         motion = self.motion.check_captcha(answers, "image_label_binary")
-        print(motion)
         try:
             return self.session.post(
                 f'https://hcaptcha.com/checkcaptcha/{self.sitekey}/{self.key}',
