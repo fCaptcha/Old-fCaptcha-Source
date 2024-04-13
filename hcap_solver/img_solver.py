@@ -3,6 +3,7 @@ from typing import Any
 from hcap_solver.motiondata import *
 from hcap_solver.nocap_ai import *
 from hcap_solver.logger import *
+from tls_client import Session
 from datetime import datetime
 from hcap_solver.hsw import *
 import requests
@@ -14,15 +15,13 @@ import re
 js = requests.get("https://js.hcaptcha.com/1/api.js").text
 version = re.search(r'v1/(.*?)/', js).group(1)
 
-
 class Hcaptcha:
     def __init__(self, site_key: str, host: str, proxy: str = None, rq_data: str = None) -> None:
         self.hsw_key = database_fps.randomkey()
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = requests.Session()
-        self.proxy = proxy
+        self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
         self.before = time.time()
         self.session.headers = {
             'authority': 'hcaptcha.com',
@@ -39,8 +38,7 @@ class Hcaptcha:
             'sec-fetch-site': 'same-site',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         }
-        self.proxy = proxy
-        self.session.proxies = proxy
+        self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
         self.host = host.split("//")[-1].split("/")[0]
         self.rq_data = rq_data

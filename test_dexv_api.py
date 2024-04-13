@@ -43,6 +43,6 @@ def solve_captcha():
         ).solve()
 
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-    for _ in range(100):
+with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
+    for _ in range(50):
         executor.submit(solve_captcha)
