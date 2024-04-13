@@ -39,7 +39,7 @@ def solve_captcha():
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com',
-            proxy="22ujtl8x9pqc9jg-odds-5+100:3cc232m47zd7ftr@rp.proxyscrape.com:6060"
+            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
         ).solve()
 
 

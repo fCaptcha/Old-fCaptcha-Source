@@ -16,26 +16,15 @@ database_fps = Redis(
 )
 client = httpx.Client()
 
-
 def decrypt(data):
-    return client.post(
-        "http://127.0.0.1:8000/hsw/decrypt?key=199283472bcd281105edbaf31960281c", headers={
-            "Content-Type": "application/json"
-        }, json={
-            "data": data
-        }, timeout=10
-    ).text
-
+    url = "http://solver.dexv.lol:1500/decrypt"
+    json = {"data": data, "key": "realassssffrfr10384"}
+    return client.post(url, json=json).text
 
 def encrypt(data):
-    return client.post(
-        "http://127.0.0.1:8000/hsw/encrypt?key=199283472bcd281105edbaf31960281c", headers={
-            "Content-Type": "application/json"
-        }, json={
-            "data": data
-        }, timeout=10
-    ).text
-
+    url = "http://solver.dexv.lol:1500/encrypt"
+    json = {"data": data, "key": "realassssffrfr10384"}
+    return client.post(url, json=json).text
 
 def pull(key: str, hc_diff: int, hc_data: str):
     if data := json.loads(database_fps.get(key)):
@@ -50,7 +39,7 @@ def pull(key: str, hc_diff: int, hc_data: str):
             match event[0]:
                 case 2228825458:
                     event[1] = str(round(time.time() / 1000, 1))
-        d = aes_gcm_encrypt(json.dumps(data, separators=(",", ":")))
+        d = encrypt(json.dumps(data, separators=(",", ":")))
         return d
     return None
 

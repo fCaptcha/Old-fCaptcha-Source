@@ -15,7 +15,7 @@ js = requests.get("https://js.hcaptcha.com/1/api.js").text
 version = re.search(r'v1/(.*?)/', js).group(1)
 
 
-class HCaptcha:
+class Hcaptcha:
     def __init__(self, site_key: str, host: str, proxy: str = None, rq_data: str = None) -> None:
         self.hsw_key = database_fps.randomkey()
         self.job = None
@@ -100,40 +100,21 @@ class HCaptcha:
     def get_answers(self, captcha: dict) -> dict:
         target = captcha["requester_question"]["en"]
         captcha_type = captcha["request_type"]
-
+    
         self.c2 = captcha['c']
         self.key = captcha['key']
         log.captcha(f"Solving Captcha -> {captcha_type}...")
+        
         if captcha_type == "image_label_binary":
-            images = {
-                "image1": captcha['tasklist'][0]["datapoint_uri"],
-                "image2": captcha['tasklist'][1]["datapoint_uri"],
-                "image3": captcha['tasklist'][2]["datapoint_uri"],
-                "image4": captcha['tasklist'][3]["datapoint_uri"],
-                "image5": captcha['tasklist'][4]["datapoint_uri"],
-                "image6": captcha['tasklist'][5]["datapoint_uri"],
-                "image7": captcha['tasklist'][6]["datapoint_uri"],
-                "image8": captcha['tasklist'][7]["datapoint_uri"],
-                "image9": captcha['tasklist'][8]["datapoint_uri"]
-            }
+            images = {f"image{i+1}": captcha['tasklist'][i]["datapoint_uri"] for i in range(9)}
             solution = solve_grid(target, images, self.site_key, self.host)["solution"]
             self.job = "image_label_binary"
-            return {
-                captcha['tasklist'][0]["task_key"]: str(0 in solution).lower(),
-                captcha['tasklist'][1]["task_key"]: str(1 in solution).lower(),
-                captcha['tasklist'][2]["task_key"]: str(2 in solution).lower(),
-                captcha['tasklist'][3]["task_key"]: str(3 in solution).lower(),
-                captcha['tasklist'][4]["task_key"]: str(4 in solution).lower(),
-                captcha['tasklist'][5]["task_key"]: str(5 in solution).lower(),
-                captcha['tasklist'][6]["task_key"]: str(6 in solution).lower(),
-                captcha['tasklist'][7]["task_key"]: str(7 in solution).lower(),
-                captcha['tasklist'][8]["task_key"]: str(8 in solution).lower()
-            }
-
+            return {captcha['tasklist'][i]["task_key"]: str(i in solution).lower() for i in range(9)}
+    
         elif captcha_type == "image_label_area_select":
             self.job = "image_label_area_select"
             return solve_area_select(target, captcha['tasklist'], self.site_key, self.host)
-
+    
         else:
             log.failure(f"Unsupported Captcha Type -> {captcha_type}", level="hCaptcha")
 

@@ -6,7 +6,7 @@ import requests
 import secrets
 import tls_client
 import bodystuff
-from hcap_solver import HCaptcha
+from hcap_solver import Hcaptcha
 
 r = requests.get("https://raw.githubusercontent.com/qoft/discord-api/main/fetch")
 build_numbers_client = r.json()["build_numbers"]["client"]
@@ -19,7 +19,7 @@ class DiscordGen:
             client_identifier="chrome_108",
             random_tls_extension_order=True
         )
-        self.session.proxies = "http://22ujtl8x9pqc9jg-odds-6+100:3cc232m47zd7ftr@rp.proxyscrape.com:6060"
+        self.session.proxies = "http://qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
 
     def generate(self):
         cookies = self.session.get("https://discord.com").cookies
@@ -27,17 +27,17 @@ class DiscordGen:
         password = self.get_password()
         fingerprint = self.get_fingerprint()
         xtrack = self.get_xtrack()
-        captcha = HCaptcha(
-            sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
-            host='https://discord.com/register',
-            proxy="22ujtl8x9pqc9jg-odds-5+100:3cc232m47zd7ftr@rp.proxyscrape.com:6060"
+        captcha = Hcaptcha(
+            site_key='4c672d35-0701-42b2-88c3-78380b0db560',
+            host='discord.com', 
+            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
         ).solve()
 
         bodystuff.logger.info("creating account", username=username, password=password)
         self.session.headers = {
             "Accept": "*/*",
             "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+            "Accept-Language": 'ar-kw,fa-ir;q=0.6,fa;q=0.7,en-us;q=0.7,en;q=0.6,ar;q=0.8',
             "Content-Type": "application/json",
             "Connection": "keep-alive",
             "Cookie": "; ".join([f"{cookie.name}={cookie.value}" for cookie in cookies]),
@@ -59,13 +59,13 @@ class DiscordGen:
         r = self.session.post("https://discord.com/api/v9/auth/register", json={
             "captcha_key": captcha,
             "fingerprint": fingerprint,
-            "email": f"{secrets.token_hex(4)}@outlook.com",
+            "email": f"{username}{secrets.token_hex(1)}@outlook.com",
             "username": username,
             "global_name": username,
             "password": password,
-            "invite": "",
+            "invite": "qraid",
             "consent": True,
-            "date_of_birth": "1999-11-15",
+            "date_of_birth": "2001-02-10",
             "gift_code_sku_id": None,
             "promotional_email_opt_in": False,
         })
@@ -124,10 +124,10 @@ class DiscordGen:
 def Gen():
     DiscordGen().generate()
 
-Gen()
+#Gen()
 
 # Uncomment to make run forever thing
-# import concurrent.futures
-# with concurrent.futures.ThreadPoolExecutor(max_workers=25) as executor:
-#     for _ in range(10):
-#         executor.submit(Gen)
+import concurrent.futures
+with concurrent.futures.ThreadPoolExecutor(max_workers=25) as executor:
+    for _ in range(10):
+        executor.submit(Gen)
