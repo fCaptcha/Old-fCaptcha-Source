@@ -21,7 +21,7 @@ class Hcaptcha:
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
+        self.session = Session(client_identifier='chrome_120', random_tls_extension_order=True)
         self.before = time.time()
         self.session.headers = {
             'authority': 'hcaptcha.com',
@@ -49,7 +49,7 @@ class Hcaptcha:
         s = req.split(".")[1].encode()
         s += b'=' * (-len(s) % 4)
         data = json.loads(base64.b64decode(s, validate=False).decode())
-        return pull(self.hsw_key, data['s'], data['d'])
+        return pull(self.hsw_key, data['s'], data['d'], self.host)
 
     def solve(self) -> str:
         try:

@@ -6,7 +6,7 @@ def solve_captcha():
         Hcaptcha(
             site_key='4c672d35-0701-42b2-88c3-78380b0db560',
             host='discord.com', 
-            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
+            proxy="theproproxy:uXJwhcxE@geo.iproyal.com:12321"
         ).solve()
 
 with concurrent.futures.ThreadPoolExecutor() as executor:

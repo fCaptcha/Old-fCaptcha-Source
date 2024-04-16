@@ -26,15 +26,13 @@ def encrypt(data):
     json = {"data": data, "key": "realassssffrfr10384"}
     return client.post(url, json=json).text
 
-def pull(key: str, hc_diff: int, hc_data: str):
+def pull(key: str, hc_diff: int, hc_data: str, host: str):
     if data := json.loads(database_fps.get(key)):
         data["stamp"] = mint(hc_data, hc_diff)
-        data["href"] = "https://discord.com/"
+        data["href"] = f"https://{host}"
         data["proof_spec"]["data"] = hc_data
         data["proof_spec"]["difficulty"] = hc_diff
-        data["stack_data"] = [
-            "new Promise (<anonymous>)"
-        ]
+        data["stack_data"] = ["new Promise (<anonymous>)"]
         for event in data["events"]:
             match event[0]:
                 case 2228825458:
@@ -43,17 +41,14 @@ def pull(key: str, hc_diff: int, hc_data: str):
         return d
     return None
 
-
 def mint(resource, bits=2, ext='', salt_chars=8):
     timestamp = strftime("%Y-%m-%d", localtime(time.time()))
     challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
     return f"{challenge}{_mint_stamp(challenge, bits)}"
 
-
 def _get_salt(data_in):
     charset = ascii_letters + "+/="
     return ''.join([choice(charset) for _ in [None] * data_in])
-
 
 def _mint_stamp(challenge, bits):
     counter = 0

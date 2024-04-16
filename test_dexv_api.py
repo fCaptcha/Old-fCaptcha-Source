@@ -32,17 +32,16 @@ class Captcha:
                 pass
                 # log.failure(f"Failed To Solve Captcha -> {e}")
 
-
 def solve_captcha():
     while True:
         Captcha(
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com',
-            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
+            proxy="theproproxy:uXJwhcxE@geo.iproyal.com:12321"
         ).solve()
 
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=50) as executor:
-    for _ in range(50):
+with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
+    for _ in range(200):
         executor.submit(solve_captcha)
