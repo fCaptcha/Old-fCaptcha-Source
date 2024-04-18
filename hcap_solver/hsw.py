@@ -42,11 +42,9 @@ def pull(data: str, hc_diff: int, hc_data: str, host: str):
     return None
 
 def mint(resource, bits=2, ext='', salt_chars=8):
-    bits *= 2
     timestamp = strftime("%Y-%m-%d", localtime(time.time()))
-    challenge = f"1:{bits / 2}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}:{_mint_stamp(resource, bits)}"
-    return challenge
-
+    challenge = f"1:{bits}:{timestamp}:{resource}:{ext}:{_get_salt(salt_chars)}"
+    return f"{challenge}{_mint_stamp(challenge, bits)}"
 
 def _get_salt(data_in):
     charset = ascii_letters + "+/="
@@ -54,7 +52,7 @@ def _get_salt(data_in):
 
 def _mint_stamp(challenge, bits):
     counter = 0
-    hex_digits = ceil(bits / 4)
+    hex_digits = int(ceil(bits / 4.0))
     zeros = '0' * hex_digits
     while 1:
         digest = hashlib.sha1((challenge + hex(counter)[2:]).encode()).hexdigest()
