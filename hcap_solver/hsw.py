@@ -26,13 +26,13 @@ def encrypt(data):
     json = {"data": data, "key": "realassssffrfr10384"}
     return client.post(url, json=json).text
 
-def pull(key: str, hc_diff: int, hc_data: str, host: str):
-    if data := json.loads(database_fps.get(key)):
+def pull(data: str, hc_diff: int, hc_data: str, host: str):
+    if data:
         data["stamp"] = mint(hc_data, hc_diff)
         data["href"] = f"https://{host}"
         data["proof_spec"]["data"] = hc_data
         data["proof_spec"]["difficulty"] = hc_diff
-        data["stack_data"] = ["new Promise (<anonymous>)"]
+        #data["stack_data"] = ["new Promise (<anonymous>)"]
         for event in data["events"]:
             match event[0]:
                 case 2228825458:
