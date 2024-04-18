@@ -332,22 +332,22 @@ class Hcaptcha:
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
+        self.session = Session(client_identifier='chrome_120', random_tls_extension_order=True)
         self.before = time.time()
         self.session.headers = {
             'authority': 'hcaptcha.com',
             'accept': 'application/json',
-            'accept-language': 'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7',
+            'accept-language': 'en-US',
             'content-type': 'text/plain',
             'origin': 'https://newassets.hcaptcha.com',
             'referer': 'https://newassets.hcaptcha.com/',
-            'sec-ch-ua': '"Chromium";v="120", "Google Chrome";v="120", "Not=A?Brand";v="99"',
+            'sec-ch-ua': '"Not_A Brand";v="8", "Chromium";v="120"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.221 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36',
         }
         self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
