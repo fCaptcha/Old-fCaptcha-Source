@@ -39,7 +39,7 @@ class HSW:
             data["components"]["inv_unique_keys"] = "__wdata,sessionStorage,localStorage,hsw,_sharedLibs"
             data["components"]["common_keys_tail"] = "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
             data["rand"] = [self.random_float(), self.random_float()]
-            data["href"] = f"https://{host}"
+            data["href"] = f"https://{host}/"
             data["proof_spec"]["data"] = hc_data
             data["proof_spec"]["difficulty"] = hc_diff
             data["stack_data"] = ["new Promise (<anonymous>)"]
