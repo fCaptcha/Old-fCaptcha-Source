@@ -158,7 +158,7 @@ hswwww = {
 }
 
 class Hcaptcha:
-    def __init__(self, site_key: str, host: str, proxy: str = None, rq_data: str = None) -> None:
+    def __init__(self, site_key: str, host: str, proxy: str, rq_data: str = None) -> None:
         #self.hsw_key = database_fps.randomkey()
         self.hsw_key = hswwww
         self.job = None
@@ -179,7 +179,7 @@ class Hcaptcha:
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9041 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36',
         }
         self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
