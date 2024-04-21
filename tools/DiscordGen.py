@@ -6,7 +6,11 @@ import requests
 import secrets
 import tls_client
 import bodystuff
+import colorama
+import concurrent.futures
 from hcap_solver import Hcaptcha
+
+colorama.init()
 
 r = requests.get("https://raw.githubusercontent.com/qoft/discord-api/main/fetch")
 build_numbers_client = r.json()["build_numbers"]["client"]
@@ -19,7 +23,12 @@ class DiscordGen:
             client_identifier="chrome_108",
             random_tls_extension_order=True
         )
-        self.session.proxies = "http://qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
+
+        with open("proxies.txt", "r", encoding='utf-8') as f:
+            proxies = f.read().splitlines()
+            self.proxy = random.choice(proxies)
+
+        self.session.proxies = f"http://{self.proxy}"
 
     def generate(self):
         cookies = self.session.get("https://discord.com").cookies
@@ -30,7 +39,7 @@ class DiscordGen:
         captcha = Hcaptcha(
             site_key='4c672d35-0701-42b2-88c3-78380b0db560',
             host='discord.com', 
-            proxy="qapnxywtcwnmbmn38052:bmvgavatiz@prem_resi.turboproxy.in:16666"
+            proxy=self.proxy
         ).solve()
 
         bodystuff.logger.info("creating account", username=username, password=password)
@@ -121,13 +130,11 @@ class DiscordGen:
             "client_event_source": None,
         }).encode()).decode()
 
-def Gen():
-    DiscordGen().generate()
+def genn():
+    i = DiscordGen()
+    i.generate()
 
-#Gen()
-
-# Uncomment to make run forever thing
-import concurrent.futures
-with concurrent.futures.ThreadPoolExecutor(max_workers=25) as executor:
-    for _ in range(10):
-        executor.submit(Gen)
+def start_genning():
+    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+        for _ in range(10):
+            executor.submit(genn)
