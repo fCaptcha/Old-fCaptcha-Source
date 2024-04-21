@@ -8,6 +8,7 @@ from datetime import datetime
 from hcap_solver.hsw import *
 import requests
 import base64
+import httpx
 import time
 import json
 import re
@@ -351,22 +352,23 @@ class Hcaptcha:
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = Session(client_identifier='chrome_118', random_tls_extension_order=True)
+        #self.session = Session(client_identifier='chrome_123', random_tls_extension_order=True)
+        self.session = httpx.Client()
         self.before = time.time()
         self.session.headers = {
-            'authority': 'hcaptcha.com',
-            'accept': 'application/json',
-            'accept-language': 'sv-SE,sv;q=0.9,en-US;q=0.8,en;q=0.7',
-            'content-type': 'text/plain',
+            'accept': '*/*',
+            'accept-language': 'en-AU,en;q=0.9,fa;q=0.8,en-US;q=0.7,sv;q=0.6',
+            'content-type': 'application/json;charset=UTF-8',
+            'dnt': "1",
             'origin': 'https://newassets.hcaptcha.com',
             'referer': 'https://newassets.hcaptcha.com/',
-            'sec-ch-ua': '"Chromium";v="120", "Google Chrome";v="120", "Not=A?Brand";v="99"',
+            'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
             'sec-fetch-dest': 'empty',
             'sec-fetch-mode': 'cors',
             'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
         }
         self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
