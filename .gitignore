@@ -4,3 +4,5 @@ api.py
 g.json
 **/dortcap/
 proxies.txt
+test.py
+working_proxies.txt
