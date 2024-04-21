@@ -27,8 +27,8 @@ class HSW:
     def random_float(self) -> float:
         return random.uniform(0.0000000000000001,0.9999999999999999)
     
-    def pull(self, data: dict, hc_diff: int, hc_data: str, host: str, user_agent: str) -> str:
-        if data:
+    def pull(self, key: dict, hc_diff: int, hc_data: str, host: str, user_agent: str) -> str:
+        if data := json.loads(self.database_fps.get(key)):
             data["stamp"] = self.mint(hc_data, hc_diff)
             data["components"]["navigator"]["user_agent"] = user_agent
             data["components"]["canvas_hash"] = str(random.randint(1000000000000000000,9999999999999999999))
