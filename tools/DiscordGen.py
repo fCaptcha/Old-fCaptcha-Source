@@ -25,7 +25,6 @@ build_numbers_client = r.json()["build_numbers"]["client"]
 build_numbers_main = r.json()["build_numbers"]["main"]
 build_numbers_native = r.json()["build_numbers"]["native"]
 
-
 class DiscordGen:
     def __init__(self):
         self.session = tls_client.Session(
