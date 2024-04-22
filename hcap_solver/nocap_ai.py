@@ -1,7 +1,8 @@
 from hcap_solver.logger import *
 import base64, httpx
 
-class AI_Solver:
+
+class AISolver:
     def __init__(self, type: str, captcha: dict, sitekey: str, host: str) -> None:
         self.type = type
         self.captcha = captcha
@@ -38,14 +39,17 @@ class AI_Solver:
             "ln": "en",
             "softid": "UserScript3.7.0"
         }
-        if example is not None: data["examples"] = [self.encode_img(example)]
-        response = httpx.post("https://pro.nocaptchaai.com/solve", headers=self.headers, json=data, timeout=100000).json()
+        if example is not None:
+            data["examples"] = [self.encode_img(example)]
+        response = httpx.post("https://pro.nocaptchaai.com/solve", headers=self.headers, json=data,
+                              timeout=100000).json()
         return {self.captcha['tasklist'][i]["task_key"]: str(i in response["solution"]).lower() for i in range(9)}
 
     def area_select(self) -> dict:
         tasklist = self.captcha['tasklist']
         try:
-            image = {str(i): base64.b64encode(httpx.get(str(img["datapoint_uri"])).content).decode('utf-8') for i, img in enumerate(tasklist)}
+            image = {str(i): base64.b64encode(httpx.get(str(img["datapoint_uri"])).content).decode('utf-8') for i, img
+                     in enumerate(tasklist)}
             task = httpx.post(
                 'https://pro.nocaptchaai.com/solve',
                 headers=self.headers,

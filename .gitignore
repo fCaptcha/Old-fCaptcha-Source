@@ -2,6 +2,7 @@
 **/node_modules/
 api.py
 g.json
+.venv
 **/dortcap/
 proxies.txt
 test.py

@@ -5,6 +5,7 @@ import math
 import time
 import string
 
+
 class util:
     @staticmethod
     def randint(a: int, b: int) -> int:
@@ -15,16 +16,19 @@ class util:
         return int(time.time() * 1000)
 
     @staticmethod
-    def get_mm(start: tuple, goal: tuple, screen_size: tuple, max_points: int, random_amount: int, polling_rate: int) -> list:
+    def get_mm(start: tuple, goal: tuple, screen_size: tuple, max_points: int, random_amount: int,
+               polling_rate: int) -> list:
         cp = util.randint(3, 5)
         x, y = np.linspace(start[0], goal[0], num=cp, dtype='int'), np.linspace(start[1], goal[1], num=cp, dtype='int')
         r = [util.randint(-random_amount, random_amount) for _ in range(cp)]
         x += np.clip(r, 0, screen_size[0])
         y += np.clip(r, 0, screen_size[1])
         tck, _ = interpolate.splprep((x, y), k=3 if cp > 3 else cp - 1)
-        u = np.linspace(0, 1, num=min(2 + int(math.sqrt((goal[0] - start[0]) ** 2 + (goal[1] - start[1]) ** 2) / polling_rate), max_points))
+        u = np.linspace(0, 1, num=min(
+            2 + int(math.sqrt((goal[0] - start[0]) ** 2 + (goal[1] - start[1]) ** 2) / polling_rate), max_points))
         points = interpolate.splev(u, tck)
-        return [[int(x), int(y), util.get_ms()] for x, y in zip(*(i.astype(int) for i in points)) if time.sleep(1 / util.randint(80, 240)) is None]
+        return [[int(x), int(y), util.get_ms()] for x, y in zip(*(i.astype(int) for i in points)) if
+                time.sleep(1 / util.randint(80, 240)) is None]
 
     @staticmethod
     def periods(timestamps: list) -> float:
@@ -53,7 +57,8 @@ class util:
         for i, answer in enumerate(answers):
             result[i] = answer.lower() == 'true' if isinstance(answer, str) else answer
         return result
-    
+
+
 class rectangle:
     def __init__(self, width: int, height: int) -> None:
         self.width = width
@@ -66,7 +71,9 @@ class rectangle:
         return (rel_x, rel_y), (rel_x + self.width, rel_y + self.height)
 
     def get_corners(self, rel_x: int = 0, rel_y: int = 0) -> list:
-        return [(rel_x, rel_y), (rel_x + self.width, rel_y), (rel_x, rel_y + self.height), (rel_x + self.width, rel_y + self.height)]
+        return [(rel_x, rel_y), (rel_x + self.width, rel_y), (rel_x, rel_y + self.height),
+                (rel_x + self.width, rel_y + self.height)]
+
 
 class widget_check:
     def __init__(self, rel_position: tuple) -> None:
@@ -81,6 +88,7 @@ class widget_check:
         corners = self.widget.get_corners(self.rel_position[0], self.rel_position[1])
         sorted_corners = sorted(corners, key=lambda c: util.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
+
 
 class binary_challenge:
     def __init__(self, box_centre: tuple, screen_size: tuple) -> None:
@@ -105,6 +113,7 @@ class binary_challenge:
         corners = self.widget.get_corners(*self.widget_position)
         sorted_corners = sorted(corners, key=lambda c: util.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
+
 
 COMMON_SCREEN_SIZES = [
     (1024, 768),
@@ -138,6 +147,7 @@ COMMON_MEMORY_SIZES = [
     32,
     64
 ]
+
 
 class get_cap:
     def __init__(self, user_agent: str, href: str) -> None:
@@ -191,10 +201,10 @@ class get_cap:
                     "userAgent": self.user_agent,
                     "language": "en-US",
                     "languages": [
-                      "en-US",
-                      "en",
-                      "sv-SE",
-                      "sv"
+                        "en-US",
+                        "en",
+                        "sv-SE",
+                        "sv"
                     ],
                     "onLine": True,
                     "webdriver": False,
@@ -211,22 +221,22 @@ class get_cap:
                     "wakeLock": {},
                     "deviceMemory": random.choice(COMMON_MEMORY_SIZES),
                     "userAgentData": {
-                      "brands": [
-                        {
-                          "brand": "Not A(Brand",
-                          "version": "99"
-                        },
-                        {
-                          "brand": "Google Chrome",
-                          "version": "121"
-                        },
-                        {
-                          "brand": "Chromium",
-                          "version": "121"
-                        }
-                      ],
-                      "mobile": False,
-                      "platform": "Windows"
+                        "brands": [
+                            {
+                                "brand": "Not A(Brand",
+                                "version": "99"
+                            },
+                            {
+                                "brand": "Google Chrome",
+                                "version": "121"
+                            },
+                            {
+                                "brand": "Chromium",
+                                "version": "121"
+                            }
+                        ],
+                        "mobile": False,
+                        "platform": "Windows"
                     },
                     "login": {},
                     "ink": {},
@@ -270,6 +280,7 @@ class get_cap:
             }
         }
 
+
 class check_cap:
     def __init__(self, old_motion_data: get_cap, answers: dict) -> None:
         self.old_motion_data = old_motion_data
@@ -304,6 +315,7 @@ class check_cap:
         self.data["mm-mp"] = util.periods([x[-1] for x in self.data["mm"]])
         self.data["md-mp"] = util.periods([x[-1] for x in self.data["md"]])
         self.data["mu-mp"] = util.periods([x[-1] for x in self.data["mu"]])
+
 
 class MotionData:
     def __init__(self, user_agent: str, url: str) -> None:

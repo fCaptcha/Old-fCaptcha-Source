@@ -1,6 +1,8 @@
+import base64
 import json
 import time
 import httpx
+import tls_client
 from redis import Redis
 import random
 import hashlib
@@ -9,26 +11,31 @@ from string import ascii_letters
 from random import randint as r
 from time import strftime, localtime
 
-class HSW:
-    def __init__(self) -> None:
-        self.database_fps = Redis("80.75.212.79", 6379, 240, "k7rCJ59itoIjwaAFF930WVe99T8aagAtLc4b3CAdO7sXCAQ27ef4j9UJpBv0dObmw3QeK9XwZeh2alLmxR8Xl50etyTR74teQRXys6dfe7n5TvO3OK7pvc2WieIgqokHxlHTSQeFQBDq0vEYxEYAzV8NKWb77TtTXUSAY")
-        self.client = httpx.Client()
+client = tls_client.Session("chrome_104", random_tls_extension_order=True)
+database_fps = Redis("80.75.212.79", 6379, 240, "k7rCJ59itoIjwaAFF930WVe99T8aagAtLc4b3CAdO7sXCAQ27ef4j9UJpBv0dObmw3QeK9XwZeh2alLmxR8Xl50etyTR74teQRXys6dfe7n5TvO3OK7pvc2WieIgqokHxlHTSQeFQBDq0vEYxEYAzV8NKWb77TtTXUSAY")
 
+
+class HSW:
     def decrypt(self, data: str) -> str:
         url = "http://solver.dexv.lol:1500/decrypt"
         json = {"data": data, "key": "realassssffrfr10384"}
-        return self.client.post(url, json=json).text
+        return client.post(url, json=json).text
 
     def encrypt(self, data: str) -> str:
         url = "http://solver.dexv.lol:1500/encrypt"
         json = {"data": data, "key": "realassssffrfr10384"}
-        return self.client.post(url, json=json).text
+        return client.post(url, json=json).text
 
     def random_float(self) -> float:
-        return random.uniform(0.0000000000000001,0.9999999999999999)
-    
-    def pull(self, data: dict, hc_diff: int, hc_data: str, host: str, user_agent: str) -> str:
-        if data:
+        return random.uniform(0.0000000000000001, 0.9999999999999999)
+
+    def pull(self, jwt: str, host: str, user_agent: str) -> str:
+        s = jwt.split(".")[1].encode()
+        s += b'=' * (-len(s) % 4)
+        parsed = json.loads(base64.b64decode(s, validate=False).decode())
+        hc_diff = parsed['s']
+        hc_data = parsed['d']
+        if data := json.load(open("n.json", "r")):
             data["stamp"] = self.mint(hc_data, hc_diff)
             data["components"]["navigator"]["user_agent"] = user_agent
             data["components"]["canvas_hash"] = str(random.randint(1000000000000000000,9999999999999999999))
@@ -39,10 +46,12 @@ class HSW:
             data["components"]["inv_unique_keys"] = "__wdata,sessionStorage,localStorage,hsw,_sharedLibs"
             data["components"]["common_keys_tail"] = "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
             data["rand"] = [self.random_float(), self.random_float()]
-            data["href"] = f"https://{host}/"
+            data["href"] = f"https://{host}/register"
             data["proof_spec"]["data"] = hc_data
             data["proof_spec"]["difficulty"] = hc_diff
-            data["stack_data"] = ["new Promise (<anonymous>)"]
+            data["stack_data"] = [
+                "new Promise (<anonymous>)"
+            ]
             for event in data["events"]:
                 match event[0]:
                     case 702607242:

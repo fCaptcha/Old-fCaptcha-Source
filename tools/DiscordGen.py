@@ -1,14 +1,18 @@
 import json
+import multiprocessing
 import random
 import string
 import base64
+import threading
+import traceback
+
 import requests
 import secrets
 import tls_client
 import bodystuff
 import colorama
 import concurrent.futures
-from hcap_solver import Hcaptcha
+from hcap_solver import HCaptchaEnterpriseChallenge, DATABASE
 from kopeechka import MailActivations
 
 colorama.init()
@@ -35,18 +39,24 @@ class DiscordGen:
         self.session.proxies = f"http://{self.proxy}"
 
     def generate(self):
-        cookies = self.session.get("https://discord.com").cookies
+        self.session.get("https://discord.com")
         username = self.get_username()
-        email = api.mailbox_get_email("discord.com", "outlook")
+        # email = api.mailbox_get_email("discord.com", "outlook")
+        email = f"{secrets.token_hex(16)}@outlook.com"
         password = self.get_password()
         fingerprint = self.get_fingerprint()
         xtrack = self.get_xtrack()
-        captcha = Hcaptcha(
-            site_key="4c672d35-0701-42b2-88c3-78380b0db560",
-            host="discord.com",
-            proxy=self.proxy,
-        ).solve()
-
+        while True:
+            try:
+                if captcha := HCaptchaEnterpriseChallenge(
+                    site_key="4c672d35-0701-42b2-88c3-78380b0db560",
+                    site_url="https://canary.discord.com",
+                    proxy=f"http://{self.proxy}",
+                    database=DATABASE
+                ).solve():
+                    break
+            except Exception:
+                pass
         bodystuff.logger.info("creating account", username=username, password=password)
         self.session.headers = {
             "Accept": "*/*",
@@ -54,9 +64,6 @@ class DiscordGen:
             "Accept-Language": "ar-kw,fa-ir;q=0.6,fa;q=0.7,en-us;q=0.7,en;q=0.6,ar;q=0.8",
             "Content-Type": "application/json",
             "Connection": "keep-alive",
-            "Cookie": "; ".join(
-                [f"{cookie.name}={cookie.value}" for cookie in cookies]
-            ),
             "origin": "https://discord.com",
             "referer": "https://discord.com",
             "sec-ch-ua": '"Not?A_Brand";v="8", "Chromium";v="108"',
@@ -76,16 +83,16 @@ class DiscordGen:
             json={
                 "captcha_key": captcha,
                 "fingerprint": fingerprint,
-                "email": f"{email.mail}",
+                "email": f"{email}",
                 "username": username,
                 "global_name": username,
                 "password": password,
-                "invite": None,
+                "invite": "sRAW4yzy",
                 "consent": True,
                 "date_of_birth": "2001-11-02",
                 "gift_code_sku_id": None,
                 "promotional_email_opt_in": False,
-            },
+            }
         )
         if "token" in r.json():
             token = r.json()["token"]
@@ -97,25 +104,25 @@ class DiscordGen:
                 bodystuff.logger.success(
                     "Account Not Locked!", username=username, token=token[:40], flags=flags
                 )
-                e_token = self.GetVerifylink(email)
-                e_solve = Hcaptcha(
-                    site_key="f5561ba9-8f1e-40ca-9b5b-a0b3f719ef34",
-                    host="discord.com",
-                    proxy=self.proxy,
-                ).solve()
-                verify = self.session.post(
-                    "https://discord.com/api/v9/auth/verify",
-                    headers={
-                        "Authorization": token,
-                        "X-Captcha-Key": e_solve,
-                    },
-                    json={"token": e_token},
-                )
-                if verify.status_code == 200:
-                    bodystuff.logger.success(f"Successfully Verified", Token=token[:40])#
-                    token = verify.json()["token"]
-                    with open("tokens.txt", "a") as f:
-                        f.write(f"{email.mail}:{password}:{token}" + "\n")
+                # e_token = self.GetVerifylink(email)
+                # e_solve = Hcaptcha(
+                #     site_key="f5561ba9-8f1e-40ca-9b5b-a0b3f719ef34",
+                #     host="discord.com",
+                #     proxy=self.proxy,
+                # ).solve()
+                # verify = self.session.post(
+                #     "https://discord.com/api/v9/auth/verify",
+                #     headers={
+                #         "Authorization": token,
+                #         "X-Captcha-Key": e_solve,
+                #     },
+                #     json={"token": e_token},
+                # )
+                # if verify.status_code == 200:
+                #     bodystuff.logger.success(f"Successfully Verified", Token=token[:40])#
+                #     token = verify.json()["token"]
+                #     with open("tokens.txt", "a") as f:
+                #         f.write(f"{email.mail}:{password}:{token}" + "\n")
             else:
                 if "40002" in r.json():
                     bodystuff.logger.error("Account Locked!")
@@ -131,18 +138,7 @@ class DiscordGen:
         ]
 
     def get_username(self):
-        while True:
-            username = self.session.get("https://randomuser.me/api/").json()["results"][
-                0
-            ]["login"]["username"]
-            check = self.session.post(
-                f"https://discord.com/api/v9/unique-username/username-attempt-unauthed",
-                json={"username": username},
-            ).json()["taken"]
-            if check:
-                self.get_username()
-            else:
-                return username
+        return secrets.token_hex(16)
 
     def get_password(self):
         return "".join(
@@ -189,10 +185,14 @@ class DiscordGen:
 
 
 def genn():
-    i = DiscordGen()
-    i.generate()
+    while 1:
+        try:
+            i = DiscordGen()
+            i.generate()
+        except Exception:
+            pass
 
 
-def start_genning():
-    while True:
-        genn()
+def proc():
+    for i in range(50):
+        threading.Thread(target=genn).start()
