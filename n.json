@@ -3,25 +3,27 @@
       "difficulty": 2,
       "fingerprint_type": 0,
       "_type": "w",
-      "data": "PXDUmuv8G2w/sIu2WmSqV32+1L6TyaOnu3WLfj59djao7t/dXY3BenORyCAD8NgrhpzmYaJY47ZT+2BT0BGTCOZpHR58uXovNsGyXnc5wIyCrZaGr07nT5Y6inwaYpvmFlCzMPEou0nIBN4rpsvS+uE9IMXu3J12ob41MxNA228GA+Iku4iI1zywKaDysYXRVNKFi6PHyMguj2RhQVRPZ05Z/IwdnQhEB5zWjqb9IBkRG/GlSO9BdZefgQnpvViZ",
+      "data": "5L5ZQaAtzmCQam37xCRlA6wktErs2vcmkjXsIvN1Q9iDWK6KFoY4yqD/auBIDa1jAtoA+UQPxVeiolLRCoCFgMnnGJz2Fp1A3tdvmG5bmsQv+eRByCYhiEE20572tJqhIK91z0qXw97mBNesWXfOTov9aaiTpX4uBmsJhw56JCecuI+jWOexgvPS6DfiBlORBiz3w5tCsmnpYbNf6aTmaGUvNCoyEEqaoFTQAddfROZ0RMpM+0AJ3XwG+5mqcZqd",
       "_location": "https://newassets.hcaptcha.com/c/e78a38c",
       "timeout_value": 1000
     },
     "rand": [
-      0.4118670543951961,
-      0.0034492681734263897
+      0.5236112287490988,
+      0.24094443349167705
     ],
     "components": {
       "navigator": {
         "user_agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9042 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36",
-        "language": "sv",
+        "language": "en-US",
         "languages": [
-          "sv",
-          "sv-SE",
-          "fa"
+          "en-US",
+          "en-SE",
+          "en-GB",
+          "fa",
+          "sv-SE"
         ],
         "platform": "Win32",
-        "max_touch_points": 10,
+        "max_touch_points": 0,
         "webdriver": false,
         "notification_query_permission": null,
         "plugins_undefined": false
@@ -29,17 +31,17 @@
       "screen": {
         "color_depth": 24,
         "pixel_depth": 24,
-        "width": 1366,
-        "height": 768,
-        "avail_width": 1366,
-        "avail_height": 728
+        "width": 1920,
+        "height": 1080,
+        "avail_width": 1920,
+        "avail_height": 1040
       },
       "device_pixel_ratio": 1,
       "has_session_storage": true,
       "has_local_storage": true,
       "has_indexed_db": true,
       "web_gl_hash": "-1",
-      "canvas_hash": "12416080031521948649",
+      "canvas_hash": "3290922276056775431",
       "has_touch": false,
       "notification_api_permission": "Granted",
       "chrome": false,
@@ -52,10 +54,10 @@
       "extensions": [
         false
       ],
-      "parent_win_hash": "15877724132084714748",
+      "parent_win_hash": "6038873566458142321",
       "webrtc_hash": "-1",
       "performance_hash": "11097854906383886648",
-      "unique_keys": "__localeData__,__REACT_DEVTOOLS_SHOW_INLINE_WARNINGS_AND_ERRORS__,PermissionStore,ReadStateStore,useEffect,SnowflakeUtils,DiscordNative,canonicalizeReplace,SearchableSelect,findByCode,ScrollerThin,MaskedLink,MessageStore,zustandPersist,useToken,Button,ModalImageClasses,SelectedGuildStore,TextArea,regeneratorRuntime,UserProfileStore,__isReactDndBackendSetUp,0,__BILLING_STANDALONE__,findExportedComponent,shortcutList,InviteActions,useCallback,webpackChunkdiscord_app,platform,wpex,React,UserSettingsActionCreators,Paginator,__SECRET_EMOTION__,ComponentTypes,Dialog,GuildMemberStore,__SENTRY__,reload,IconUtils,lodash,__REACT_DEVTOOLS_APPEND_COMPONENT_STACK__,fakeRender,Parser,UserProfileActions,findByProps,hcaptcha,SettingsRouter,Card,__REACT_DEVTOOLS_HIDE_CONSOLE_LOGS_IN_STRICT_MODE__,__SENTRY_IPC__,useRef,hcaptchaOnLoad,MessageActions,moment,zustandCreate,Vencord,Flex,PluginsApi,wp,RelationshipStore,restart,wpsearch,Switch,OAuth2AuthorizeModal,Slider,WindowStore,UserUtils,useMemo,ButtonWrapperClasses,__timingFunction,wpexs,findComponentByCode,UploadHandler,SelectedChannelStore,ContextMenuApi,useReducer,TextAndImagesSettingsStores,findAll,canonicalizeReplacement,findStore,Api,DiscordErrors,GuildChannelStore,ReactDOM,RestAPI,Tooltip,Flux,findAllByProps,VencordNative,plugins,clearImmediate,Alerts,Select,Clickable,VencordStyles,__OVERLAY__,showToast,__REACT_DEVTOOLS_BROWSER_THEME__,DraftStore,Timestamp,findAllComponentsByCode,grecaptcha,Popout,Avatar,findAllByCode,GuildStore,ButtonLooks,FluxDispatcher,GLOBAL_ENV,canonicalizeMatch,setImmediate,useStateFromStores,Settings,1,Toasts,EmojiStore,IntlPolyfill,NavigationRouter,useState,ComponentDispatch,PresenceStore,Forms,wpc,TabBar,UserStore,hljs,DraftType,ApplicationAssetUtils,createDiscordStream,TextInput,MenuTypes,Menu,_ws,UtilTypes,popupBridge,PermissionsBits,i18n,FocusLock,StatusSettingsStores,ChannelStore,__REACT_DEVTOOLS_COMPONENT_FILTERS__,__DISCORD_WINDOW_ID,__REACT_DEVTOOLS_BREAK_ON_CONSOLE_ERRORS__,PrivateChannelsStore,wreq",
+      "unique_keys": "__localeData__,DiscordNative,regeneratorRuntime,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,hcaptcha,__SENTRY_IPC__,hcaptchaOnLoad,Vencord,__timingFunction,DiscordErrors,VencordNative,clearImmediate,VencordStyles,__OVERLAY__,grecaptcha,GLOBAL_ENV,setImmediate,1,IntlPolyfill,createDiscordStream,popupBridge,__DISCORD_WINDOW_ID",
       "inv_unique_keys": "__wdata,sessionStorage,localStorage,hsw,_sharedLibs",
       "common_keys_hash": 276567530,
       "common_keys_tail": "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven",
@@ -69,223 +71,223 @@
     },
     "events": [
       [
-        3646847539,
-        "[2147483647,2147483647,2147483647,2147483647]"
-      ],
-      [
-        2731828028,
-        "4631229088072584217"
-      ],
-      [
-        40999691,
-        "[\"OYadO3ydO=CdN0ed\",\"1a\",\"7\",\"ADWIPRZJIYCPE\"]"
-      ],
-      [
-        1930240485,
-        "[74418208768,74418208768,null,null,1098907648,true,true,true,null]"
-      ],
-      [
-        4174694926,
-        "[[],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
-      ],
-      [
-        1578658063,
-        "[1,2,3,4,17]"
-      ],
-      [
-        3298983941,
-        "9345374751420407194"
-      ],
-      [
-        1392191255,
-        "[\"pXyTlMZjr2cGJTJhH2yxlndj\",\"e\",\"15\",\"MFRIMUQSOFOYH\"]"
-      ],
-      [
-        2883186606,
-        "[[\"giU3NMb1lCmYUiU3xMLWITjQHheWvnb=\",\"9\",\"1\",\"SZZDKAHVYJMJW\"],[\"V3ETKWiTJwdGCLdheyHGMyUIsXNFMyUcwjLGdHHyRpajMLgcwjLGdHNkMLajMLa1qwFEV==WUZMVMxkcMyUszo9VNfBZqyUcMyUyAo9VNfBDMyUyU4dGdyL2MTFTMWiTJoaTbWaDMWqD\",\"f\",\"47\",\"AZZSHQCLIIIWS\"]]"
-      ],
-      [
-        2122633777,
-        "140443318783123448"
-      ],
-      [
-        2946108189,
-        "[0,18407,18407]"
-      ],
-      [
-        3635805594,
-        "[\"5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9042 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9042 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",8,4,\"sv\",[\"sv\",\"sv-SE\",\"fa\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,50,false,false,false,\"[object Keyboard]\",false,false]"
-      ],
-      [
-        2258007971,
-        "4932383211497360507"
-      ],
-      [
-        956283155,
-        "[\"Windows\",\"10.0.0\",null,\"64\",\"x86\",\"120.0.6099.291\"]"
-      ],
-      [
-        364527618,
-        "[11]"
-      ],
-      [
-        2571423665,
-        "92.70000000018626"
-      ],
-      [
-        1438921646,
-        "[[\"navigation:newassets.hcaptcha.com\",41.60000000009313,75.29999999981374],[\"script:newassets.hcaptcha.com\",31.5999999998603,91.30000000004657],[\"xmlhttprequest:api2.hcaptcha.com\",0,116.70000000018626]]"
-      ],
-      [
-        3741287486,
-        "[2147483647,2147483647,4294967294]"
-      ],
-      [
-        1578500414,
-        "16153807394097295248"
-      ],
-      [
-        2638668498,
-        "[24,24,65536,212992,200704]"
-      ],
-      [
-        3961532981,
-        "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
-      ],
-      [
-        3157273169,
-        "34.39999999990687"
-      ],
-      [
-        3504714987,
-        "[1,4,5,7,9,10,12,20,21,24,25,29,31]"
-      ],
-      [
-        612273951,
-        "[\"Europe/Stockholm\",-60,-60,-3203646808000,\"centraleuropeisk normaltid\",\"sv\"]"
-      ],
-      [
-        1845702994,
-        "15307345790125003576"
-      ],
-      [
-        980782277,
-        "[32767,32767,16384,8,8,16]"
-      ],
-      [
-        106767486,
-        "[\"Google Inc. (Intel)\",\"ANGLE (Intel, Intel(R) UHD Graphics (0x00004E71) Direct3D11 vs_5_0 ps_5_0, D3D11)\"]"
-      ],
-      [
-        1476007714,
-        "[[true,\"sv-SE\",true,\"Microsoft Bengt - Swedish\",\"Microsoft Bengt - Swedish\"]]"
-      ],
-      [
-        422388259,
-        "[[[\"https://newassets.hcaptcha.com/captcha/v1/b1c589a/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
+        157020890,
+        "17002384262467705698"
       ],
       [
         689964981,
         "57"
       ],
       [
-        2264178394,
-        "\"Europe/Stockholm\""
+        612273951,
+        "[\"Europe/Stockholm\",-60,-60,-3203646808000,\"Central European Standard Time\",\"en-US\"]"
       ],
       [
-        3672350690,
-        "91.30000000004657"
-      ],
-      [
-        1340556786,
-        "true"
-      ],
-      [
-        1192669439,
-        "6174559167396075939"
-      ],
-      [
-        3444878050,
-        "[[277114314453,277114314460,277114314451,357114314456,277114314452,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314450,554228628919,277114314460,277114314451],false]"
-      ],
-      [
-        4286617223,
-        "[1366,768,1366,728,24,24,false,10,1,1366,728,true,true,true,false]"
-      ],
-      [
-        157020890,
-        "17002384262467705698"
-      ],
-      [
-        1933294324,
-        "[16,4096,30,16,16384,120,12,120,[23,127,127]]"
-      ],
-      [
-        1196101075,
-        "[16,1024,4096,7,12,120,[23,127,127]]"
-      ],
-      [
-        3260504850,
-        "[[154,[154,154,154,255,154,154,154,255,154,154,154,255,154,154,154,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,12,13,15,17,18,19,21,22,23,28,29,30,31,33,34,35,37,39,42,47,48,49,66,67,69,71,72,75,76,77,78,79,81,82],[0,0,0,0,14,3,0]]"
+        3652805059,
+        "[4,128,4]"
       ],
       [
         2338842265,
         "3313549113868922289"
       ],
       [
+        2264178394,
+        "\"Europe/Stockholm\""
+      ],
+      [
+        1845702994,
+        "15307345790125003576"
+      ],
+      [
+        4286617223,
+        "[1920,1080,1920,1040,24,24,false,0,1,1920,1040,true,true,true,false]"
+      ],
+      [
         3004217393,
         "627"
       ],
       [
-        3369879498,
-        "11038406483972230190"
+        3157273169,
+        "40"
       ],
       [
-        206443282,
-        "2462.7000000001863"
+        422388259,
+        "[[[\"https://newassets.hcaptcha.com/captcha/v1/b1c589a/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
       ],
       [
         702607242,
-        "1713863053986"
+        "1713900848246.4"
       ],
       [
-        1885396794,
-        "[16384,32,16384,2048,2,2048]"
+        1438921646,
+        "[[\"navigation:newassets.hcaptcha.com\",30.799999997019768,90.5],[\"script:newassets.hcaptcha.com\",44.44999999552965,168.35000000149012],[\"xmlhttprequest:api2.hcaptcha.com\",0,137.6000000089407]]"
       ],
       [
-        3652805059,
-        "[4,120,4]"
+        364527618,
+        "[21]"
       ],
       [
-        645217632,
-        "[1,1024,1,1,4]"
+        2571423665,
+        "106.29999999701977"
+      ],
+      [
+        1578658063,
+        "[1,2,3,4]"
+      ],
+      [
+        4174694926,
+        "[[],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
+      ],
+      [
+        3961532981,
+        "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
+      ],
+      [
+        1933294324,
+        "[16,4096,31,32,16384,124,14,128,[23,127,127]]"
+      ],
+      [
+        3298983941,
+        "9345374751420407194"
+      ],
+      [
+        3646847539,
+        "[2147483647,2147483647,2147483647,2147483647]"
+      ],
+      [
+        1392191255,
+        "[\"GALZwdGjTjjPwZzFGeLj2yvt\",\"10\",\"2\",\"MAJPBWYOYVLMO\"]"
       ],
       [
         1833974975,
         "16290568259171983358"
       ],
       [
+        3369879498,
+        "11038406483972230190"
+      ],
+      [
+        980782277,
+        "[8192,8192,8192,8,8,4]"
+      ],
+      [
+        645217632,
+        "[1,1023,1,1,4]"
+      ],
+      [
+        2883186606,
+        "[[\"MVyHNhexlCMYUsV69mLwITjTFWyzHXcO\",\"c\",\"1\",\"YQOAHPYSAQJJS\"],[\"MePajml8EcNrNBwbjmlGCrorXclr0cs9gcjbjmlEjLZ4CmwITJHz2d2xWewITJoIle6J3dwnKmlajmlwUWSdfUvngdNb3YPajmlQEA0fXzEnHBvb3YwITJoaTAwaDmw4EmpbVkPmKmlajmlGCrM12Awn\",\"b\",\"42\",\"MFMAGAGZBKNRP\"]]"
+      ],
+      [
+        40999691,
+        "[\"AjN2KtN2gDm=izN3\",\"3\",\"5\",\"EQKUMLIPRTITR\"]"
+      ],
+      [
+        3504714987,
+        "[1,4,5,7,9,12,20,21,24,25,29,31]"
+      ],
+      [
+        1192669439,
+        "13051680398954254262"
+      ],
+      [
+        206443282,
+        "4363.300000011921"
+      ],
+      [
+        355545911,
+        "1825316679185413516"
+      ],
+      [
+        2122633777,
+        "12073207331849695208"
+      ],
+      [
+        2946108189,
+        "[0,18407,18407]"
+      ],
+      [
+        1930240485,
+        "[27706695680,27706695680,null,null,1098907648,true,true,true,null]"
+      ],
+      [
         3737842855,
         "1117"
       ],
       [
-        202322096,
-        "2337666753322697468"
+        106767486,
+        "[\"Google Inc. (Google)\",\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\"]"
+      ],
+      [
+        3741287486,
+        "[2147483647,2147483647,4294967294]"
+      ],
+      [
+        1196101075,
+        "[32,4096,16384,7,14,128,[23,127,127]]"
+      ],
+      [
+        2258007971,
+        "4932383211497360507"
+      ],
+      [
+        3444878050,
+        "[[277114314453,277114314460,277114314451,357114314456,277114314452,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314450,554228628919,277114314460,277114314451],false]"
+      ],
+      [
+        2638668498,
+        "[60,72,65536,245760,245760]"
       ],
       [
         1767811539,
         "4226317358175830201"
       ],
       [
-        355545911,
-        "12593688630062279982"
+        2731828028,
+        "4631229088072584217"
+      ],
+      [
+        202322096,
+        "2337666753322697468"
+      ],
+      [
+        956283155,
+        "[\"Windows\",\"10.0.0\",null,\"64\",\"x86\",\"120.0.6099.291\"]"
+      ],
+      [
+        1340556786,
+        "false"
+      ],
+      [
+        3635805594,
+        "[\"5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9042 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9042 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",8,4,\"en-US\",[\"en-US\",\"en-SE\",\"en-GB\",\"fa\",\"sv-SE\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,100,false,false,false,\"[object Keyboard]\",false,false]"
+      ],
+      [
+        1885396794,
+        "[8192,64,16384,2048,15,2048]"
+      ],
+      [
+        1476007714,
+        "[[true,\"en-US\",true,\"Microsoft David - English (United States)\",\"Microsoft David - English (United States)\"],[false,\"en-GB\",true,\"Microsoft Hazel - English (United Kingdom)\",\"Microsoft Hazel - English (United Kingdom)\"],[false,\"en-GB\",true,\"Microsoft Susan - English (United Kingdom)\",\"Microsoft Susan - English (United Kingdom)\"]]"
+      ],
+      [
+        1578500414,
+        "16153807394097295248"
+      ],
+      [
+        3260504850,
+        "[[88,[88,88,88,255,88,88,88,255,88,88,88,255,88,88,88,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,12,13,15,17,18,19,21,22,23,28,29,30,31,33,34,35,37,39,42,47,48,49,66,67,69,71,72,75,76,77,78,79,81,82],[0,0,0,0,14,3,0]]"
+      ],
+      [
+        3672350690,
+        "130.05000000447035"
       ]
     ],
     "suspicious_events": [],
     "messages": null,
     "stack_data": null,
-    "stamp": "1:2:2024-04-23:PXDUmuv8G2w/sIu2WmSqV32+1L6TyaOnu3WLfj59djao7t/dXY3BenORyCAD8NgrhpzmYaJY47ZT+2BT0BGTCOZpHR58uXovNsGyXnc5wIyCrZaGr07nT5Y6inwaYpvmFlCzMPEou0nIBN4rpsvS+uE9IMXu3J12ob41MxNA228GA+Iku4iI1zywKaDysYXRVNKFi6PHyMguj2RhQVRPZ05Z/IwdnQhEB5zWjqb9IBkRG/GlSO9BdZefgQnpvViZ::RfneKHC5:3",
-    "href": "https://discord.com/register?redirect_to=%2Fchannels%2F%40me%2F1222616146981945456",
+    "stamp": "1:2:2024-04-23:5L5ZQaAtzmCQam37xCRlA6wktErs2vcmkjXsIvN1Q9iDWK6KFoY4yqD/auBIDa1jAtoA+UQPxVeiolLRCoCFgMnnGJz2Fp1A3tdvmG5bmsQv+eRByCYhiEE20572tJqhIK91z0qXw97mBNesWXfOTov9aaiTpX4uBmsJhw56JCecuI+jWOexgvPS6DfiBlORBiz3w5tCsmnpYbNf6aTmaGUvNCoyEEqaoFTQAddfROZ0RMpM+0AJ3XwG+5mqcZqd::nLvyay4T:4",
+    "href": "https://discord.com/register",
     "ardata": null,
     "errs": {
       "list": []
@@ -293,11 +295,11 @@
     "perf": [
       [
         1,
-        22
+        14
       ],
       [
         2,
-        101
+        114
       ],
       [
         3,
