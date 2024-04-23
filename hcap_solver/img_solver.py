@@ -2,7 +2,6 @@ import base64
 import json
 import random
 import typing
-from datetime import datetime
 from hashlib import sha1
 from io import BytesIO
 
@@ -67,7 +66,6 @@ class HCaptchaEnterpriseChallenge(object):
         self.motion_data = MotionData(self.agent, site_url)
         self.token = self._obtain_token()
         self.challenge = self._obtain_chl()
-        print(self.challenge)
         if self.challenge.get("pass"):
             self.solved_token = self.challenge.get("generated_pass_UUID")
         else:
@@ -104,32 +102,28 @@ class HCaptchaEnterpriseChallenge(object):
 
     def _obtain_chl(self) -> dict:
         return self.client.post(f"https://hcaptcha.com/getcaptcha/{self.site_key}", headers={
-            'accept': 'application/json',
-            'accept-language': 'en-AU,en;q=0.9,fa;q=0.8,en-US;q=0.7,sv;q=0.6',
-            'content-type': 'application/x-www-form-urlencoded',
-            'dnt': "1",
-            'origin': 'https://newassets.hcaptcha.com',
-            'referer': 'https://newassets.hcaptcha.com/',
-            'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9041 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36',
+            "accept": "application/json",
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "en-US,en;q=0.9",
+            "content-type": "application/x-www-form-urlencoded",
+            "origin": "https://newassets.hcaptcha.com",
+            "referer": "https://newassets.hcaptcha.com/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "user-agent": self.agent
         }, data={
             "v": self.version,
             "sitekey": self.site_key,
             "host": self.site_url,
             "hl": "en",
             **self.extra_data,
-            "motiondata": json.dumps(self.motion_data.get_captcha()),
-            'pdc': {"s": round(datetime.now().timestamp() * 1000), "n": 0, "p": random.randint(0, 2),
-                    "gcs": random.randint(30, 658)},
-            'pem': {"csc": random.uniform(100, 2500)},
+            "motiondata": self.motion_data.get_captcha(),
             "n": self.hsw.pull(self.token.get("req"), self.site_url, self.agent),
-            "c": json.dumps(self.token),
-            'pst': 'false'
+            "c": json.dumps(self.token)
         }).json()
 
     def solve(self) -> str:
@@ -163,18 +157,18 @@ class HCaptchaEnterpriseChallenge(object):
         }
         return self.client.post(f"https://hcaptcha.com/checkcaptcha/{self.site_key}/{self.game_token}", headers={
             "accept": "application/json",
-            'accept-language': 'en-AU,en;q=0.9,fa;q=0.8,en-US;q=0.7,sv;q=0.6',
-            'content-type': 'application/json;charset=UTF-8',
-            'dnt': "1",
-            'origin': 'https://newassets.hcaptcha.com',
-            'referer': 'https://newassets.hcaptcha.com/',
-            'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Windows"',
-            'sec-fetch-dest': 'empty',
-            'sec-fetch-mode': 'cors',
-            'sec-fetch-site': 'same-site',
-            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9041 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36',
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "en-US,en;q=0.9",
+            "Content-type": "application/json;charset=UTF-8",
+            "origin": "https://newassets.hcaptcha.com",
+            "referer": "https://newassets.hcaptcha.com/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-site",
+            "user-agent": self.agent
         }, json={
             "v": self.version,
             "job_mode": "image_label_binary",

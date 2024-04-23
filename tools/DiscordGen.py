@@ -55,7 +55,6 @@ class DiscordGen:
                 ).solve():
                     break
             except Exception:
-                traceback.print_exc()
                 pass
         bodystuff.logger.info("creating account", username=username, password=password)
         self.session.headers = {
@@ -190,7 +189,6 @@ def genn():
             i = DiscordGen()
             i.generate()
         except Exception:
-            traceback.print_exc()
             pass
 
 
