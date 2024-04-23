@@ -2,6 +2,7 @@ import base64
 import json
 import random
 import typing
+from datetime import datetime
 from hashlib import sha1
 from io import BytesIO
 
@@ -121,9 +122,13 @@ class HCaptchaEnterpriseChallenge(object):
             "host": self.site_url,
             "hl": "en",
             **self.extra_data,
-            "motiondata": self.motion_data.get_captcha(),
+            "motiondata": json.dumps(self.motion_data.get_captcha()),
+            'pdc': {"s": round(datetime.now().timestamp() * 1000), "n": 0, "p": random.randint(0, 2),
+                    "gcs": random.randint(30, 658)},
+            'pem': {"csc": random.uniform(100, 2500)},
             "n": self.hsw.pull(self.token.get("req"), self.site_url, self.agent),
-            "c": json.dumps(self.token)
+            "c": json.dumps(self.token),
+            'pst': 'false'
         }).json()
 
     def solve(self) -> str:
@@ -176,6 +181,6 @@ class HCaptchaEnterpriseChallenge(object):
             "serverdomain": self.site_url,
             "sitekey": self.site_key,
             "motionData": json.dumps(self.motion_data.check_captcha(answers)),
-            "n": self.hsw.pull(self.proof_data.get("req"), self.site_url, self.agent),
+            "n": self.hsw.pull(self.proof_data.get("req"), "https://" + self.site_url, self.agent),
             "c": json.dumps(self.proof_data)
         }).json()

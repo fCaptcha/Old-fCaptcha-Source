@@ -49,12 +49,13 @@ class DiscordGen:
             try:
                 if captcha := HCaptchaEnterpriseChallenge(
                     site_key="4c672d35-0701-42b2-88c3-78380b0db560",
-                    site_url="https://canary.discord.com",
+                    site_url="https://discord.com",
                     proxy=f"http://{self.proxy}",
                     database=DATABASE
                 ).solve():
                     break
             except Exception:
+                traceback.print_exc()
                 pass
         bodystuff.logger.info("creating account", username=username, password=password)
         self.session.headers = {
@@ -75,7 +76,7 @@ class DiscordGen:
             "x-debug-options": "bugReporterEnabled",
             "x-discord-locale": "en-US",
             "X-Fingerprint": fingerprint,
-            "X-Super-Properties": xtrack,
+            "X-Track": xtrack,
         }
         r = self.session.post(
             "https://discord.com/api/v9/auth/register",
@@ -167,7 +168,7 @@ class DiscordGen:
                 {
                     "os": "Windows",
                     "browser": "Discord Client",
-                    "release_channel": "stable",
+                    "release_channel": "canary",
                     "client_version": build_numbers_client,
                     "os_version": "10.0.19045",
                     "os_arch": "x64",
@@ -189,6 +190,7 @@ def genn():
             i = DiscordGen()
             i.generate()
         except Exception:
+            traceback.print_exc()
             pass
 
 
