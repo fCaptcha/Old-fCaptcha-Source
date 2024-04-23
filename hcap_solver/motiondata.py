@@ -5,7 +5,6 @@ import math
 import time
 import string
 
-
 class util:
     @staticmethod
     def randint(a: int, b: int) -> int:
@@ -16,8 +15,7 @@ class util:
         return int(time.time() * 1000)
 
     @staticmethod
-    def get_mm(start: tuple, goal: tuple, screen_size: tuple, max_points: int, random_amount: int,
-               polling_rate: int) -> list:
+    def get_mm(start: tuple, goal: tuple, screen_size: tuple, max_points: int, random_amount: int, polling_rate: int) -> list:
         cp = util.randint(3, 5)
         x, y = np.linspace(start[0], goal[0], num=cp, dtype='int'), np.linspace(start[1], goal[1], num=cp, dtype='int')
         r = [util.randint(-random_amount, random_amount) for _ in range(cp)]
@@ -58,7 +56,6 @@ class util:
             result[i] = answer.lower() == 'true' if isinstance(answer, str) else answer
         return result
 
-
 class rectangle:
     def __init__(self, width: int, height: int) -> None:
         self.width = width
@@ -74,7 +71,6 @@ class rectangle:
         return [(rel_x, rel_y), (rel_x + self.width, rel_y), (rel_x, rel_y + self.height),
                 (rel_x + self.width, rel_y + self.height)]
 
-
 class widget_check:
     def __init__(self, rel_position: tuple) -> None:
         self.widget = rectangle(300, 75)
@@ -88,7 +84,6 @@ class widget_check:
         corners = self.widget.get_corners(self.rel_position[0], self.rel_position[1])
         sorted_corners = sorted(corners, key=lambda c: util.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
-
 
 class binary_challenge:
     def __init__(self, box_centre: tuple, screen_size: tuple) -> None:
@@ -113,7 +108,6 @@ class binary_challenge:
         corners = self.widget.get_corners(*self.widget_position)
         sorted_corners = sorted(corners, key=lambda c: util.distance(position, c))
         return sorted_corners[0], sorted_corners[1]
-
 
 COMMON_SCREEN_SIZES = [
     (1024, 768),
@@ -147,7 +141,6 @@ COMMON_MEMORY_SIZES = [
     32,
     64
 ]
-
 
 class get_cap:
     def __init__(self, user_agent: str, href: str) -> None:
@@ -280,7 +273,6 @@ class get_cap:
             }
         }
 
-
 class check_cap:
     def __init__(self, old_motion_data: get_cap, answers: dict) -> None:
         self.old_motion_data = old_motion_data
@@ -315,7 +307,6 @@ class check_cap:
         self.data["mm-mp"] = util.periods([x[-1] for x in self.data["mm"]])
         self.data["md-mp"] = util.periods([x[-1] for x in self.data["md"]])
         self.data["mu-mp"] = util.periods([x[-1] for x in self.data["mu"]])
-
 
 class MotionData:
     def __init__(self, user_agent: str, url: str) -> None:

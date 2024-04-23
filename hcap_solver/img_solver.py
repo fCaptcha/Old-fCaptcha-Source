@@ -1,181 +1,127 @@
-import base64
-import json
+from hcap_solver.motiondata import *
+from hcap_solver.nocap_ai import *
+from hcap_solver.logger import *
+from tls_client import Session
+from datetime import datetime
+from hcap_solver.hsw import *
+from typing import Any
+import requests
 import random
-import typing
-from hashlib import sha1
-from io import BytesIO
-
+import base64
 import httpx
-import imagehash
-import tls_client
-from PIL import Image
-from redis.client import Redis
+import time
+import json
+import re
 
-from hcap_solver import MotionData, HSW
+js = requests.get("https://js.hcaptcha.com/1/api.js").text
+version = re.search(r'v1/(.*?)/', js).group(1)
 
-CLIENT = httpx.Client()
-
-
-def hostname_from_url(url):
-    return url.split("://", 1)[1].split("/", 1)[0].lower()
-
-
-LOCAL_DB: typing.Mapping = dict()
-
-
-class Tile(object):
-    image_id: str
-    image_index: int
-    image_content: bytes
-
-    def __init__(self, image_id: str, image_index: int, image_content: bytes):
-        self.selected = False
-        self.image_id = image_id
-        self.image_content = image_content
-        self.image_index = image_index
-
-
-class HCaptchaEnterpriseChallenge(object):
-    site_key: str
-    site_url: str
-    tiles: list[Tile]
-
-    def __init__(self, site_key: str,
-                 site_url: str,
-                 extra_data: dict[str, str] = None,
-                 proxy: str = None,
-                 agent: str = None,
-                 database: typing.Union[Redis, typing.Mapping] = LOCAL_DB) -> None:
-        if extra_data is None:
-            extra_data = dict[str, str]()
-        self.database = database
+class Hcaptcha:
+    def __init__(self, site_key: str, host: str, proxy: str, user_agent: str = None,  rq_data: str = None) -> None:
         self.hsw = HSW()
-        self.answered = []
-        self.tiles = list[Tile]()
+        self.job = None
+        self.key = None
+        self.c2 = None
+        self.session = Session("chrome_108", random_tls_extension_order=True)
+        self.before = time.time()
+        self.user_agent = user_agent if user_agent else "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.291 Electron/28.2.7 Safari/537.36"
+        self.session.headers = {
+            'accept': '*/*',
+            'accept-language': 'en-AU,en;q=0.9,fa;q=0.8,en-US;q=0.7,sv;q=0.6',
+            'content-type': 'application/json;charset=UTF-8',
+            'dnt': "1",
+            'origin': 'https://newassets.hcaptcha.com',
+            'referer': 'https://newassets.hcaptcha.com/',
+            'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-site',
+            'user-agent': self.user_agent,
+        }
+        self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
-        self.site_url = hostname_from_url(site_url)
-        self.extra_data = extra_data
-        self.agent = agent if agent else "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9038 Chrome/120.0.6099.291 Electron/28.2.7 Safari/537.36"
-        self.client = tls_client.Session("chrome_108", random_tls_extension_order=True)
-        self.client.proxies = proxy
-        resp = self.client.get("https://hcaptcha.com/1/api.js")
-        data = resp.text
-        start = data.find("https://newassets.hcaptcha.com/captcha/") + 42
-        end = data[start:].find("/") + start
-        self.version = data[start:end]
-        self.motion_data = MotionData(self.agent, site_url)
-        self.token = self._obtain_token()
-        self.challenge = self._obtain_chl()
-        if self.challenge.get("pass"):
-            self.solved_token = self.challenge.get("generated_pass_UUID")
-        else:
-            self.solved_token = None
-        self.proof_data = self.challenge.get("c")
-        self.game_variant = self.challenge.get("requester_question").get("en")
-        self.game_token = self.challenge.get("key")
-        self.tiles = [
-            Tile(info.get("task_key"), index, CLIENT.get(info.get("datapoint_uri"), headers={
-                "Accept-Encoding": "gzip"
-            }).content)
-            for index, info in enumerate(self.challenge.get("tasklist"))
-        ]
-
-    def _obtain_token(self) -> dict:
-        return self.client.get(f"https://hcaptcha.com/checksiteconfig?v={self.version}&host={self.site_url}"
-                               f"&sitekey={self.site_key}&sc=1&swa=1",
-                               headers={
-                                   "accept": "application/json",
-                                   "accept-encoding": "gzip, deflate, br",
-                                   "accept-language": "en-US,en;q=0.9",
-                                   "content-type": "application/x-www-form-urlencoded",
-                                   "origin": "https://newassets.hcaptcha.com",
-                                   "referer": "https://newassets.hcaptcha.com/",
-                                   "sec-ch-ua": "\"Google Chrome\";v=\"113\", \"Chromium\""
-                                                ";v=\"113\", \"Not-A.Brand\";v=\"24\"",
-                                   "sec-ch-ua-mobile": "?0",
-                                   "sec-ch-ua-platform": "\"Windows\"",
-                                   "sec-fetch-dest": "empty",
-                                   "sec-fetch-mode": "cors",
-                                   "sec-fetch-site": "same-site",
-                                   "user-agent": self.agent
-                               }).json().get("c")
-
-    def _obtain_chl(self) -> dict:
-        return self.client.post(f"https://hcaptcha.com/getcaptcha/{self.site_key}", headers={
-            "accept": "application/json",
-            "accept-encoding": "gzip, deflate, br",
-            "accept-language": "en-US,en;q=0.9",
-            "content-type": "application/x-www-form-urlencoded",
-            "origin": "https://newassets.hcaptcha.com",
-            "referer": "https://newassets.hcaptcha.com/",
-            "sec-ch-ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "user-agent": self.agent
-        }, data={
-            "v": self.version,
-            "sitekey": self.site_key,
-            "host": self.site_url,
-            "hl": "en",
-            **self.extra_data,
-            "motiondata": self.motion_data.get_captcha(),
-            "n": self.hsw.pull(self.token.get("req"), self.site_url, self.agent),
-            "c": json.dumps(self.token)
-        }).json()
+        self.host = host.split("//")[-1].split("/")[0]
+        self.rq_data = rq_data
+        self.motion = MotionData(self.user_agent, f"https://{self.host}")
+        self.motion_data = self.motion.get_captcha()
 
     def solve(self) -> str:
-        if self.solved_token:
-            return self.solved_token
-        question_hash = sha1(self.game_variant.encode()).hexdigest()
-        for tile in self.tiles:
-            image_hash = imagehash.phash(Image.open(BytesIO(tile.image_content)), 32)
-            tile.custom_id = f"{question_hash}|{image_hash}"
-            tile.score = int(self.database.get(tile.custom_id) or 0)
-        self.tiles.sort(
-            key=lambda _tile: _tile.score or random.uniform(0, 0.97),
-            reverse=True)
-        n_answers = max(3,
-                        len(list(filter(lambda t: t.score >= 1, self.tiles))))
-        for index in range(n_answers):
-            tile = self.tiles[index]
-            tile.selected = True
-            self.answered.append(tile)
-        token: dict = self.submit()
-        if token.get("generated_pass_UUID"):
-            for tile in self.tiles:
-                if not tile.selected:
-                    continue
-                self.database.incrbyfloat(tile.custom_id, 1)
-            return token.get("generated_pass_UUID")
+        try:
+            captcha = self.siteconfig()
+            hsw = self.hsw.pull(captcha["req"], self.host, self.user_agent)
+            got_captcha = self.getcaptcha(hsw, captcha)
+            answers = self.get_answers(got_captcha)
+            if answers:
+                solve_time1 = round(time.time() - self.before, 2)
+                sleep_total = 3.9 - solve_time1
+                if sleep_total >= 0:
+                    time.sleep(sleep_total)
+                hsw2 = self.hsw.pull(self.c2["req"], self.host, self.user_agent)
+                response = self.submit_captcha(answers, hsw2)
+                if response:
+                    try:
+                        capkey = response["generated_pass_UUID"]
+                        log.captcha(f"Solved hCaptcha {capkey[:70]}", self.before, time.time())
+                        return capkey
+                    except Exception:
+                        log.failure(f"Failed To Solve hCaptcha", self.before, time.time(), level="hCaptcha")
+        except Exception as e:
+            log.failure(f"Failed To Solve hCaptcha -> {e}", self.before, time.time(), level="hCaptcha")
+            # traceback.print_exc()
 
-    def submit(self):
-        answers: dict = {
-            tile.image_id: "true" if tile.selected else "false" for tile in self.tiles
+    def submit_captcha(self, answers: dict, hsw2: str) -> Any | None:
+        self.session.headers.update({'content-type': 'application/json;charset=UTF-8'})
+        motion = self.motion.check_captcha(answers)
+        try:
+            return self.session.post(
+                f'https://hcaptcha.com/checkcaptcha/{self.site_key}/{self.key}',
+                json={
+                    'v': version,
+                    'job_mode': self.job,
+                    'answers': answers,
+                    'serverdomain': self.host,
+                    'sitekey': self.site_key,
+                    'motionData': json.dumps(motion),
+                    'n': hsw2,
+                    'c': json.dumps(self.c2),
+                },
+            ).json()
+        except Exception:
+            return None
+
+    def get_answers(self, captcha: dict) -> dict:
+        captcha_type = captcha["request_type"]
+        self.c2 = captcha['c']
+        self.key = captcha['key']
+        log.captcha(f"Solving Captcha -> {captcha_type}...")
+        self.job = captcha_type
+        return AI_Solver(captcha_type, captcha, self.site_key, self.host).solve()
+
+    def getcaptcha(self, hsw: str, c: dict) -> dict:
+        self.session.headers.update({'content-type': 'application/x-www-form-urlencoded'})
+        data = {
+            'v': version,
+            'sitekey': self.site_key,
+            'host': self.host,
+            'hl': 'sv',
+            'motionData': json.dumps(self.motion_data),
+            'pdc': {"s": round(datetime.now().timestamp() * 1000), "n": 0, "p": random.randint(0, 2), "gcs": random.randint(30, 658)},
+            'pem': {"csc":random.uniform(100, 2500)},
+            'n': hsw,
+            'c': json.dumps(c),
+            'pst': 'false'
         }
-        return self.client.post(f"https://hcaptcha.com/checkcaptcha/{self.site_key}/{self.game_token}", headers={
-            "accept": "application/json",
-            "accept-encoding": "gzip, deflate, br",
-            "accept-language": "en-US,en;q=0.9",
-            "Content-type": "application/json;charset=UTF-8",
-            "origin": "https://newassets.hcaptcha.com",
-            "referer": "https://newassets.hcaptcha.com/",
-            "sec-ch-ua": "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "user-agent": self.agent
-        }, json={
-            "v": self.version,
-            "job_mode": "image_label_binary",
-            "answers": answers,
-            "serverdomain": self.site_url,
-            "sitekey": self.site_key,
-            "motionData": json.dumps(self.motion_data.check_captcha(answers)),
-            "n": self.hsw.pull(self.proof_data.get("req"), self.site_url, self.agent),
-            "c": json.dumps(self.proof_data)
-        }).json()
+        if self.rq_data is not None: data['rqdata'] = self.rq_data
+        return self.session.post(f'https://hcaptcha.com/getcaptcha/{self.site_key}', data=data).json()
+
+    def siteconfig(self) -> dict:
+        return self.session.post("https://api.hcaptcha.com/checksiteconfig", params={
+            'v': version,
+            'host': self.host,
+            'sitekey': self.site_key,
+            'sc': '1',
+            'swa': '1',
+            'spst': '1',
+        }).json()["c"]
