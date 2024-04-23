@@ -1,15 +1,16 @@
 import concurrent.futures
 import colorama
-from hcap_solver import Hcaptcha 
+from hcap_solver import Hcaptcha
 
 colorama.init()
 
 def solve_captcha():
     return Hcaptcha(
         site_key='4c672d35-0701-42b2-88c3-78380b0db560',
-        host='discord.com', 
-        proxy="766aptlkzt5xvy9:he41d5uvjuc2udc@rp.proxyscrape.com:6060"
+        site_url='https://discord.com/', 
+        proxy="http://brd-customer-hl_6ef0caa2-zone-datacenter_proxy1:6p6xamh0a871@brd.superproxy.io:22225"
     ).solve()
+
 
 def main():
     with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:

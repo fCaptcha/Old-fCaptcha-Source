@@ -387,7 +387,7 @@ class generator:
 
         if req.status_code == 200:
             if printl:
-                logger.printk(f"{logger.color('green',obj=f'UNLOCKED {hidden_token}')} ")
+                logger.printk(f"{logger.color('green',obj=f'UNLOCKED {token}')} ")
                 _global.unlocked+=1
 
             return "unlocked"
@@ -459,6 +459,8 @@ class generator:
         
         if register_result.get("token"):
             self.token=register_result["token"]
+            with open("tokens.txt","a+") as file:
+                        file.write(self.token+"\n")
 
             del self.session.headers["X-Fingerprint"]
             self.session.headers.update({
