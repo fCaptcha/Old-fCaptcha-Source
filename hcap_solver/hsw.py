@@ -16,15 +16,6 @@ class HSW:
         self.database_fps = Redis("80.75.212.79", 6379, 240, "k7rCJ59itoIjwaAFF930WVe99T8aagAtLc4b3CAdO7sXCAQ27ef4j9UJpBv0dObmw3QeK9XwZeh2alLmxR8Xl50etyTR74teQRXys6dfe7n5TvO3OK7pvc2WieIgqokHxlHTSQeFQBDq0vEYxEYAzV8NKWb77TtTXUSAY")
         self.client = httpx.Client()
 
-    def that_thing(self) -> list:
-        thing = []
-        thing.append(random.randint(50, 200))
-        thing.append([random.randint(50, 200) for _ in range(8)])
-        thing.append([[random.randint(10, 20), 0, random.choice([-1, 0, 1]), random.uniform(100, 120), random.randint(10, 20), random.randint(3, 6), random.uniform(100, 120)] for _ in range(10)])
-        thing.append([random.randint(0, 100) for _ in range(40)])
-        thing.append([0, 0, 0, 0, random.randint(10, 20), random.randint(1, 20), 0])
-        return thing
-    
     def decrypt(self, data: str) -> str:
         url = "http://solver.dexv.lol:1500/decrypt"
         json = {"data": data, "key": "realassssffrfr10384"}
@@ -64,7 +55,7 @@ class HSW:
                     case 702607242:
                         event[1] = str(round(time.time() * 1000, 1))
                     case 3260504850:
-                        event[1] = str(self.that_thing())
+                        event[1] = f"[[154,[154,154,154,255,154,154,154,255,154,154,154,255,154,154,154,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,{str(r(10,12))},13,15,{str(r(16,17))},18,19,{str(r(20,21))},22,23,{str(r(26,28))},29,30,31,{str(r(32,33))},34,35,{str(r(36,37))},39,{str(r(40,45))},47,48,{str(r(49,65))},66,67,69,71,72,{str(r(73,75))},76,77,78,79,81,82],[0,0,0,0,{str(r(10,20))},{str(r(1,17))},0]]"
             hsw_str = self.encrypt(json.dumps(data, separators=(",", ":")))
             return hsw_str
         return None
