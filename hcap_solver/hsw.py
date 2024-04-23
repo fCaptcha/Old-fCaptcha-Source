@@ -16,12 +16,17 @@ database_fps = Redis("45.45.238.213", 42081, 313, "ACCA5B570561DCFA5ACB1417C69F2
 
 
 class HSW:
-    def decrypt(self, data: str) -> str:
+    def __init__(self):
+        self.key = database_fps.randomkey()
+
+    @staticmethod
+    def decrypt(data: str) -> str:
         url = "http://solver.dexv.lol:1500/decrypt"
         json = {"data": data, "key": "realassssffrfr10384"}
         return client.post(url, json=json).text
 
-    def encrypt(self, data: str) -> str:
+    @staticmethod
+    def encrypt(data: str) -> str:
         url = "http://solver.dexv.lol:1500/encrypt"
         json = {"data": data, "key": "realassssffrfr10384"}
         return client.post(url, json=json).text
@@ -35,7 +40,7 @@ class HSW:
         parsed = json.loads(base64.b64decode(s, validate=False).decode())
         hc_diff = parsed['s']
         hc_data = parsed['d']
-        if data := json.load(open("n.json", "r")):
+        if data := json.loads(database_fps.get(self.key)):
             data["stamp"] = self.mint(hc_data, hc_diff)
             data["components"]["navigator"]["user_agent"] = user_agent
             data["components"]["canvas_hash"] = str(random.randint(1000000000000000000,9999999999999999999))
