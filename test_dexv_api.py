@@ -1,5 +1,5 @@
 import concurrent.futures
-from hcap.logger import *
+from hcap_solver.logger import *
 import requests
 import time
 

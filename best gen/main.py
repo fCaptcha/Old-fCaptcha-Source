@@ -299,6 +299,16 @@ class generator:
         except:
             pass
 
+    def suppress(self):
+        try:
+            success=self.session.post("https://discord.com/api/v9/tutorial/indicators/suppresss").status_code
+
+            if success==204:
+                self.added.append("suppress")
+
+        except: 
+            pass
+
     def add_pfp(self):
         try:
             with open(f'data/avatars/{random.choice(_global.all_pfps)}', "rb") as image_file:
@@ -471,7 +481,8 @@ class generator:
 
             if self.check(self.token)=="unlocked":
                 ws=self.Online()
-
+                
+                self.suppress()
                 self.set_birth()
                 self.add_pfp()
                 self.set_online()
