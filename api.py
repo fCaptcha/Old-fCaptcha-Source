@@ -16,7 +16,7 @@ task_status = {}
 
 admin_key = "fuckjews123"
 def generate_api_key() -> str:
-    return f"fcap-{'-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])}"
+    return f"fCap-{'-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])}"
 
 def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, proxy: str, rqdata: str = None, useragent: str = None) -> None:
     start = time.time()
