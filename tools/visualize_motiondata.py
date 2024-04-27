@@ -2,7 +2,7 @@ from matplotlib import pyplot
 import matplotlib.image as mpimg
 
 def show(mouse_data):
-    img = mpimg.imread('chrome_AHrwpCdnvIvxc.png')
+    img = mpimg.imread('fcap.png')
     dpi = 100
     fig_width = img.shape[1] / dpi
     fig_height = img.shape[0] / dpi
