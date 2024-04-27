@@ -13,12 +13,14 @@ class Captcha:
         self.rqdata = rqdata
 
     def solve(self) -> str:
-        # log.info("Solving Captcha...")
+        log.info("Solving Captcha...")
         start = time.time()
 
-        payload = {"api_key": self.api_key, "url": self.url, "sitekey": self.sitekey, "proxy": self.proxy}
-        if self.rqdata: payload["rqdata"] = self.rqdata
-
+        payload ={
+          "key": "66f7f6126f55bb1ec6a4e4800357afa2",
+          "sitekey": "4c672d35-0701-42b2-88c3-78380b0db560",
+          "pageurl": "https://discord.com/register",
+        }
         while True:
             try:
                 result = requests.post("http://solver.dexv.lol:1000/api/solve_hcap", json=payload)
@@ -33,7 +35,7 @@ class Captcha:
                 # log.failure(f"Failed To Solve Captcha -> {e}")
 
 def solve_captcha():
-    while True:
+   # while True:
         Captcha(
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
@@ -41,7 +43,4 @@ def solve_captcha():
             proxy="766aptlkzt5xvy9:he41d5uvjuc2udc@rp.proxyscrape.com:6060"
         ).solve()
 
-
-with concurrent.futures.ThreadPoolExecutor(max_workers=200) as executor:
-    for _ in range(200):
-        executor.submit(solve_captcha)
+print(solve_captcha())
