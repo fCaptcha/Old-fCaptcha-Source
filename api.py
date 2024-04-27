@@ -16,7 +16,7 @@ collection = db['users']
 # keep this empty cus pro db shit
 task_status = {}
 
-
+admin_key = "fuckjews123"
 def generate_api_key():
     apikey = 'fcap-' + '-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])
     return apikey
@@ -62,6 +62,13 @@ def solve_captcha_task(api_key, task_id, sitekey, host, proxy, rqdata=None, user
 # ADMIN Routes
 @app.route('/admin/create', methods=['POST'])
 def create_api_key():
+    api_key = request.headers.get('authorization')
+    if not api_key:
+        return jsonify({"error": True, "message": "API key is missing"}), 401
+    user = admin_key
+    if not user:
+        return jsonify({"error": True, "message": "Invalid API key"}), 401
+
     data = request.json
     if data["balance"] <= 0:
         return jsonify({
@@ -82,6 +89,12 @@ def create_api_key():
 
 @app.route('/admin/delete', methods=['DELETE'])
 def remove_api_key():
+    api_key = request.headers.get('authorization')
+    if not api_key:
+        return jsonify({"error": True, "message": "API key is missing"}), 401
+    user = admin_key
+    if not user:
+        return jsonify({"error": True, "message": "Invalid API key"}), 401
     data = request.json
     result = collection.delete_one({
         'api_key': data["api_key"]
