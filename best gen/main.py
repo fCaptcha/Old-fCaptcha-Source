@@ -301,7 +301,7 @@ class generator:
 
     def suppress(self):
         try:
-            success=self.session.post("https://discord.com/api/v9/tutorial/indicators/suppresss").status_code
+            success=self.session.post("https://discord.com/api/v9/tutorial/indicators/suppress").status_code
 
             if success==204:
                 self.added.append("suppress")

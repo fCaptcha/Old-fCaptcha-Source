@@ -47,22 +47,25 @@ class HSW:
             data["components"]["parent_win_hash"] = str(random.randint(10000000000000000000,99999999999999999999))
             data["components"]["performance_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
             data["components"]["common_keys_hash"] = random.randint(1000000000,9999999999)
-            data["components"]["unique_keys"] = "__localeData__,DiscordNative,regeneratorRuntime,2,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,hcaptcha,__SENTRY_IPC__,hcaptchaOnLoad,__timingFunction,DiscordErrors,clearImmediate,__OVERLAY__,grecaptcha,DiscordSentry,GLOBAL_ENV,setImmediate,1,IntlPolyfill,createDiscordStream,_ws,popupBridge,__DISCORD_WINDOW_ID"
+            unique_keys = "__localeData__,DiscordNative,regeneratorRuntime,2,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,hcaptcha,__SENTRY_IPC__,hcaptchaOnLoad,__timingFunction,DiscordErrors,clearImmediate,__OVERLAY__,grecaptcha,DiscordSentry,GLOBAL_ENV,setImmediate,1,IntlPolyfill,createDiscordStream,popupBridge,__DISCORD_WINDOW_ID".split(',')
+            random.shuffle(unique_keys)
+            data["components"]["unique_keys"] = ",".join(unique_keys)
             data["components"]["inv_unique_keys"] = "__wdata,sessionStorage,localStorage,hsw,_sharedLibs"
             data["components"]["common_keys_tail"] = "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
             data["rand"] = [self.random_float(), self.random_float()]
             data["href"] = f"https://{host}"
             data["proof_spec"]["data"] = hc_data
             data["proof_spec"]["difficulty"] = hc_diff
-            data["stack_data"] = [
-                "new Promise (<anonymous>)"
-            ]
+            data["stack_data"] = ["new Promise (<anonymous>)"]
+            random.shuffle(data["events"])
             for event in data["events"]:
                 match event[0]:
                     case 702607242:
                         event[1] = str(round(time.time() * 1000, 1))
                     case 3260504850:
-                        event[1] = f"[[115,[115,115,115,255,115,115,115,255,115,115,115,255,115,115,115,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,{str(r(10,12))},13,15,{str(r(16,17))},18,19,{str(r(20,21))},22,23,{str(r(26,28))},29,30,31,{str(r(32,33))},34,35,{str(r(36,37))},39,{str(r(40,45))},47,48,{str(r(49,65))},66,67,69,71,72,{str(r(73,75))},76,77,78,79,81,82],[0,0,0,0,{str(r(10,20))},{str(r(1,17))},0]]"
+                        event[1] = f"[[69,[69,69,69,255,69,69,69,255,69,69,69,255,69,69,69,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,{str(r(10,12))},13,15,{str(r(16,17))},18,19,{str(r(20,21))},22,23,{str(r(26,28))},29,30,31,{str(r(32,33))},34,35,{str(r(36,37))},39,{str(r(40,45))},47,48,{str(r(49,65))},66,67,69,71,72,{str(r(73,75))},76,77,78,79,81,82],[0,0,0,0,{str(r(10,20))},{str(r(1,17))},0]]"
+                    case 3635805594:
+                        event[1] = f"[\"{user_agent.split('Mozilla/', 1)[-1]}\",\"{user_agent}\",8,4,\"en-US\",[\"en-US\",\"en-SE\",\"en-GB\",\"fa\",\"sv-SE\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,150,false,false,false,\"[object Keyboard]\",false,false]"
             hsw_str = self.encrypt(json.dumps(data, separators=(",", ":")))
             return hsw_str
         return None

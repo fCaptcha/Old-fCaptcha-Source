@@ -13,21 +13,26 @@ import json
 import re
 
 from matplotlib import pyplot
+import matplotlib.image as mpimg
 
 def show(mouse_data):
-    x = [data[0] for data in mouse_data]
-    y = [data[1] for data in mouse_data]
+    img = mpimg.imread('chrome_AHrwpCdnvIvxc.png')
+    dpi = 100
+    fig_width = img.shape[1] / dpi
+    fig_height = img.shape[0] / dpi
+    fig, ax = pyplot.subplots(figsize=(fig_width, fig_height), dpi=dpi)
+    ax.imshow(img, extent=[0, img.shape[1], 0, img.shape[0]])
 
-    fig, ax = pyplot.subplots()
-    ax.plot(x, y)
+    x_data = [data[0] for data in mouse_data]
+    y_data = [data[1] for data in mouse_data]
 
-    # Reverse the y-axis limits
-    ax.set_ylim(ax.get_ylim()[::-1])
+    x = [(data - min(x_data)) * img.shape[1] / (max(x_data) - min(x_data)) for data in x_data]
+    y = [(data - min(y_data)) * img.shape[0] / (max(y_data) - min(y_data)) for data in y_data]
 
+    ax.plot(x, y, color='red')
     pyplot.xlabel('X position')
     pyplot.ylabel('Y position')
-    pyplot.title('')
-
+    pyplot.title('Motiondata')
     pyplot.show()
 
 js = requests.get("https://js.hcaptcha.com/1/api.js").text
@@ -91,7 +96,7 @@ class Hcaptcha:
     def submit_captcha(self, answers: dict, hsw2: str) -> Any | None:
         self.session.headers.update({'content-type': 'application/json;charset=UTF-8'})
         motion = self.motion.check_captcha(answers)
-        show(motion["mm"])
+        #show(motion["mm"])
         try:
             return self.session.post( 
                 f'https://hcaptcha.com/checkcaptcha/{self.site_key}/{self.key}',

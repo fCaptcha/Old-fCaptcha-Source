@@ -4,6 +4,7 @@ import random
 import math
 import time
 import string
+import bezier 
 
 class util:
     @staticmethod
@@ -21,10 +22,11 @@ class util:
         r = [util.randint(-random_amount, random_amount) for _ in range(cp)]
         x += np.clip(r, 0, screen_size[0])
         y += np.clip(r, 0, screen_size[1])
-        tck, _ = interpolate.splprep((x, y), k=3 if cp > 3 else cp - 1)
+        random_point = (util.randint(0, screen_size[0]), util.randint(0, screen_size[1]))
+        curve = bezier.Curve(np.asfortranarray([[start[0], random_point[0], goal[0]], [start[1], random_point[1], goal[1]]]), degree=2)
         u = np.linspace(0, 1, num=min(
             2 + int(math.sqrt((goal[0] - start[0]) ** 2 + (goal[1] - start[1]) ** 2) / polling_rate), max_points))
-        points = interpolate.splev(u, tck)
+        points = curve.evaluate_multi(u)
         return [[int(x), int(y), util.get_ms()] for x, y in zip(*(i.astype(int) for i in points)) if
                 time.sleep(1 / util.randint(80, 240)) is None]
 
@@ -276,11 +278,9 @@ class get_cap:
 class check_cap:
     def __init__(self, old_motion_data: get_cap, answers: dict) -> None:
         self.old_motion_data = old_motion_data
-        screen_size = old_motion_data.screen_size
-        self.screen_size = screen_size
+        self.screen_size = old_motion_data.screen_size
         widget_center = util.get_center(old_motion_data.widget.get_check())
-        self.position = util.get_random_point(((0, 0), screen_size))
-        self.widget = binary_challenge(widget_center, screen_size)
+        self.widget = binary_challenge(widget_center, self.screen_size)
 
         self.data = {
             "st": util.get_ms(),
@@ -294,20 +294,26 @@ class check_cap:
             "topLevel": self.old_motion_data.data["topLevel"],
             "v": 1
         }
+        position = (self.widget.widget_position[0], self.widget.widget_position[1])
         for answer_key, is_correct in util.convert_answers(answers).items():
             if is_correct:
-                print(self.position)
                 goal = util.get_random_point(self.widget.get_image_box(int(answer_key)))
-                mouse_movements = util.get_mm(self.position, goal, self.screen_size, 25, 3, 17)
+                mouse_movements = util.get_mm(position, goal, self.screen_size, 25, 3, 17)
                 self.data["mm"].extend(mouse_movements)
-                self.data["md"].append(mouse_movements[-1][:2] + [util.get_ms()])
+                self.data["md"].append(list(goal) + [util.get_ms()])
                 time.sleep(0.1)
-                self.data["mu"].append(mouse_movements[-1][:2] + [util.get_ms()])
-                self.position = goal
+                self.data["mu"].append(list(goal) + [util.get_ms()])
+                position = goal
 
-        self.data["mm-mp"] = util.periods([x[-1] for x in self.data["mm"]])
-        self.data["md-mp"] = util.periods([x[-1] for x in self.data["md"]])
-        self.data["mu-mp"] = util.periods([x[-1] for x in self.data["mu"]])
+        goal = util.get_random_point(self.widget.get_button_box())
+        self.data["mm"] += util.get_mm(position, goal, self.screen_size, 25, 3, 16)
+        self.data["md"].append(list(goal) + [util.get_ms()])
+        time.sleep(0.1)
+        self.data["mu"].append(list(goal) + [util.get_ms()])
+        position = goal
+
+        for x in ["m", "d", "u"]:
+            self.data[f"m{x}-mp"] = util.periods([x[-1] for x in self.data["m" + x]])
 
 class MotionData:
     def __init__(self, user_agent: str, url: str) -> None:
