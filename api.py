@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import time
 import threading
 from hcap_solver import Hcaptcha, logger
+from collections import OrderedDict
 import random
 import string
 
@@ -220,22 +221,23 @@ def get_api_key_balance(api_key):
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify({
-        'message': 'Welcome to fCaptcha API',
-        'version': '1.0',
-        'docs' 'https://docs.fcaptcha.lol'
-        'author': 'https://dexv.lol',
-        'github': 'https://github.com/DXVVAY',
-        'status': 'Up And Working',
-        'discord_status': {
-            'Register': 'Silent Flag',
-            'Join': 'Works',
-            'Friend Request': 'Works'
-        },
-        'epicgames_status': {
-            'Register' : 'Works'
-        }
-    }), 200
+    response = OrderedDict([
+        ('message', 'Welcome to fCaptcha API'),
+        ('version', '1.0'),
+        ('docs', 'https://docs.fcaptcha.lol'),
+        ('author', 'https://dexv.lol'),
+        ('github', 'https://github.com/DXVVAY'),
+        ('status', 'Up And Working'),
+        ('discord_status', OrderedDict([
+            ('Register', 'Silent Flag'),
+            ('Join', 'Works'),
+            ('Friend Request', 'Works')
+        ])),
+        ('epicgames_status', OrderedDict([
+            ('Register', 'Works')
+        ]))
+    ])
+    return jsonify(response), 200
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
