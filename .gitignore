@@ -1,8 +1,0 @@
-**/__pycache__/
-**/node_modules/
-g.json
-.venv
-**/dortcap/
-proxies.txt
-test.py
-working_proxies.txt

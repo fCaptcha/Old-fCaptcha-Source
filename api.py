@@ -139,7 +139,6 @@ def solve_captcha_route():
 
     logger.log.info(f"New Task Created: {task_id} From IP: {ip_address}")
 
-    # Call the function with the correct arguments
     if rq_data or user_agent is not None:
         threading.Thread(
             target=solve_captcha_task, args=(api_key, task_id, sitekey, host, proxy, rq_data, user_agent)
