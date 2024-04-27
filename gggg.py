@@ -36,16 +36,15 @@ class Captcha:
 
 def solve_captcha():
     while True:
-        with open("proxies.txt", "r", encoding='utf-8') as f:
-            proxies = f.read().splitlines()
-            proxy = random.choice(proxies)
+        proxy = "6c78f8469c;any:bcbc8697ff@datacenter.sigmaproxies.com:9000"
         g = Captcha(
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             url='discord.com',
             proxy=proxy
         ).solve()
-        requests.post("http://localhost:9999/make_token", json={"captcha_key": g, "proxy": proxy})
+        if g:
+            requests.post("http://localhost:9999/make_token", json={"captcha_key": g, "proxy": proxy})
 
 
 with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:

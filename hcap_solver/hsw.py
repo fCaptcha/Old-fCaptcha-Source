@@ -40,7 +40,7 @@ class HSW:
         parsed = json.loads(base64.b64decode(s, validate=False).decode())
         hc_diff = parsed['s']
         hc_data = parsed['d']
-        if data := json.load(open("n.json", "r")):
+        if data := json.load(open("hsw_types/discord.json", "r")):
             data["stamp"] = self.mint(hc_data, hc_diff)
             data["components"]["navigator"]["user_agent"] = user_agent
             data["components"]["canvas_hash"] = str(random.randint(1000000000000000000,9999999999999999999))
