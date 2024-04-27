@@ -6,7 +6,11 @@ from hcap_solver import Hcaptcha, logger
 import random
 import string
 
+import logging
 app = Flask(__name__)
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.CRITICAL)
 
 client = MongoClient('mongodb+srv://dev:hwOhSJASFYGKx8sb@cluster0.dgh1m9c.mongodb.net/')
 db = client['fcaptcha']
@@ -17,6 +21,10 @@ task_status = {}
 admin_key = "fuckjews123"
 def generate_api_key() -> str:
     return f"fCap-{'-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])}"
+
+def clear_task_status(task_id: str) -> None:
+    if task_id in task_status:
+        del task_status[task_id]
 
 def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, proxy: str, rqdata: str = None, useragent: str = None) -> None:
     start = time.time()
@@ -54,6 +62,7 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
             {"api_key": api_key},
             {"$inc": {"balance": -cost}}
         )
+    threading.Timer(100, clear_task_status, args=(task_id,)).start()
 
 # ADMIN Routes
 @app.route('/admin/create', methods=['POST'])
@@ -132,7 +141,7 @@ def update_api_key_balance():
     }), 200
 
 # Solving
-@app.route("/solve", methods=["POST"])
+@app.route("/api/createTask", methods=["POST"])
 def solve_captcha_route():
     api_key = request.headers.get('authorization')
     if not api_key:
@@ -170,14 +179,16 @@ def solve_captcha_route():
         target=solve_captcha_task, args=(api_key, task_id, sitekey, host, proxy, rq_data, user_agent)
     ).start()
 
-    return jsonify({"error": False, "task": {"task_id": task_id, "state": "processing"}})
+    return jsonify({"error": False, "task": {"task_id": task_id, "state": "Created"}}), 200
 
-@app.route("/getTaskData/<task_id>", methods=["GET"])
+@app.route("/api/getTaskData/<task_id>", methods=["GET"])
 def get_status(task_id):
     api_key = request.headers.get('authorization')
     if not api_key:
         return jsonify({"error": True, "message": "API key is missing"}), 401
 
+    data = request.get_json()
+    task_id = data.get("task_id")
     user = collection.find_one({"api_key": api_key})
     if not user:
         return jsonify({"error": True, "message": "Invalid API key"}), 401
@@ -185,7 +196,7 @@ def get_status(task_id):
     if task_id not in task_status:
         return jsonify({"error": True, "message": "Task not found"}), 404
 
-    return jsonify(task_status[task_id])
+    return jsonify(task_status[task_id]), 200
 
 @app.route('/get_balance/<api_key>', methods=['GET'])
 def get_api_key_balance(api_key):
@@ -207,9 +218,28 @@ def get_api_key_balance(api_key):
         'balance': result['balance']
     }), 200
 
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({
+        'message': 'Welcome to fCaptcha API',
+        'version': '1.0',
+        'docs' 'https://docs.fcaptcha.lol'
+        'author': 'https://dexv.lol',
+        'github': 'https://github.com/DXVVAY',
+        'status': 'Up And Working',
+        'discord_status': {
+            'Register': 'Silent Flag',
+            'Join': 'Works',
+            'Friend Request': 'Works'
+        },
+        'epicgames_status': {
+            'Register' : 'Works'
+        }
+    }), 200
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port='1234',
+        port='80',
         debug=True
     )
+        
