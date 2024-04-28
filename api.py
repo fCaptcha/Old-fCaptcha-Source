@@ -1,17 +1,17 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from pymongo import MongoClient
 import time
 import threading
 from hcap_solver import Hcaptcha, logger
-from collections import OrderedDict
 import random
 import string
+import json
 
 import logging
 app = Flask(__name__)
 
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.CRITICAL)
+#log = logging.getLogger('werkzeug')
+#log.setLevel(logging.CRITICAL)
 
 client = MongoClient('mongodb+srv://dev:hwOhSJASFYGKx8sb@cluster0.dgh1m9c.mongodb.net/')
 db = client['fcaptcha']
@@ -222,23 +222,24 @@ def get_api_key_balance(api_key):
 
 @app.route('/', methods=['GET'])
 def home():
-    response = OrderedDict([
-        ('message', 'Welcome to fCaptcha API'),
-        ('version', '1.0'),
-        ('docs', 'https://docs.fcaptcha.lol'),
-        ('author', 'https://dexv.lol'),
-        ('github', 'https://github.com/DXVVAY'),
-        ('status', 'Up And Working'),
-        ('discord_status', OrderedDict([
-            ('Register', 'Silent Flag'),
-            ('Join', 'Works'),
-            ('Friend Request', 'Works')
-        ])),
-        ('epicgames_status', OrderedDict([
-            ('Register', 'Works')
-        ]))
-    ])
-    return jsonify(response), 200
+    response = {
+        'message': 'Welcome to fCaptcha API',
+        'version': '1.0',
+        'docs': 'https://docs.fcaptcha.lol',
+        'author': 'https://dexv.lol',
+        'github': 'https://github.com/DXVVAY',
+        'status': 'Up And Working',
+        'discord_status': {
+            'Register': 'Silent Flag',
+            'Join': 'Works',
+            'Friend Request': 'Works'
+        },
+        'epicgames_status': {
+            'Register': 'Works'
+        }
+    }
+    return Response(json.dumps(response, sort_keys=False, indent=4), mimetype='application/json'), 200
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
