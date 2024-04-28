@@ -26,7 +26,7 @@ def generate_api_key() -> str:
 def clear_task_status(task_id: str) -> None:
     if task_id in task_status:
         del task_status[task_id]
-        logger.log.success(f"Deleted task -> {task_id}"))
+        logger.log.success(f"Deleted task -> {task_id}")
 
 def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, proxy: str, rqdata: str = None, useragent: str = None) -> None:
     start = time.time()
