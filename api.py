@@ -182,8 +182,8 @@ def solve_captcha_route():
 
     return jsonify({"error": False, "task": {"task_id": task_id, "state": "Created"}}), 200
 
-@app.route("/api/getTaskData/<task_id>", methods=["GET"])
-def get_status(task_id):
+@app.route("/api/getTaskData", methods=["GET"])
+def get_status():
     api_key = request.headers.get('authorization')
     if not api_key:
         return jsonify({"error": True, "message": "API key is missing"}), 401
