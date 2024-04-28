@@ -26,6 +26,7 @@ def generate_api_key() -> str:
 def clear_task_status(task_id: str) -> None:
     if task_id in task_status:
         del task_status[task_id]
+        logger.log.success(f"Deleted task -> {task_id}"))
 
 def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, proxy: str, rqdata: str = None, useragent: str = None) -> None:
     start = time.time()
@@ -63,7 +64,7 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
             {"api_key": api_key},
             {"$inc": {"balance": -cost}}
         )
-    threading.Timer(100, clear_task_status, args=(task_id,)).start()
+    threading.Timer(20, clear_task_status, args=(task_id,)).start()
 
 # ADMIN Routes
 @app.route('/admin/create', methods=['POST'])
