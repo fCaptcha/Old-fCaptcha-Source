@@ -62,6 +62,7 @@ class Hcaptcha:
             'sec-fetch-site': 'same-site',
             'user-agent': self.user_agent,
         }
+        proxy = proxy.split('://', 1)[-1]
         self.session.proxies = {'http': f'http://{proxy}', 'https': f'http://{proxy}'}
         self.site_key = site_key
         self.host = host.split("//")[-1].split("/")[0]
