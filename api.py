@@ -10,8 +10,8 @@ import json
 import logging
 app = Flask(__name__)
 
-#log = logging.getLogger('werkzeug')
-#log.setLevel(logging.CRITICAL)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.CRITICAL)
 
 client = MongoClient('mongodb+srv://dev:hwOhSJASFYGKx8sb@cluster0.dgh1m9c.mongodb.net/')
 db = client['fcaptcha']
