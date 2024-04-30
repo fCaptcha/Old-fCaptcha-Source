@@ -22,13 +22,13 @@ class HSW:
     @staticmethod
     def decrypt(data: str) -> str:
         url = "http://solver.dexv.lol:1500/decrypt"
-        json = {"data": data, "key": "realassssffrfr10384"}
+        json = {"data": data, "key": "6643617074636861206f6e20746f7021"}
         return client.post(url, json=json).text
 
     @staticmethod
     def encrypt(data: str) -> str:
         url = "http://solver.dexv.lol:1500/encrypt"
-        json = {"data": data, "key": "realassssffrfr10384"}
+        json = {"data": data, "key": "6643617074636861206f6e20746f7021"}
         return client.post(url, json=json).text
 
     def random_float(self) -> float:
