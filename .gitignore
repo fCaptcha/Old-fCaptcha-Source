@@ -1,6 +1,5 @@
 **/__pycache__/
 **/node_modules/
-api.py
 g.json
 .venv
 **/dortcap/

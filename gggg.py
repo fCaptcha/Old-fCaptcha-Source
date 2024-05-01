@@ -4,43 +4,48 @@ import requests
 import time
 import random
 
-
-class Captcha:
-    def __init__(self, api_key: str, url: str, sitekey: str, proxy: str, rqdata: str = None) -> None:
+class fCaptcha:
+    def __init__(self, api_key: str, sitekey: str, host: str, proxy: str, rqdata: str = None, user_agent: str = None) -> None:
         self.api_key = api_key
-        self.url = url
         self.sitekey = sitekey
+        self.host = host
         self.proxy = proxy
         self.rqdata = rqdata
+        self.user_agent = user_agent
 
     def solve(self) -> str:
-        # log.info("Solving Captcha...")
-        start = time.time()
-
-        payload = {"api_key": self.api_key, "url": self.url, "sitekey": self.sitekey, "proxy": self.proxy, "user_agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9038 Chrome/120.0.6099.291 Electron/28.2.7 Safari/537.36"}
-        if self.rqdata: payload["rqdata"] = self.rqdata
-
-        while True:
-            try:
-                result = requests.post("http://solver.dexv.lol:1000/api/solve_hcap", json=payload)
+        try:
+            headers = {"authorization": self.api_key}
+            payload = {}
+            keys = ['sitekey', 'host', 'proxy', 'rqdata', 'user_agent']
+            for key in keys:
+                if getattr(self, key) is not None:
+                    payload[key] = getattr(self, key)
+                
+            result = requests.post("https://api.fcaptcha.lol/api/createTask", headers=headers, json=payload)
+            task_id = result.json()["task"]["task_id"]
+            payload = {"task_id": task_id}
+            while True:
+                result = requests.get(f"https://api.fcaptcha.lol/api/getTaskData", headers=headers, json=payload)
                 data = result.json()
-                if data.get("success"):
-                    log.captcha(f"Solved Captcha / {data['message'][:70]} / In {str(time.time() - start)[:5]} Seconds")
-                    return data['message']
-                # log.failure(f"Failed To Solve Captcha -> {data.get('message')}")
-                break
-            except Exception as e:
-                pass
-                # log.failure(f"Failed To Solve Captcha -> {e}")
+                if data["task"]["state"] == "processing":
+                    continue
+                time = data["task"]["time"]
+                capkey = data["task"]["captcha_key"]
+                log.captcha(f"Solved Captcha / {capkey[:70]} / In {str(time)[:5]} Seconds")
+                return capkey
+        except Exception as e:
+            pass
+            #log.failure(f"Failed to solve -> {e}")
 
 
 def solve_captcha():
     while True:
         proxy = "6c78f8469c;any:bcbc8697ff@datacenter.sigmaproxies.com:9000"
-        g = Captcha(
+        g = fCaptcha(
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
-            url='discord.com',
+            host='discord.com',
             proxy=proxy
         ).solve()
         if g:
