@@ -12,7 +12,7 @@ import tls_client
 import bodystuff
 import colorama
 import concurrent.futures
-from hcap_solver import HCaptchaEnterpriseChallenge, DATABASE
+from hcap_solver import DATABASE, HCaptchaEnterpriseChallenge
 from kopeechka import MailActivations
 
 colorama.init()
@@ -24,6 +24,7 @@ r = requests.get("https://raw.githubusercontent.com/qoft/discord-api/main/fetch"
 build_numbers_client = r.json()["build_numbers"]["client"]
 build_numbers_main = r.json()["build_numbers"]["main"]
 build_numbers_native = r.json()["build_numbers"]["native"]
+
 
 class DiscordGen:
     def __init__(self):
@@ -48,11 +49,11 @@ class DiscordGen:
         while True:
             try:
                 if captcha := HCaptchaEnterpriseChallenge(
-                    site_key="4c672d35-0701-42b2-88c3-78380b0db560",
-                    site_url="https://discord.com",
-                    proxy=f"http://{self.proxy}",
-                    database=DATABASE
-                ).solve():
+                        site_key="4c672d35-0701-42b2-88c3-78380b0db560",
+                        site_url="https://discord.com",
+                        proxy=f"http://{self.proxy}",
+                        database=DATABASE
+                ).solve(True):
                     break
             except Exception:
                 pass
@@ -60,46 +61,41 @@ class DiscordGen:
         self.session.headers = {
             "Accept": "*/*",
             "Accept-Encoding": "gzip, deflate, br",
-            "Accept-Language": "ar-kw,fa-ir;q=0.6,fa;q=0.7,en-us;q=0.7,en;q=0.6,ar;q=0.8",
-            "Content-Type": "application/json",
+            "Accept-Language": "en-US,en;q=0.5",
             "Connection": "keep-alive",
-            "origin": "https://discord.com",
-            "referer": "https://discord.com",
-            "sec-ch-ua": '"Not?A_Brand";v="8", "Chromium";v="108"',
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": '"Windows"',
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9038 Chrome/120.0.6099.291 Electron/28.2.7 Safari/537.36",
-            "x-debug-options": "bugReporterEnabled",
-            "x-discord-locale": "en-US",
-            "X-Fingerprint": fingerprint,
+            "Content-Type": "application/json",
+            "DNT": "1",
+            "Host": "discord.com",
+            "Origin": "https://discord.com",
+            "Referer": 'https://discord.com/register',
+            "Sec-Fetch-Dest": "empty",
+            "Sec-Fetch-Mode": "cors",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-GPC": "1",
+            "TE": "trailers",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0",
+            "X-Debug-Options": "bugReporterEnabled",
+            "X-Discord-Locale": "en-US",
+            "X-Discord-Timezone": "Asia/Calcutta",
             "X-Track": xtrack,
         }
-        r = self.session.post(
+        retard_req = self.session.post(
             "https://discord.com/api/v9/auth/register",
             json={
                 "captcha_key": captcha,
                 "fingerprint": fingerprint,
-                "email": f"{email}",
-                "username": username,
                 "global_name": username,
-                "password": password,
                 "invite": "sRAW4yzy",
-                "consent": True,
-                "date_of_birth": "2001-11-02",
-                "gift_code_sku_id": None,
-                "promotional_email_opt_in": False,
+                "consent": True
             }
         )
-        if "token" in r.json():
-            token = r.json()["token"]
+        if "token" in retard_req.json():
+            token = retard_req.json()["token"]
             bodystuff.logger.success("Account Created!", username=username)
             self.session.headers["Authorization"] = token
-            r = self.session.get("https://discord.com/api/v9/users/@me")
-            flags = r.json()["flags"]
-            if r.status_code == 200:
+            retard_req = self.session.get("https://discord.com/api/v9/users/@me")
+            flags = retard_req.json()["flags"]
+            if retard_req.status_code == 200:
                 bodystuff.logger.success(
                     "Account Not Locked!", username=username, token=token[:40], flags=flags
                 )
@@ -123,13 +119,13 @@ class DiscordGen:
                 #     with open("tokens.txt", "a") as f:
                 #         f.write(f"{email.mail}:{password}:{token}" + "\n")
             else:
-                if "40002" in r.json():
+                if "40002" in retard_req.json():
                     bodystuff.logger.error("Account Locked!")
                 else:
                     bodystuff.logger.error("Account Locked!")
-                    print(r.json())
+                    print(retard_req.json())
         else:
-            bodystuff.logger.error("failed to create account", response=r.json())
+            bodystuff.logger.error("failed to create account", response=retard_req.json())
 
     def get_fingerprint(self):
         return self.session.get("https://discord.com/api/v9/experiments").json()[
@@ -193,5 +189,5 @@ def genn():
 
 
 def proc():
-    for i in range(50):
+    for i in range(101):
         threading.Thread(target=genn).start()
