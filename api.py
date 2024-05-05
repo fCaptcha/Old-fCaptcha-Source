@@ -2,10 +2,15 @@ from flask import Flask, request, jsonify, Response
 from pymongo import MongoClient
 import time
 import threading
-from hcap_solver import Hcaptcha, logger
+import requests
+from hcap_solver import HCaptchaEnterpriseChallenge, logger
 import random
 import string
 import json
+import hashlib
+import hmac
+import sys
+
 
 import logging
 app = Flask(__name__)
@@ -20,6 +25,26 @@ collection = db['users']
 task_status = {}
 
 admin_key = "fuckjews123"
+webhook = "https://discord.com/api/webhooks/1236679645873573970/n7sXyWyw-WjyIEmupNv7UBQQcWDVx6qBKxFxDOTylDt6P7ZWG1Sc9L4lFUhyTJD2zqGI"
+
+def send_error(api_key, sitekey, host, proxy, error):
+   data = {
+     "content": None,
+     "embeds": [
+      {
+        "title": "Solve Error!",
+        "description": f"API Key: {api_key}\nSite Key: {sitekey}\nHost: https://{host}/\nProxy: {proxy}\n---------------------------------------------------------------\n**Error:**\n```\ne{error}\n```",
+        "color": 16385285
+     }
+    ],
+    "attachments": []
+   }
+   r = requests.post(webhook, json=data)
+   if r.status_code == 200:
+     print("Sent Error to Logs")
+   else:
+     print("Failed to log error :(")
+   
 def generate_api_key() -> str:
     return f"fCap-{'-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])}"
 
@@ -35,7 +60,7 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
     else:
         cost = 0.00025
 
-    captcha_key = Hcaptcha(
+    captcha_key = HCaptchaEnterpriseChallenge(
         site_key=sitekey,
         host=host,
         proxy=proxy,
@@ -51,6 +76,7 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
                 "state": "error",
             },
         }
+    #    send_error(api_key, sitekey, host, proxy, 'error_message')
     else:
         task_status[task_id] = {
             "error": False,
@@ -92,7 +118,7 @@ def create_api_key():
         'message': 'Successfully Created a New User!',
         'api_key': apikey
     }), 201
-
+ 
 @app.route('/admin/delete', methods=['DELETE'])
 def remove_api_key():
     api_key = request.headers.get('authorization')
@@ -190,7 +216,7 @@ def get_status():
         return jsonify({"error": True, "message": "API key is missing"}), 401
 
     data = request.get_json()
-    task_id = data.get("task_id")
+    task_id = data["task_id"]
     user = collection.find_one({"api_key": api_key})
     if not user:
         return jsonify({"error": True, "message": "Invalid API key"}), 401
@@ -219,31 +245,70 @@ def get_api_key_balance(api_key):
         'message': 'Balance retrieved successfully',
         'balance': result['balance']
     }), 200
+    
+@app.route('/sellix/complete_purchase', methods=['POST'])
+def sellix_complete():
+    Sig = request.headers.get("X-Sellix-Signature")
+    if not Sig:
+        return jsonify({"error": True, "message": "X-Sellix-Signature Is Missing"}), 401
+    
+    payload = request.get_data()
+    secret = b'kEn3nTemMlVhIzUZWBnesX8cu1ntHZ2K'  # replace with your webhook secret
+    header_signature = Sig
 
+    computed_signature = hmac.new(secret, payload, hashlib.sha512).hexdigest()
+    
+    if hmac.compare_digest(computed_signature, header_signature):
+        data = request.get_json()
+        if data and "data" in data and "uniqid" in data["data"]:
+            uniqid = data["data"]["uniqid"]
+            print("Valid Signature Recived!")
+            print(f"Received uniqid: {uniqid}")
+            bal = data["data"]["total"]
+            apikey = generate_api_key()
+            Insert = {
+             "api_key": apikey,
+             "balance": bal,
+             "permissions": 0
+            }
+            collection.insert_one(Insert)
+            print(f"${bal} Api key proccessed VIA Sellix storefront ")
+            #print("new invoice processed")
+            return f'${bal} - {apikey}', 200
+        else:
+            return jsonify({'message': 'Invalid data format!'}), 400
+    else:
+        return jsonify({'message': 'Invalid SIG!'}), 401
+    
+    
 @app.route('/', methods=['GET'])
 def home():
     response = {
-        'message': 'Welcome to fCaptcha API',
-        'version': '1.0',
-        'docs': 'https://docs.fcaptcha.lol',
-        'author': 'https://dexv.lol',
-        'github': 'https://github.com/DXVVAY',
-        'status': 'Up And Working',
-        'discord_status': {
-            'Register': 'Silent Flag',
-            'Join': 'Works',
-            'Friend Request': 'Works'
+        "message": "Welcome to fCaptcha API",
+        "version": "1.1",
+        "docs": "https://docs.fcaptcha.lol",
+        "authors": {
+            "denzelxrt": "API",
+            "dexv & dort": "Solver",
+            "Fap-cap GC 🌟": "i cba to write everyones name."
         },
-        'epicgames_status': {
-            'Register': 'Works'
+        "github": "https://github.com/DXVVAY",
+        "status": "Up And Working",
+        "discord_status": {
+            "Register": "Silent Flag",
+            "Join": "Works",
+            "Friend Request": "Works"
+        },
+        "epicgames_status": {
+            "Register": "Works"
         }
     }
+
     return Response(json.dumps(response, sort_keys=False, indent=4), mimetype='application/json'), 200
 
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port='80',
+        port='3000',
         debug=True
     )
-        
