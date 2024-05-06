@@ -8,7 +8,7 @@ def solve_captcha():
     return Hcaptcha(
         site_key='4c672d35-0701-42b2-88c3-78380b0db560',
         host='https://discord.com/', 
-        proxy="eo5lyn59sw99xcb:w8081b0cy1g9321@rp.proxyscrape.com:6060"
+        proxy="5ki63yn1tpy0qvc:2zd5osm1wn9ssf1@rp.proxyscrape.com:6060"
     ).solve()
 
 

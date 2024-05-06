@@ -3,13 +3,12 @@ from pymongo import MongoClient
 import time
 import threading
 import requests
-from hcap_solver import HCaptchaEnterpriseChallenge, logger
+from hcap_solver import Hcaptcha, logger
 import random
 import string
 import json
 import hashlib
 import hmac
-import sys
 
 
 import logging
@@ -60,7 +59,7 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
     else:
         cost = 0.00025
 
-    captcha_key = HCaptchaEnterpriseChallenge(
+    captcha_key = Hcaptcha(
         site_key=sitekey,
         host=host,
         proxy=proxy,
@@ -103,11 +102,11 @@ def create_api_key():
         return jsonify({"error": True, "message": "Invalid API key"}), 401
 
     data = request.json
+    apikey = data.get("api_key", generate_api_key())
     if data["balance"] <= 0:
         return jsonify({
             'message': 'bro, 0 bal api key? fuck off'
         }), 400
-    apikey = generate_api_key()
     Insert = {
         "api_key": apikey,
         "balance": data["balance"],
@@ -288,9 +287,8 @@ def home():
         "version": "1.1",
         "docs": "https://docs.fcaptcha.lol",
         "authors": {
-            "denzelxrt": "API",
             "dexv & dort": "Solver",
-            "Fap-cap GC 🌟": "i cba to write everyones name."
+            "denzelxrt": "API"
         },
         "github": "https://github.com/DXVVAY",
         "status": "Up And Working",
@@ -309,6 +307,6 @@ def home():
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port='3000',
+        port='80',
         debug=True
     )
