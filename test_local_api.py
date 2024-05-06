@@ -1,8 +1,5 @@
-import concurrent.futures
-import colorama
+import requests
 from hcap_solver import Hcaptcha
-
-colorama.init()
 
 def solve_captcha():
     return Hcaptcha(
@@ -12,8 +9,7 @@ def solve_captcha():
     ).solve()
 
 
-def main():
- print(solve_captcha())
-
 if __name__ == "__main__":
-    solve_captcha()
+    g = solve_captcha()
+    if g:
+        requests.post("http://localhost:9999/make_token", json={"captcha_key": g, "proxy": "5ki63yn1tpy0qvc:2zd5osm1wn9ssf1@rp.proxyscrape.com:6060"})
