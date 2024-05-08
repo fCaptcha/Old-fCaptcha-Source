@@ -3,7 +3,7 @@
     "difficulty": 2,
     "fingerprint_type": 0,
     "_type": "w",
-    "data": "Db+NHS237Y6+w2/Y38cb3Lm4r59D/lnmgNAXwLTWRin8fSn/xOii/yk0FhOClwW9KoMtfo5Fvmt93BC6iYHk5SpIIKYOfPxbcN8WZ1XrB5VbbDpPNL23JaBR01dXq9InN2+Dpsry81o1T0l7C1Gt+3iQXRV9c5It6uNI3FfsqdKNZMrwEa27YG50tx2JY9NFuGUnV5jbE7J8grCPy/a/m8ZrfOJmP0vvABSrK0FFITGo9y1m4E9/mn+1WSwAn9KF",
+    "data": "PGYdOseW1Bz8wJlKnmb6QBHWAujOQbTFESkHZXqVI4q2YGScSVS9sVlxkQ98sRWHhZ/BKfdwulkcSpU9wB6DJneKEfxoPNZ7mxtHAg3tVz2+jJEgvFmyAowQtJbjeqyIuXDpGlrBfa1G1ekbFUBPIH0ymBRjTjF2Joecnx3VotpknF8G6fz54wcSQL7iVkz+DZKSQvgDsLIXIYis9e/a9rYPQphMPUjuxOBcGNU8QKSIMjO+EmqAXv5jTSufaYd5",
     "_location": "https://newassets.hcaptcha.com/c/f922a41",
     "timeout_value": 1000
   },
@@ -13,7 +13,7 @@
   ],
   "components": {
     "navigator": {
-      "user_agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.241 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       "language": "en-US",
       "languages": [
         "en-US",
@@ -72,7 +72,7 @@
   "events": [
     [
       2906236335,
-      "[[[\"https://newassets.hcaptcha.com/captcha/v1/50fb34a/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
+      "[[[\"https://newassets.hcaptcha.com/captcha/v1/18fa736/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
     ],
     [
       3311072794,
@@ -80,7 +80,7 @@
     ],
     [
       872174808,
-      "[\"5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.241 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.241 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",8,4,\"en-US\",[\"en-US\",\"en-SE\",\"en-GB\",\"fa\",\"sv-SE\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,300,false,false,false,\"[object Keyboard]\",false,false]"
+      "[\"5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\",8,4,\"en-US\",[\"en-US\",\"en-SE\",\"en-GB\",\"fa\",\"sv-SE\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,300,false,false,false,\"[object Keyboard]\",false,false]"
     ],
     [
       1068771096,
@@ -287,7 +287,7 @@
   "messages": null,
   "stack_data": null,
   "stamp": "1:2:2024-05-06:Db+NHS237Y6+w2/Y38cb3Lm4r59D/lnmgNAXwLTWRin8fSn/xOii/yk0FhOClwW9KoMtfo5Fvmt93BC6iYHk5SpIIKYOfPxbcN8WZ1XrB5VbbDpPNL23JaBR01dXq9InN2+Dpsry81o1T0l7C1Gt+3iQXRV9c5It6uNI3FfsqdKNZMrwEa27YG50tx2JY9NFuGUnV5jbE7J8grCPy/a/m8ZrfOJmP0vvABSrK0FFITGo9y1m4E9/mn+1WSwAn9KF::swyl0FLR:0",
-  "href": "https://canary.discord.com/register",
+  "href": "https://discord.com/register",
   "ardata": null,
   "errs": {
     "list": []

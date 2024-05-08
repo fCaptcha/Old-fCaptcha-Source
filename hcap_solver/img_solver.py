@@ -44,9 +44,9 @@ class Hcaptcha:
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = Session("chrome_108", random_tls_extension_order=True)
+        self.session = Session("chrome_120", random_tls_extension_order=True) # 120 works better than 108 💀
         self.before = time.time()
-        self.user_agent = user_agent if user_agent else "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.6099.291 Electron/28.2.7 Safari/537.36"
+        self.user_agent = user_agent if user_agent else "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         self.session.headers = {
             'accept': '*/*',
             'accept-language': 'en-AU,en;q=0.9,fa;q=0.8,en-US;q=0.7,sv;q=0.6',
@@ -54,7 +54,7 @@ class Hcaptcha:
             'dnt': "1",
             'origin': 'https://newassets.hcaptcha.com',
             'referer': 'https://newassets.hcaptcha.com/',
-            'sec-ch-ua': '"Google Chrome";v="123", "Not:A-Brand";v="8", "Chromium";v="123"',
+            'sec-ch-ua': '"Google Chrome";v="120", "Not:A-Brand";v="8", "Chromium";v="120"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
             'sec-fetch-dest': 'empty',

@@ -223,11 +223,11 @@ class get_cap:
                             },
                             {
                                 "brand": "Google Chrome",
-                                "version": "121"
+                                "version": "120"
                             },
                             {
                                 "brand": "Chromium",
-                                "version": "121"
+                                "version": "120"
                             }
                         ],
                         "mobile": False,
