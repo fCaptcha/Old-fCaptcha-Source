@@ -47,11 +47,6 @@ class HSW:
             data["components"]["parent_win_hash"] = str(random.randint(10000000000000000000,99999999999999999999))
             data["components"]["performance_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
             data["components"]["common_keys_hash"] = random.randint(1000000000,9999999999)
-            unique_keys = "__localeData__,DiscordNative,regeneratorRuntime,2,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,hcaptcha,__SENTRY_IPC__,hcaptchaOnLoad,__timingFunction,DiscordErrors,clearImmediate,__OVERLAY__,grecaptcha,DiscordSentry,GLOBAL_ENV,setImmediate,1,IntlPolyfill,createDiscordStream,popupBridge,__DISCORD_WINDOW_ID".split(',')
-            random.shuffle(unique_keys)
-            data["components"]["unique_keys"] = ",".join(unique_keys)
-            data["components"]["inv_unique_keys"] = "__wdata,sessionStorage,localStorage,hsw,_sharedLibs"
-            data["components"]["common_keys_tail"] = "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven"
             data["rand"] = [self.random_float(), self.random_float()]
             data["href"] = f"https://{host}"
             data["proof_spec"]["data"] = hc_data
