@@ -1,5 +1,4 @@
 from hcap_solver.motiondata import *
-from hcap_solver.nocap_ai import *
 from hcap_solver.logger import *
 from tls_client import Session
 from datetime import datetime
@@ -44,7 +43,7 @@ class Hcaptcha:
         self.job = None
         self.key = None
         self.c2 = None
-        self.session = Session("chrome_120", random_tls_extension_order=True) # 120 works better than 108 💀
+        self.session = Session("chrome_120", random_tls_extension_order=True)
         self.before = time.time()
         self.user_agent = user_agent if user_agent else "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         self.session.headers = {
@@ -121,7 +120,14 @@ class Hcaptcha:
         self.key = captcha['key']
         log.captcha(f"Solving Captcha -> {captcha_type}...")
         self.job = captcha_type
-        return AI_Solver(captcha_type, captcha, self.site_key, self.host).solve()
+        json = {
+            "captcha_type": captcha_type,
+            "captcha_json": captcha,
+            "sitekey": self.site_key,
+            "host": self.host,
+            "key": "6643617074636861206f6e20746f7021"
+        }
+        return httpx.post("http://solver.dexv.lol:1000/solve_ai", json=json, timeout=1000).json()
 
     def getcaptcha(self, hsw: str, c: dict) -> dict:
         self.session.headers.update({'content-type': 'application/x-www-form-urlencoded'})
