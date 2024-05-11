@@ -40,8 +40,12 @@ class HSW:
         parsed = json.loads(base64.b64decode(s, validate=False).decode())
         hc_diff = parsed['s']
         hc_data = parsed['d']
-        if data := json.loads(database_fps.get(self.key)):
+        if data := json.load(open("hsw_types/discord.json", "r")):
             data["stamp"] = self.mint(hc_data, hc_diff)
+            data["components"]["canvas_hash"] = str(random.randint(1000000000000000000,9999999999999999999))
+            data["components"]["parent_win_hash"] = str(random.randint(10000000000000000000,99999999999999999999))
+            data["components"]["performance_hash"] = str(random.randint(10000000000000000000, 99999999999999999999))
+            data["components"]["common_keys_hash"] = random.randint(1000000000,9999999999)
             data["rand"] = [self.random_float(), self.random_float()]
             data["href"] = f"https://{host}"
             data["proof_spec"]["data"] = hc_data

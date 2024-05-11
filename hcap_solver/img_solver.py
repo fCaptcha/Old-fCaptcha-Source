@@ -85,7 +85,7 @@ class Hcaptcha:
                 if response:
                     try:
                         capkey = response["generated_pass_UUID"]
-                        log.captcha(f"Solved hCaptcha {capkey[:70]}", self.before, time.time())
+                        log.captcha(f"Solved hCaptcha {capkey[:50]}", self.before, time.time())
                         return capkey
                     except Exception:
                         log.failure(f"Failed To Solve hCaptcha", self.before, time.time(), level="hCaptcha")
