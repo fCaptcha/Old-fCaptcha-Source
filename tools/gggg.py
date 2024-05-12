@@ -1,5 +1,5 @@
 import concurrent.futures
-from hcap_solver.logger import *
+from fcaptcha.logger import *
 import requests
 import time
 import random
@@ -41,7 +41,7 @@ class fCaptcha:
 
 def solve_captcha():
     while True:
-        proxy = "5ki63yn1tpy0qvc:2zd5osm1wn9ssf1@rp.proxyscrape.com:6060"
+        proxy = "golibal2022-zone-resi:Cockpitbender23@6a74976724304e24.ika.na.pyproxy.io:16666"
         g = fCaptcha(
             api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',

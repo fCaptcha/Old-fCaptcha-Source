@@ -12,7 +12,7 @@ import tls_client
 import bodystuff
 import colorama
 import concurrent.futures
-from hcap_solver import DATABASE, HCaptchaEnterpriseChallenge
+from fcaptcha import DATABASE, HCaptchaEnterpriseChallenge
 from kopeechka import MailActivations
 
 colorama.init()

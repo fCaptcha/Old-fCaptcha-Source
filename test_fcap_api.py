@@ -1,5 +1,5 @@
 import requests
-from hcap_solver.logger import *
+from fcaptcha.logger import *
 
 class fCaptcha:
     def __init__(self, api_key: str, sitekey: str, host: str, proxy: str, rqdata: str = None, user_agent: str = None) -> None:

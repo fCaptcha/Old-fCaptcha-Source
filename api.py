@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import time
 import threading
 import requests
-from hcap_solver import Hcaptcha, logger
+from fcaptcha import Hcaptcha, logger
 import random
 import string
 import json

@@ -1,8 +1,8 @@
-from hcap_solver.motiondata import *
-from hcap_solver.logger import *
+from fcaptcha.motiondata import *
+from fcaptcha.logger import *
 from tls_client import Session
 from datetime import datetime
-from hcap_solver.hsw import *
+from fcaptcha.hsw import *
 from typing import Any
 import traceback
 import requests

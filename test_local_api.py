@@ -1,6 +1,6 @@
 import threading
 import requests, httpx
-from hcap_solver import Hcaptcha
+from fcaptcha import Hcaptcha
 
 def solve_captcha():
     return Hcaptcha(
