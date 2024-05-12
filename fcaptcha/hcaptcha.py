@@ -76,7 +76,6 @@ class Hcaptcha:
             got_captcha = self.getcaptcha(hsw, captcha)
             answers = self.get_answers(got_captcha)
             if answers:
-                print(answers)
                 #solve_time1 = round(time.time() - self.before, 2)
                 #sleep_total = 3.9 - solve_time1
                 #if sleep_total >= 0:
