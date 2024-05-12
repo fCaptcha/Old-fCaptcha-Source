@@ -17,13 +17,13 @@ app = Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.CRITICAL)
 
-client = MongoClient('mongodb+srv://dev:hwOhSJASFYGKx8sb@cluster0.dgh1m9c.mongodb.net/')
+client = MongoClient("mongodb+srv://dexv:#tkKM..FZeKx8$n@cluster0.xa88iyg.mongodb.net")
 db = client['fcaptcha']
 collection = db['users']
 
 task_status = {}
 
-admin_key = "fuckjews123"
+admin_key = "DEXYSEXYFRFR^()69"
 webhook = "https://discord.com/api/webhooks/1236679645873573970/n7sXyWyw-WjyIEmupNv7UBQQcWDVx6qBKxFxDOTylDt6P7ZWG1Sc9L4lFUhyTJD2zqGI"
 
 def send_error(api_key, sitekey, host, proxy, error):

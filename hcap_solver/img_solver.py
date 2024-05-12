@@ -125,7 +125,7 @@ class Hcaptcha:
             "captcha_json": captcha,
             "sitekey": self.site_key,
             "host": self.host,
-            "key": "6643617074636861206f6e20746f7021"
+            "key": "88de30e1c0d0e89d"
         }
         return httpx.post("http://solver.dexv.lol:1000/solve_ai", json=json, timeout=1000).json()
 
