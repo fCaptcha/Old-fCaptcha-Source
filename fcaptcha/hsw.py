@@ -51,6 +51,9 @@ class HSW:
             data["proof_spec"]["data"] = hc_data
             data["proof_spec"]["difficulty"] = hc_diff
             data["stack_data"] = ["new Promise (<anonymous>)"]
+            data["perf"][0][1] = round(random.uniform(10, 20), 0)
+            data["perf"][1][1] = round(random.uniform(84, 99), 0)
+            data["perf"][2][1] = round(random.uniform(0, 1), 0)
             random.shuffle(data["events"])
             for event in data["events"]:
                 match event[0]:
