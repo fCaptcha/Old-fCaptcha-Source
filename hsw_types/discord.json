@@ -3,21 +3,20 @@
         "difficulty": 2,
         "fingerprint_type": 0,
         "_type": "w",
-        "data": "YqcbuTlsbLgc/7fo1Tbr9EPUNjYmhjOr+314TVo/92Uhx9Np0sBHD/HYouA0qgWEx3t72+bAxBfU6RyaTpHHvLEIe+sXgnBPCiGGM7cXaOYAkAITzcf4tITzr3KAxBfLrGchlvaXPSSFKX0CMEUX2qbXYzTNIM73iPw4KFKWgKKvY3dKSxB3wbgeDBnnS95kWO8mH05osK3+fK9tK4zxhdz0ytIr4As33r782aWeiSc9V/3TGbrFK0dwRfseFJUq",
+        "data": "n4+z5jfA7P76Z0FLA0ccYKvzr/AyaVQbM3TW08Bd+ZqXeqsYw9pT4uSWHLP/RWgScZurthpkfQp3+y2Fs+6LUdkOur9kSezxsTNTg1PFprjybe7YwpkbAdYCXTM2oCwCWWu1CXBVt53mQxxukMVj4ZuYYGI9fLo2DMGmAg+7Z+38iNpvBt2lJtWtXAYS+U/HJEOqn9tj+8W/UO+4y3aB7Zy5jwGSkjnAieNWBoIq6zMKNkSfSuHqrpZY/ba/NApF",
         "_location": "https://newassets.hcaptcha.com/c/f922a41",
         "timeout_value": 1000.0
     },
     "rand": [
-        0.08278477596594369,
-        0.062085908371955156
+        0.877191546256415,
+        0.17694562720134854
     ],
     "components": {
         "navigator": {
-            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0",
-            "language": "es-ES",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9146 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36",     
+            "language": "en-US",
             "languages": [
-                "es-ES",
-                "es"
+                "en-US"
             ],
             "platform": "Win32",
             "max_touch_points": 0,
@@ -28,20 +27,20 @@
         "screen": {
             "color_depth": 24,
             "pixel_depth": 24,
-            "width": 1366,
-            "height": 768,
-            "avail_width": 1366,
-            "avail_height": 720
+            "width": 1668,
+            "height": 862,
+            "avail_width": 1668,
+            "avail_height": 822
         },
         "device_pixel_ratio": 1.0,
         "has_session_storage": true,
         "has_local_storage": true,
         "has_indexed_db": true,
         "web_gl_hash": "-1",
-        "canvas_hash": "17916178002726864701",
+        "canvas_hash": "3290922276056775431",
         "has_touch": false,
-        "notification_api_permission": "Denied",
-        "chrome": true,
+        "notification_api_permission": "Granted",
+        "chrome": false,
         "to_string_length": 33,
         "err_firefox": null,
         "r_bot_score": 0,
@@ -51,13 +50,13 @@
         "extensions": [
             false
         ],
-        "parent_win_hash": "2998800690843378806",
+        "parent_win_hash": "14533946090530726899",
         "webrtc_hash": "-1",
         "performance_hash": "11097854906383886648",
-        "unique_keys": "__localeData__,regeneratorRuntime,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,hcaptcha,hcaptchaOnLoad,__timingFunction,DiscordErrors,clearImmediate,__OVERLAY__,grecaptcha,DiscordSentry,GLOBAL_ENV,setImmediate,1,IntlPolyfill,__DISCORD_WINDOW_ID",
+        "unique_keys": "__localeData__,__REACT_DEVTOOLS_SHOW_INLINE_WARNINGS_AND_ERRORS__,DiscordNative,regeneratorRuntime,2,__isReactDndBackendSetUp,0,__BILLING_STANDALONE__,webpackChunkdiscord_app,platform,__SECRET_EMOTION__,__SENTRY__,__REACT_DEVTOOLS_APPEND_COMPONENT_STACK__,hcaptcha,__REACT_DEVTOOLS_HIDE_CONSOLE_LOGS_IN_STRICT_MODE__,__SENTRY_IPC__,hcaptchaOnLoad,Vencord,__timingFunction,DiscordErrors,VencordNative,clearImmediate,VencordStyles,__OVERLAY__,__REACT_DEVTOOLS_BROWSER_THEME__,grecaptcha,GLOBAL_ENV,setImmediate,1,IntlPolyfill,createDiscordStream,_ws,popupBridge,__REACT_DEVTOOLS_COMPONENT_FILTERS__,__DISCORD_WINDOW_ID,__REACT_DEVTOOLS_BREAK_ON_CONSOLE_ERRORS__",
         "inv_unique_keys": "__wdata,sessionStorage,localStorage,hsw,_sharedLibs",
-        "common_keys_hash": 1869536896,
-        "common_keys_tail": "webkitCancelAnimationFrame,webkitRequestAnimationFrame,chrome,g_opr,opr,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,getScreenDetails,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,onpagereveal,credentialless,speechSynthesis,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven",
+        "common_keys_hash": 276567530,
+        "common_keys_tail": "chrome,caches,cookieStore,ondevicemotion,ondeviceorientation,ondeviceorientationabsolute,launchQueue,documentPictureInPicture,onbeforematch,getScreenDetails,openDatabase,queryLocalFonts,showDirectoryPicker,showOpenFilePicker,showSaveFilePicker,originAgentCluster,credentialless,speechSynthesis,oncontentvisibilityautostatechange,onscrollend,webkitRequestFileSystem,webkitResolveLocalFileSystemURL,Raven",
         "features": {
             "performance_entries": true,
             "web_audio": true,
@@ -68,215 +67,223 @@
     },
     "events": [
         [
-            2906236335,
-            "[[[\"https://newassets.hcaptcha.com/captcha/v1/18fa736/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
+            3497821731,
+            "[1,1023,1,1,4]"
         ],
         [
-            690142092,
-            "[32767,32767,16384,8,8,16]"
+            1587180961,
+            "1715547394213"
         ],
         [
-            3082579163,
-            "8398791803026140725"
+            2275435905,
+            "4631229088072584217"
         ],
         [
-            2998564779,
-            "[24,24,65536,212992,200704]"
+            1405859696,
+            "[16,4096,31,32,16384,124,14,128,[23,127,127]]"
         ],
         [
-            2232178856,
-            "[2147483647,2147483647,2147483647,2147483647]"
+            1587819988,
+            "1032251938945356892"
         ],
         [
-            669213918,
-            "[\"Google Inc. (Intel)\",\"ANGLE (Intel, Intel(R) UHD Graphics (0x00008A56) Direct3D11 vs_5_0 ps_5_0, D3D11)\"]"
+            2115854713,
+            "[\"NphelHhbUzgerJmd0zkMlUEaS9fV\",\"13\",\"14\",\"HSGICZWNTFGWG\"]"
         ],
         [
             255383392,
             "[2147483647,2147483647,4294967294]"
         ],
         [
-            3725196262,
-            "[16,1024,4096,7,12,120,[23,127,127]]"
-        ],
-        [
-            414144794,
-            "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
-        ],
-        [
-            1587819988,
-            "8915205951503093450"
-        ],
-        [
-            3952131478,
-            "[20]"
-        ],
-        [
-            2854298529,
-            "76.40000000596046"
-        ],
-        [
-            1373138784,
-            "[[\"navigation:newassets.hcaptcha.com\",5.5999999940395355,36.599999994039536],[\"script:newassets.hcaptcha.com\",1.4000000059604645,20.650000005960464],[\"xmlhttprequest:api2.hcaptcha.com\",0,136.19999998807907]]"
-        ],
-        [
-            2275435905,
-            "6541161718341693925"
-        ],
-        [
-            3957763561,
-            "[\"Windows\",\"15.0.0\",null,\"64\",\"x86\",\"109.0.5097.79\"]"
-        ],
-        [
-            2115854713,
-            "[\"JTJgR3drJ2dY52Aolgeg\",\"13\",\"9\",\"GAASGMMBVFMHX\"]"
-        ],
-        [
-            873741287,
-            "[0,10465,10465]"
-        ],
-        [
-            3756317564,
-            "17157476241021694346"
-        ],
-        [
-            748900772,
-            "18207788058829391080"
-        ],
-        [
-            531197711,
-            "30.150000005960464"
-        ],
-        [
-            872174808,
-            "[\"5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0\",\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0\",8,4,\"es-ES\",[\"es-ES\",\"es\"],\"Win32\",null,[\"Opera GX 109\",\"Not:A-Brand 8\",\"Chromium 123\"],false,\"Windows\",2,5,true,false,50,false,false,true,\"[object Keyboard]\",false,false]"
-        ],
-        [
-            2622130410,
-            "[16384,32,16384,2048,2,2048]"
-        ],
-        [
-            2691352878,
-            "1277.5"
-        ],
-        [
-            338869435,
-            "17243842281358228277"
-        ],
-        [
-            443486963,
-            "4932383211497360507"
-        ],
-        [
-            3498175614,
-            "[\"m1atN5QtNxUzmwUz\",\"e\",\"7\",\"RGMOKYOHATYVG\"]"
-        ],
-        [
-            3913991343,
-            "1.5"
-        ],
-        [
-            3070040703,
-            "14418552291162380194"
-        ],
-        [
-            1068771096,
-            "631"
-        ],
-        [
-            143592240,
-            "[[229,[229,229,229,255,229,229,229,255,229,229,229,255,229,229,229,255]],[[11,0,0,95.96875,15,4,96.765625],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,0,95.96875,15,4,96.765625],[11,0,0,95.96875,15,4,96.765625],[11,0,0,95.96875,15,4,96.765625],[11,0,0,95.96875,15,4,96.765625],[11,0,0,95.96875,15,4,96.765625],[11,0,0,95.96875,15,4,96.765625],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,8,13,15,17,24,26,27,28,29,30,31,32,34,37,39,40,49,69,75,76,79,80],[0,0,0,0,14,3,0]]"
-        ],
-        [
-            1421982308,
-            "[153053505945,153053505945,null,null,2172649472,true,true,true,null]"
-        ],
-        [
-            694616987,
-            "[1366,768,1366,720,24,24,false,0,1,1366,720,true,true,true,false]"
-        ],
-        [
-            1877814445,
-            "[0,1,2,3,4]"
-        ],
-        [
-            3497821731,
-            "[1,1024,1,1,4]"
-        ],
-        [
-            2151859767,
-            "[[\"loadTimes\",\"csi\",\"search\",\"app\"],35,34,null,false,false,true,37,true,true,true,true,true,[\"g_opr\",\"opr\",\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
-        ],
-        [
-            3916977893,
-            "[[\"ylcMyUyt0lmLwitJNvXdTJ3a=gyt0p3a\",\"6\",\"8\",\"CQTKHIHVEOFET\"],[\"MyUyYm9VNFBzQyUcMyUsam9VNFBdMyUsU2VmCwD2MRftMwitJOAzawAdMwgjt1YtKwitJUVmbjVnDwZGMyUcsVffMyUIVHDmC5HsRpAjMlgIVHDmC5NkMlAjMl4UQUllU==QUzEVMXkc\",\"d\",\"b\",\"HHCTOIXSHXDFO\"]]"
-        ],
-        [
-            2371850788,
-            "true"
-        ],
-        [
-            334928754,
-            "6174559167396075939"
-        ],
-        [
-            1405859696,
-            "[16,4096,30,16,16384,120,12,120,[23,127,127]]"
+            1350382849,
+            "[[277114314453,277114314460,277114314451,357114314456,277114314452,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314450,554228628919,277114314460,277114314451],false]"
         ],
         [
             3827436525,
             "15307345790125003576"
         ],
         [
-            1311261287,
-            "[4,120,4]"
+            137519462,
+            "9854590905640690920"
         ],
         [
-            1613898511,
-            "12027682292028963860"
+            338869435,
+            "1825316679185413516"
         ],
         [
-            3311072794,
-            "1120"
-        ],
-        [
-            3719249172,
-            "8707354059021379401"
-        ],
-        [
-            2881608941,
-            "57"
-        ],
-        [
-            1587180961,
-            "1715537195721"
-        ],
-        [
-            2460707167,
-            "[1,4,5,7,9,12,20,21,24,25,29,31]"
+            137955265,
+            "\"America/Los_Angeles\""
         ],
         [
             1335970363,
             "4226317358175830201"
         ],
         [
+            2460707167,
+            "[1,4,5,7,9,12,20,21,23,25,30,31]"
+        ],
+        [
+            694616987,
+            "[1668,862,1668,822,24,24,false,0,1,1280,720,true,true,true,false]"
+        ],
+        [
+            690142092,
+            "[8192,8192,8192,8,8,4]"
+        ],
+        [
+            3719249172,
+            "16290568259171983358"
+        ],
+        [
+            2232178856,
+            "[2147483647,2147483647,2147483647,2147483647]"
+        ],
+        [
+            3082579163,
+            "16153807394097295248"
+        ],
+        [
+            1068771096,
+            "627"
+        ],
+        [
+            3498175614,
+            "[\"OYQdOxQJm3mdNzGT\",\"7\",\"b\",\"IDGGDYMMLJBSP\"]"
+        ],
+        [
+            334928754,
+            "13051680398954254262"
+        ],
+        [
+            1311261287,
+            "[4,128,4]"
+        ],
+        [
+            2881608941,
+            "57"
+        ],
+        [
+            2691352878,
+            "2486.5"
+        ],
+        [
+            414144794,
+            "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
+        ],
+        [
+            3952131478,
+            "[13]"
+        ],
+        [
+            3725196262,
+            "[32,4096,16384,7,14,128,[23,127,127]]"
+        ],
+        [
+            1877814445,
+            "[2,3,4]"
+        ],
+        [
+            2151859767,
+            "[[],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
+        ],
+        [
+            143592240,
+            "[[128,[128,128,128,255,128,128,128,255,128,128,128,255,128,128,128,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,12,13,15,17,18,19,21,22,23,28,29,30,31,33,34,35,37,39,42,47,48,49,66,67,69,71,72,75,76,77,78,79,81,82],[0,0,0,0,14,3,0]]"
+        ],
+        [
+            872174808,
+            "[\"5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9146 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9146 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",8,6,\"en-US\",[\"en-US\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,50,false,false,false,\"[object Keyboard]\",false,false]"
+        ],
+        [
+            873741287,
+            "[0,10480,10480]"
+        ],
+        [
+            2998564779,
+            "[60,72,65536,245760,245760]"
+        ],
+        [
+            2371850788,
+            "false"
+        ],
+        [
+            3913991343,
+            "27.90000009536743"
+        ],
+        [
+            3311072794,
+            "1117"
+        ],
+        [
+            2906236335,
+            "[[[\"https://newassets.hcaptcha.com/captcha/v1/18fa736/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
+        ],
+        [
+            2854298529,
+            "95.40000009536743"
+        ],
+        [
             2571358880,
-            "[\"Europe/Madrid\",-60,-60,-3203642716000,\"hora est\u00e1ndar de Europa central\",\"es-ES\"]"
+            "[\"America/Los_Angeles\",480,480,-3203492822000,\"Pacific Standard Time\",\"en-US\"]"
         ],
         [
-            137955265,
-            "\"Europe/Madrid\""
+            3756317564,
+            "2337666753322697468"
         ],
         [
-            1350382849,
-            "[[277114314453,277114314460,277114314451,357114314456,277114314453,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314451,554228628919,277114314460,277114314451],false]"
+            4086018371,
+            "[[true,\"en-US\",true,\"Microsoft David - English (United States)\",\"Microsoft David - English (United States)\"],[false,\"en-US\",true,\"Microsoft Mark - English (United States)\",\"Microsoft Mark - English (United States)\"],[false,\"en-US\",true,\"Microsoft Zira - English (United States)\",\"Microsoft Zira - English (United States)\"]]"
+        ],
+        [
+            3957763561,
+            "[\"Windows\",\"12.0.0\",null,\"64\",\"x86\",\"120.0.6099.291\"]"
+        ],
+        [
+            531197711,
+            "55.64999985694885"
+        ],
+        [
+            1421982308,
+            "[142734389248,142734389248,null,null,4294705152,true,true,true,null]"
+        ],
+        [
+            1373138784,
+            "[[\"navigation:newassets.hcaptcha.com\",14.5,53.799999713897705],[\"script:newassets.hcaptcha.com\",29.850000143051147,58.200000047683716],[\"xmlhttprequest:api2.hcaptcha.com\",0,45.5]]"
+        ],
+        [
+            669213918,
+            "[\"Google Inc. (Google)\",\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\"]"
+        ],
+        [
+            3070040703,
+            "9345374751420407194"
+        ],
+        [
+            748900772,
+            "11038406483972230190"
+        ],
+        [
+            3916977893,
+            "[[\"ctXZmLwitJkJnCq9gAOOKCYp2bOlcMYu\",\"3\",\"e\",\"XATIYOECSUVGK\"],[\"JMLKKVPrVtspxcK1mepaJMLEUZX5mYBBxAs1meWItjoaJZWaDMWsEMM1UkpMKMLaJMLgSQJpGATp3dpaJMLWUbKF3ATBJMLgSQLFnbiFEcpXwb6BJMLEJlz4CMWItjENGdzLmdWItjo80d39GdTNKMLa\",\"8\",\"8e\",\"JWXKRTXLJJWAL\"]]"
+        ],
+        [
+            443486963,
+            "4932383211497360507"
+        ],
+        [
+            1613898511,
+            "17002384262467705698"
+        ],
+        [
+            2622130410,
+            "[8192,64,16384,2048,15,2048]"
         ]
     ],
     "suspicious_events": [],
     "messages": null,
     "stack_data": null,
-    "stamp": "1:2:2024-05-12:YqcbuTlsbLgc/7fo1Tbr9EPUNjYmhjOr+314TVo/92Uhx9Np0sBHD/HYouA0qgWEx3t72+bAxBfU6RyaTpHHvLEIe+sXgnBPCiGGM7cXaOYAkAITzcf4tITzr3KAxBfLrGchlvaXPSSFKX0CMEUX2qbXYzTNIM73iPw4KFKWgKKvY3dKSxB3wbgeDBnnS95kWO8mH05osK3+fK9tK4zxhdz0ytIr4As33r782aWeiSc9V/3TGbrFK0dwRfseFJUq::TycT20js:1b",
-    "href": "https://discord.com/register",
+    "stamp": "1:2:2024-05-12:n4+z5jfA7P76Z0FLA0ccYKvzr/AyaVQbM3TW08Bd+ZqXeqsYw9pT4uSWHLP/RWgScZurthpkfQp3+y2Fs+6LUdkOur9kSezxsTNTg1PFprjybe7YwpkbAdYCXTM2oCwCWWu1CXBVt53mQxxukMVj4ZuYYGI9fLo2DMGmAg+7Z+38iNpvBt2lJtWtXAYS+U/HJEOqn9tj+8W/UO+4y3aB7Zy5jwGSkjnAieNWBoIq6zMKNkSfSuHqrpZY/ba/NApF::KniU2gh2:d",
+    "href": "https://discord.com/register?redirect_to=%2Fchannels%2F%40me",
     "ardata": null,
     "errs": {
         "list": []
@@ -284,11 +291,11 @@
     "perf": [
         [
             1,
-            17.0
+            8.0
         ],
         [
             2,
-            84.0
+            102.0
         ],
         [
             3,
