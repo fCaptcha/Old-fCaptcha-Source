@@ -3,13 +3,13 @@
         "difficulty": 2,
         "fingerprint_type": 0,
         "_type": "w",
-        "data": "n4+z5jfA7P76Z0FLA0ccYKvzr/AyaVQbM3TW08Bd+ZqXeqsYw9pT4uSWHLP/RWgScZurthpkfQp3+y2Fs+6LUdkOur9kSezxsTNTg1PFprjybe7YwpkbAdYCXTM2oCwCWWu1CXBVt53mQxxukMVj4ZuYYGI9fLo2DMGmAg+7Z+38iNpvBt2lJtWtXAYS+U/HJEOqn9tj+8W/UO+4y3aB7Zy5jwGSkjnAieNWBoIq6zMKNkSfSuHqrpZY/ba/NApF",
+        "data": "vKRSIhRe1vhJPBciTDtqjyDcweS7RnvyfxU4K/gOctt017xdGdbZEwwfd38Qj1trv7Q7sOgPomfDk9Avw+gLOnITH6Z5iG+Yq0biEYXKTsMqnkvNmPLN1UPDA9IuSxa98vs/k/mSBKJVWujhxJFfixpCSNHY4tE1t3Zec/HOOqocUkGxZSM4OIyL6fS+83w275112KMFTLHFvWKB4SZOlPkifiGYXOPSzKXCK2c5fQLmG40F1nTmL6yj5V7X4BPr",
         "_location": "https://newassets.hcaptcha.com/c/f922a41",
         "timeout_value": 1000.0
     },
     "rand": [
-        0.877191546256415,
-        0.17694562720134854
+        0.9116013943523669,
+        0.7735333812888712
     ],
     "components": {
         "navigator": {
@@ -67,222 +67,222 @@
     },
     "events": [
         [
-            3497821731,
-            "[1,1023,1,1,4]"
-        ],
-        [
-            1587180961,
-            "1715547394213"
-        ],
-        [
-            2275435905,
-            "4631229088072584217"
-        ],
-        [
-            1405859696,
-            "[16,4096,31,32,16384,124,14,128,[23,127,127]]"
-        ],
-        [
-            1587819988,
-            "1032251938945356892"
-        ],
-        [
-            2115854713,
-            "[\"NphelHhbUzgerJmd0zkMlUEaS9fV\",\"13\",\"14\",\"HSGICZWNTFGWG\"]"
-        ],
-        [
-            255383392,
-            "[2147483647,2147483647,4294967294]"
-        ],
-        [
-            1350382849,
-            "[[277114314453,277114314460,277114314451,357114314456,277114314452,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314450,554228628919,277114314460,277114314451],false]"
-        ],
-        [
-            3827436525,
-            "15307345790125003576"
-        ],
-        [
-            137519462,
-            "9854590905640690920"
-        ],
-        [
-            338869435,
-            "1825316679185413516"
-        ],
-        [
-            137955265,
-            "\"America/Los_Angeles\""
-        ],
-        [
-            1335970363,
-            "4226317358175830201"
-        ],
-        [
-            2460707167,
-            "[1,4,5,7,9,12,20,21,23,25,30,31]"
-        ],
-        [
-            694616987,
-            "[1668,862,1668,822,24,24,false,0,1,1280,720,true,true,true,false]"
-        ],
-        [
-            690142092,
-            "[8192,8192,8192,8,8,4]"
+            414144794,
+            "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
         ],
         [
             3719249172,
             "16290568259171983358"
         ],
         [
-            2232178856,
-            "[2147483647,2147483647,2147483647,2147483647]"
+            669213918,
+            "[\"Google Inc. (Google)\",\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\"]"
         ],
         [
-            3082579163,
-            "16153807394097295248"
-        ],
-        [
-            1068771096,
-            "627"
-        ],
-        [
-            3498175614,
-            "[\"OYQdOxQJm3mdNzGT\",\"7\",\"b\",\"IDGGDYMMLJBSP\"]"
-        ],
-        [
-            334928754,
-            "13051680398954254262"
-        ],
-        [
-            1311261287,
-            "[4,128,4]"
-        ],
-        [
-            2881608941,
-            "57"
-        ],
-        [
-            2691352878,
-            "2486.5"
-        ],
-        [
-            414144794,
-            "[-6.172840118408203,-20.710678100585938,120.71067810058594,-20.710678100585938,141.42135620117188,120.71067810058594,-20.710678100585938,141.42135620117188,-20.710678100585938,-20.710678100585938,0,0,300,150,false]"
-        ],
-        [
-            3952131478,
-            "[13]"
+            1421982308,
+            "[142696599552,142696599552,null,null,4294705152,true,true,true,null]"
         ],
         [
             3725196262,
             "[32,4096,16384,7,14,128,[23,127,127]]"
         ],
         [
-            1877814445,
-            "[2,3,4]"
+            3311072794,
+            "1117"
         ],
         [
-            2151859767,
-            "[[],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
-        ],
-        [
-            143592240,
-            "[[128,[128,128,128,255,128,128,128,255,128,128,128,255,128,128,128,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,12,13,15,17,18,19,21,22,23,28,29,30,31,33,34,35,37,39,42,47,48,49,66,67,69,71,72,75,76,77,78,79,81,82],[0,0,0,0,14,3,0]]"
+            694616987,
+            "[1668,862,1668,822,24,24,false,0,1,1280,720,true,true,true,false]"
         ],
         [
             872174808,
             "[\"5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9146 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9146 Chrome/120.0.6099.291 Electron/28.2.10 Safari/537.36\",8,6,\"en-US\",[\"en-US\"],\"Win32\",null,[\"Not_A Brand 8\",\"Chromium 120\"],false,\"Windows\",2,5,true,false,50,false,false,false,\"[object Keyboard]\",false,false]"
         ],
         [
-            873741287,
-            "[0,10480,10480]"
-        ],
-        [
-            2998564779,
-            "[60,72,65536,245760,245760]"
-        ],
-        [
-            2371850788,
-            "false"
-        ],
-        [
-            3913991343,
-            "27.90000009536743"
-        ],
-        [
-            3311072794,
-            "1117"
-        ],
-        [
-            2906236335,
-            "[[[\"https://newassets.hcaptcha.com/captcha/v1/18fa736/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
-        ],
-        [
-            2854298529,
-            "95.40000009536743"
-        ],
-        [
-            2571358880,
-            "[\"America/Los_Angeles\",480,480,-3203492822000,\"Pacific Standard Time\",\"en-US\"]"
-        ],
-        [
             3756317564,
             "2337666753322697468"
         ],
         [
-            4086018371,
-            "[[true,\"en-US\",true,\"Microsoft David - English (United States)\",\"Microsoft David - English (United States)\"],[false,\"en-US\",true,\"Microsoft Mark - English (United States)\",\"Microsoft Mark - English (United States)\"],[false,\"en-US\",true,\"Microsoft Zira - English (United States)\",\"Microsoft Zira - English (United States)\"]]"
+            3082579163,
+            "16153807394097295248"
         ],
         [
-            3957763561,
-            "[\"Windows\",\"12.0.0\",null,\"64\",\"x86\",\"120.0.6099.291\"]"
+            2691352878,
+            "2464.0999999046326"
         ],
         [
-            531197711,
-            "55.64999985694885"
+            2622130410,
+            "[8192,64,16384,2048,15,2048]"
         ],
         [
-            1421982308,
-            "[142734389248,142734389248,null,null,4294705152,true,true,true,null]"
+            1877814445,
+            "[2,3,4]"
         ],
         [
-            1373138784,
-            "[[\"navigation:newassets.hcaptcha.com\",14.5,53.799999713897705],[\"script:newassets.hcaptcha.com\",29.850000143051147,58.200000047683716],[\"xmlhttprequest:api2.hcaptcha.com\",0,45.5]]"
-        ],
-        [
-            669213918,
-            "[\"Google Inc. (Google)\",\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\"]"
-        ],
-        [
-            3070040703,
-            "9345374751420407194"
-        ],
-        [
-            748900772,
-            "11038406483972230190"
-        ],
-        [
-            3916977893,
-            "[[\"ctXZmLwitJkJnCq9gAOOKCYp2bOlcMYu\",\"3\",\"e\",\"XATIYOECSUVGK\"],[\"JMLKKVPrVtspxcK1mepaJMLEUZX5mYBBxAs1meWItjoaJZWaDMWsEMM1UkpMKMLaJMLgSQJpGATp3dpaJMLWUbKF3ATBJMLgSQLFnbiFEcpXwb6BJMLEJlz4CMWItjENGdzLmdWItjo80d39GdTNKMLa\",\"8\",\"8e\",\"JWXKRTXLJJWAL\"]]"
-        ],
-        [
-            443486963,
-            "4932383211497360507"
+            334928754,
+            "13051680398954254262"
         ],
         [
             1613898511,
             "17002384262467705698"
         ],
         [
-            2622130410,
-            "[8192,64,16384,2048,15,2048]"
+            1335970363,
+            "4226317358175830201"
+        ],
+        [
+            1068771096,
+            "627"
+        ],
+        [
+            255383392,
+            "[2147483647,2147483647,4294967294]"
+        ],
+        [
+            690142092,
+            "[8192,8192,8192,8,8,4]"
+        ],
+        [
+            143592240,
+            "[[116,[116,116,116,255,116,116,116,255,116,116,116,255,116,116,116,255]],[[11,0,1,105.015625,13,5,105.6171875],[[12,0,-1,113.125,17,4,113],[11,0,0,111,12,4,111],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[11,0,1,105.015625,13,5,105.6171875],[12,0,0,109.640625,14,3,110.1953125]]],[0,2,4,5,6,8,9,12,13,15,17,18,19,21,22,23,28,29,30,31,33,34,35,37,39,42,47,48,49,66,67,69,71,72,75,76,77,78,79,81,82],[0,0,0,0,14,3,0]]"
+        ],
+        [
+            2881608941,
+            "57"
+        ],
+        [
+            338869435,
+            "1825316679185413516"
+        ],
+        [
+            3498175614,
+            "[\"n1ktO1UjmXqjm2kj\",\"c\",\"7\",\"NXNBHAYQHQITM\"]"
+        ],
+        [
+            3957763561,
+            "[\"Windows\",\"12.0.0\",null,\"64\",\"x86\",\"120.0.6099.291\"]"
+        ],
+        [
+            748900772,
+            "11038406483972230190"
+        ],
+        [
+            2275435905,
+            "4631229088072584217"
+        ],
+        [
+            1373138784,
+            "[[\"navigation:newassets.hcaptcha.com\",10.300000190734863,145.40000009536743],[\"script:newassets.hcaptcha.com\",27.149999856948853,79.45000004768372],[\"xmlhttprequest:api2.hcaptcha.com\",0,178.2000002861023]]"
+        ],
+        [
+            3827436525,
+            "15307345790125003576"
+        ],
+        [
+            3070040703,
+            "9345374751420407194"
+        ],
+        [
+            2998564779,
+            "[60,72,65536,245760,245760]"
+        ],
+        [
+            2232178856,
+            "[2147483647,2147483647,2147483647,2147483647]"
+        ],
+        [
+            137955265,
+            "\"America/Los_Angeles\""
+        ],
+        [
+            2371850788,
+            "false"
+        ],
+        [
+            2571358880,
+            "[\"America/Los_Angeles\",480,480,-3203492822000,\"Pacific Standard Time\",\"en-US\"]"
+        ],
+        [
+            2906236335,
+            "[[[\"https://newassets.hcaptcha.com/captcha/v1/18fa736/hcaptcha.js\",0,5]],[[\"*\",84,9]]]"
+        ],
+        [
+            1587819988,
+            "1032251938945356892"
+        ],
+        [
+            443486963,
+            "4932383211497360507"
+        ],
+        [
+            3916977893,
+            "[[\"YUCV55mlWiTjSPNeYdHcoiLe6j3dWLCM\",\"b\",\"c\",\"LRJIILANGJYWP\"],[\"MlektHXURkjxA2vmcpaJMlM1DpZGDthwYkvmcWItjOadEWadMWMeMevUKpMkMlaJMlgyU1jmElj3bpaJMlqUZ2l2YlBJMlgyU3lmZ0NfAhRwZyBJMleJLz4CMWItjwvHbrfmbWItjOc0bVDGblNkMlaJ\",\"1a\",\"8f\",\"DJXQVEXOWJTFA\"]]"
+        ],
+        [
+            137519462,
+            "9854590905640690920"
+        ],
+        [
+            873741287,
+            "[0,10480,10480]"
+        ],
+        [
+            2854298529,
+            "124.2999997138977"
+        ],
+        [
+            4086018371,
+            "[[true,\"en-US\",true,\"Microsoft David - English (United States)\",\"Microsoft David - English (United States)\"],[false,\"en-US\",true,\"Microsoft Mark - English (United States)\",\"Microsoft Mark - English (United States)\"],[false,\"en-US\",true,\"Microsoft Zira - English (United States)\",\"Microsoft Zira - English (United States)\"]]"
+        ],
+        [
+            2115854713,
+            "[\"bZ9VqudWzsV2CB1WzYl2yHzkMlw0\",\"1a\",\"f\",\"HYIAZNQYCFFRO\"]"
+        ],
+        [
+            531197711,
+            "112.75"
+        ],
+        [
+            1405859696,
+            "[16,4096,31,32,16384,124,14,128,[23,127,127]]"
+        ],
+        [
+            1311261287,
+            "[4,128,4]"
+        ],
+        [
+            3497821731,
+            "[1,1023,1,1,4]"
+        ],
+        [
+            2151859767,
+            "[[],35,34,null,false,false,true,37,true,true,true,true,true,[\"Raven\",\"_sharedLibs\",\"hsw\",\"__wdata\"],[[\"getElementsByClassName\",[]],[\"getElementById\",[]],[\"querySelector\",[]],[\"querySelectorAll\",[]]],[],true]"
+        ],
+        [
+            2460707167,
+            "[1,4,5,7,9,12,20,21,23,25,30,31]"
+        ],
+        [
+            1350382849,
+            "[[277114314453,277114314460,277114314451,357114314456,277114314452,554228628898,57114314443,717114314371391,554228628897,277114314456,1108457257862,277114314450,554228628919,277114314460,277114314451],false]"
+        ],
+        [
+            3913991343,
+            "10.300000190734863"
+        ],
+        [
+            1587180961,
+            "1715582764746.7"
+        ],
+        [
+            3952131478,
+            "[23]"
         ]
     ],
     "suspicious_events": [],
     "messages": null,
     "stack_data": null,
-    "stamp": "1:2:2024-05-12:n4+z5jfA7P76Z0FLA0ccYKvzr/AyaVQbM3TW08Bd+ZqXeqsYw9pT4uSWHLP/RWgScZurthpkfQp3+y2Fs+6LUdkOur9kSezxsTNTg1PFprjybe7YwpkbAdYCXTM2oCwCWWu1CXBVt53mQxxukMVj4ZuYYGI9fLo2DMGmAg+7Z+38iNpvBt2lJtWtXAYS+U/HJEOqn9tj+8W/UO+4y3aB7Zy5jwGSkjnAieNWBoIq6zMKNkSfSuHqrpZY/ba/NApF::KniU2gh2:d",
+    "stamp": "1:2:2024-05-13:vKRSIhRe1vhJPBciTDtqjyDcweS7RnvyfxU4K/gOctt017xdGdbZEwwfd38Qj1trv7Q7sOgPomfDk9Avw+gLOnITH6Z5iG+Yq0biEYXKTsMqnkvNmPLN1UPDA9IuSxa98vs/k/mSBKJVWujhxJFfixpCSNHY4tE1t3Zec/HOOqocUkGxZSM4OIyL6fS+83w275112KMFTLHFvWKB4SZOlPkifiGYXOPSzKXCK2c5fQLmG40F1nTmL6yj5V7X4BPr::mUHeJvSD:2",
     "href": "https://discord.com/register?redirect_to=%2Fchannels%2F%40me",
     "ardata": null,
     "errs": {
@@ -291,11 +291,11 @@
     "perf": [
         [
             1,
-            8.0
+            9.0
         ],
         [
             2,
-            102.0
+            134.0
         ],
         [
             3,

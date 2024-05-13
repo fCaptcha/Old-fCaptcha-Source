@@ -127,7 +127,7 @@ class Hcaptcha:
             "host": self.host,
             "key": "88de30e1c0d0e89d"
         }
-        return httpx.post("http://solver.dexv.lol:1000/solve_ai", json=json, timeout=1000).json()
+        return requests.post("http://solver.dexv.lol:1000/solve_ai", json=json, timeout=1000).json()
 
     def getcaptcha(self, hsw: str, c: dict) -> dict:
         self.session.headers.update({'content-type': 'application/x-www-form-urlencoded'})
