@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import random
+import secrets
 import time
 from io import BytesIO
 from math import ceil
@@ -18,7 +19,7 @@ from redis import Redis
 
 client = tls_client.Session("chrome_104", random_tls_extension_order=True)
 database_fps = Redis("45.45.238.213", 42081, 313, "ACCA5B570561DCFA5ACB1417C69F2900DAFF8A4FD39A2E66C36DF2BD796F0BE1CFEA8AF2DB18153874215E08BFDEC4A89A397EC53E52DAC33A1E9D0B17A52D43")
-hash_json = lambda x: str(xxhash.xxh64(json.dumps(x, separators=(",", ":")), seed=5575352424011909552).intdigest())
+hash_json = lambda x: str(xxhash.xxh64_intdigest(json.dumps(x, separators=(",", ":")), seed=5575352424011909552))
 
 
 class HSW:
@@ -80,27 +81,60 @@ class HSW:
             random.shuffle(data["events"])
             rand = random.randint(1, 254)
             r = [rand, [rand, rand, rand, 255, rand, rand, rand, 255, rand, rand, rand, 255, rand, rand, rand, 255]]
-            hashed_3485632643 = hash_json(r[1])
             events = {x: y for x, y in data["events"]}
             gpu_event = json.loads(events.get(405066441))
             rand_event = json.loads(events.get(1491932711))[0]
             timezone_event = json.loads(events.get(2679091159))
+            voices_event = json.loads(events.get(1085805568))
             for event_id, event_value in events.items():
                 match event_id:
+                    case 2001712066:
+                        event_value = hash_json(voices_event)
                     case 3349438585:
                         event_value = json.dumps(self.encode(timezone_event), separators=(",", ":"))
                     case 2979183504:
                         event_value = json.dumps(self.encode(str(rand_event)), separators=(",", ":"))
                     case 3503035011:
                         event_value = json.dumps([self.encode(gpu_event[0]), self.encode(gpu_event[1])], separators=(",", ":"))
-                    case 214505624:
-                        event_value = hashed_3485632643
                     case 3485632643:
                         var0 = json.loads(event_value)
                         var0[0] = r
                         event_value = json.dumps(var0, separators=(",", ":"))
                     case 4148757807:
                         event_value = str(round(time.time() * 1000, 1))
+                    case 1955609937:
+                        event_value = hash_json([
+                            [
+                                gpu_event[0], gpu_event[1]
+                            ],
+                            [
+                                "EXT_clip_control", "EXT_color_buffer_float", "EXT_color_buffer_half_float",
+                                "EXT_conservative_depth", "EXT_depth_clamp", "EXT_disjoint_timer_query_webgl2",
+                                "EXT_float_blend", "EXT_polygon_offset_clamp", "EXT_texture_compression_bptc",
+                                "EXT_texture_compression_rgtc", "EXT_texture_filter_anisotropic",
+                                "EXT_texture_mirror_clamp_to_edge", "EXT_texture_norm16", "KHR_parallel_shader_compile",
+                                "NV_shader_noperspective_interpolation", "OES_draw_buffers_indexed",
+                                "OES_texture_float_linear", "OVR_multiview2", "WEBGL_blend_func_extended",
+                                "WEBGL_clip_cull_distance", "WEBGL_compressed_texture_s3tc",
+                                "WEBGL_compressed_texture_s3tc_srgb", "WEBGL_debug_renderer_info",
+                                "WEBGL_debug_shaders",
+                                "WEBGL_lose_context", "WEBGL_multi_draw", "WEBGL_polygon_mode",
+                                "WEBGL_provoking_vertex",
+                                "WEBGL_stencil_texturing"
+                            ],
+                            [
+                                [1, 1024],
+                                [1, 1],
+                                2147483647, 2147483647, 2147483647, 2147483647, 16384, [32767, 32767],
+                                4, 16, 4095, 30, 32, 16, 16, 1024,
+                                "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)",
+                                "WebKit", "WebKit WebGL", "WebGL 2.0 (OpenGL ES 3.0 Chromium)", 16384, 16384, 2048,
+                                2147483647, 2147483647, 2, 8, 4096, 16380, 2048, 7, 120, 4, 120, 4, 8, 8, 12, 12, 24,
+                                24,
+                                65536, 212988, 200704, 120, 120, 4294967294,
+                                [[23, 127, 127], [23, 127, 127], [23, 127, 127], [0, 30, 31]],
+                                [[23, 127, 127], [23, 127, 127], [23, 127, 127], [0, 30, 31]], 16, None, True]
+                        ])
                 events.update({
                     event_id: event_value
                 })
