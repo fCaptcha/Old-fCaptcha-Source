@@ -284,8 +284,9 @@ def sellix_complete():
 def home():
     response = {
         "message": "Welcome to fCaptcha API",
-        "version": "1.1",
+        "version": "1.1.1",
         "docs": "https://docs.fcaptcha.lol",
+        "discord": "https://discord.gg/fcaptcha",
         "authors": {
             "dexv & dort": "Solver",
             "denzelxrt": "API"
@@ -293,7 +294,7 @@ def home():
         "github": "https://github.com/DXVVAY",
         "status": "Up And Working",
         "discord_status": {
-            "Register": "Silent Flag",
+            "Register": "Phone Locked",
             "Join": "Works",
             "Friend Request": "Works"
         },
