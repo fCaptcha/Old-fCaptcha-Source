@@ -32,7 +32,7 @@ def format_uptime(uptime_seconds):
     days, hours = divmod(hours, 24)
     weeks, days = divmod(days, 7)
 
-    uptime_format = "{:02}w:{:02} / d:{:02} / h:{:02} / m:{:02}s".format(weeks, days, hours, minutes, seconds)
+    uptime_format = "w:{:02} / d:{:02} / h:{:02} / m:{:02} / s:{:02}".format(weeks, days, hours, minutes, seconds[:6])
     return uptime_format
 
 def send_error(api_key, sitekey, host, proxy, error):
