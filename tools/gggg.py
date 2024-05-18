@@ -43,7 +43,7 @@ def solve_captcha():
     while True:
         proxy = "golibal2022-zone-resi:Cockpitbender23@6a74976724304e24.ika.na.pyproxy.io:16666"
         g = fCaptcha(
-            api_key="DEXV-ADMIN-71BczP-nssbPD-eR61cH",
+            api_key="fCap-DEXV-ADMIN-gak7gfms-LAgsdnm3",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
             host='discord.com',
             proxy=proxy
