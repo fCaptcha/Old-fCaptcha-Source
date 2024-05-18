@@ -32,7 +32,7 @@ def format_uptime(uptime_seconds):
     days, hours = divmod(hours, 24)
     weeks, days = divmod(days, 7)
 
-    seconds_str = str(seconds)[:7]
+    seconds_str = str(seconds)[:5]
     uptime_format = "w:{:02} / d:{:02} / h:{:02} / m:{:02} / s:{}".format(weeks, days, hours, minutes, seconds_str)
     return uptime_format
 
