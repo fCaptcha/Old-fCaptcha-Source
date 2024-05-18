@@ -10,7 +10,7 @@ import json
 import hashlib
 import hmac
 
-
+start_time = time.time()
 import logging
 app = Flask(__name__)
 
@@ -25,6 +25,15 @@ task_status = {}
 
 admin_key = "DEXYSEXYFRFR^()69"
 webhook = "https://discord.com/api/webhooks/1236679645873573970/n7sXyWyw-WjyIEmupNv7UBQQcWDVx6qBKxFxDOTylDt6P7ZWG1Sc9L4lFUhyTJD2zqGI"
+
+def format_uptime(uptime_seconds):
+    minutes, seconds = divmod(uptime_seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    weeks, days = divmod(days, 7)
+
+    uptime_format = "{:02}w:{:02} / d:{:02} / h:{:02} / m:{:02}s".format(weeks, days, hours, minutes, seconds)
+    return uptime_format
 
 def send_error(api_key, sitekey, host, proxy, error):
    data = {
@@ -282,9 +291,11 @@ def sellix_complete():
     
 @app.route('/', methods=['GET'])
 def home():
+    uptime = time.time() - start_time
     response = {
         "message": "Welcome to fCaptcha API",
         "version": "1.1.1",
+        "uptime": format_uptime(uptime),
         "docs": "https://docs.fcaptcha.lol",
         "discord": "https://discord.gg/fcaptcha",
         "authors": {
@@ -293,13 +304,16 @@ def home():
         },
         "github": "https://github.com/DXVVAY",
         "status": "Up And Working",
-        "discord_status": {
-            "Register": "Phone Locked",
-            "Join": "Works",
-            "Friend Request": "Works"
-        },
-        "epicgames_status": {
-            "Register": "Works"
+        "hcaptcha": {
+            "hsw-version": "122e1a7",
+            "discord_status": {
+                "Register": "Phone Locked",
+                "Join": "Works",
+                "Friend Request": "Works"
+            },
+            "epicgames_status": {
+                "Register": "Works"
+            }
         }
     }
 
