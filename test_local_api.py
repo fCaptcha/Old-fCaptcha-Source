@@ -21,7 +21,7 @@ def execute_thread():
 
 if __name__ == "__main__":
     threads = []
-    for _ in range(30):
+    for _ in range(100):
         thread = threading.Thread(target=execute_thread)
         thread.start()
         threads.append(thread)

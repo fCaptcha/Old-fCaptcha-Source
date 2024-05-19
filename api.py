@@ -17,9 +17,13 @@ app = Flask(__name__)
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.CRITICAL)
 
-client = MongoClient("mongodb+srv://dexv:#tkKM..FZeKx8$n@cluster0.xa88iyg.mongodb.net")
+clientt = MongoClient("mongodb+srv://dexv:#tkKM..FZeKx8$n@cluster0.xa88iyg.mongodb.net")
+dbb = clientt['fcaptcha']
+collec = dbb['users']
+
+client = MongoClient("mongodb+srv://dexv:dexysexy6969@cluster0.2lnbxta.mongodb.net/")
 db = client['fcaptcha']
-collection = db['users']
+collection = db['User']
 
 task_status = {}
 
@@ -35,24 +39,6 @@ def format_uptime(uptime_seconds):
     seconds_str = str(seconds)[:5]
     uptime_format = "w:{:02} / d:{:02} / h:{:02} / m:{:02} / s:{}".format(weeks, days, hours, minutes, seconds_str)
     return uptime_format
-
-def send_error(api_key, sitekey, host, proxy, error):
-   data = {
-     "content": None,
-     "embeds": [
-      {
-        "title": "Solve Error!",
-        "description": f"API Key: {api_key}\nSite Key: {sitekey}\nHost: https://{host}/\nProxy: {proxy}\n---------------------------------------------------------------\n**Error:**\n```\ne{error}\n```",
-        "color": 16385285
-     }
-    ],
-    "attachments": []
-   }
-   r = requests.post(webhook, json=data)
-   if r.status_code == 200:
-     print("Sent Error to Logs")
-   else:
-     print("Failed to log error :(")
    
 def generate_api_key() -> str:
     return f"fCap-{'-'.join([''.join(random.choices(string.ascii_lowercase + string.digits, k=4)) for _ in range(3)])}"
@@ -85,7 +71,6 @@ def solve_captcha_task(api_key: str, task_id: str, sitekey: str, host: str, prox
                 "state": "error",
             },
         }
-    #    send_error(api_key, sitekey, host, proxy, 'error_message')
     else:
         task_status[task_id] = {
             "error": False,
@@ -122,7 +107,7 @@ def create_api_key():
         "balance": data["balance"],
         "permissions": 0
     }
-    collection.insert_one(Insert)
+    collec.insert_one(Insert)
     return jsonify({
         'message': 'Successfully Created a New User!',
         'api_key': apikey
@@ -137,7 +122,7 @@ def remove_api_key():
     if not user:
         return jsonify({"error": True, "message": "Invalid API key"}), 401
     data = request.json
-    result = collection.delete_one({
+    result = collec.delete_one({
         'api_key': data["api_key"]
     })
     if result.deleted_count == 0:
@@ -163,7 +148,7 @@ def update_api_key_balance():
             'message': 'Invalid balance'
         }), 400
 
-    result = collection.update_one(
+    result = collec.update_one(
         {'api_key': api_key},
         {'$set': {'balance': data["balance"]}}
     )
@@ -255,41 +240,6 @@ def get_api_key_balance(api_key):
         'balance': result['balance']
     }), 200
     
-@app.route('/sellix/complete_purchase', methods=['POST'])
-def sellix_complete():
-    Sig = request.headers.get("X-Sellix-Signature")
-    if not Sig:
-        return jsonify({"error": True, "message": "X-Sellix-Signature Is Missing"}), 401
-    
-    payload = request.get_data()
-    secret = b'kEn3nTemMlVhIzUZWBnesX8cu1ntHZ2K'  # replace with your webhook secret
-    header_signature = Sig
-
-    computed_signature = hmac.new(secret, payload, hashlib.sha512).hexdigest()
-    
-    if hmac.compare_digest(computed_signature, header_signature):
-        data = request.get_json()
-        if data and "data" in data and "uniqid" in data["data"]:
-            uniqid = data["data"]["uniqid"]
-            print("Valid Signature Recived!")
-            print(f"Received uniqid: {uniqid}")
-            bal = data["data"]["total"]
-            apikey = generate_api_key()
-            Insert = {
-             "api_key": apikey,
-             "balance": bal,
-             "permissions": 0
-            }
-            collection.insert_one(Insert)
-            print(f"${bal} Api key proccessed VIA Sellix storefront ")
-            #print("new invoice processed")
-            return f'${bal} - {apikey}', 200
-        else:
-            return jsonify({'message': 'Invalid data format!'}), 400
-    else:
-        return jsonify({'message': 'Invalid SIG!'}), 401
-    
-    
 @app.route('/', methods=['GET'])
 def home():
     uptime = time.time() - start_time
@@ -303,7 +253,7 @@ def home():
             "dexv & dort": "Solver",
             "denzelxrt": "API"
         },
-        "github": "https://github.com/DXVVAY",
+        "github": "https://github.com/fcaptcha",
         "status": "Up And Working",
         "hcaptcha": {
             "hsw-version": "122e1a7",

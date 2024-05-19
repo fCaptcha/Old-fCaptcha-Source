@@ -52,6 +52,6 @@ def solve_captcha():
             requests.post("http://localhost:9999/make_token", json={"captcha_key": g, "proxy": proxy})
 
 
-with concurrent.futures.ThreadPoolExecutor(max_workers=300) as executor:
-    for _ in range(300):
+with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    for _ in range(100):
         executor.submit(solve_captcha)
