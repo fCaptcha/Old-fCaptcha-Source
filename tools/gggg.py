@@ -41,7 +41,7 @@ class fCaptcha:
 
 def solve_captcha():
     while True:
-        proxy = "golibal2022-zone-resi:Cockpitbender23@6a74976724304e24.ika.na.pyproxy.io:16666"
+        proxy = "oxp76Hrr7o6IYbaR:X3r6ouTUsWATFRd0@geo.iproyal.com:12321"
         g = fCaptcha(
             api_key="fCap-DEXV-ADMIN-gak7gfms-LAgsdnm3",
             sitekey='4c672d35-0701-42b2-88c3-78380b0db560',

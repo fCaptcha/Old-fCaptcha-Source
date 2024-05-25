@@ -85,10 +85,6 @@ class Hcaptcha:
                 if response:
                     try:
                         capkey = response["generated_pass_UUID"]
-                        if capkey.startswith("F1_"):
-                            with open("wow.txt", "a") as f:
-                                f.write(f"{hsw2}\n") 
-                                f.close()
                         log.captcha(f"Solved hCaptcha {capkey[:50]}", self.before, time.time())
                         return capkey
                     except Exception:

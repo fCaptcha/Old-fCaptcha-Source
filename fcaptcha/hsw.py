@@ -71,7 +71,7 @@ class HSW:
         parsed = json.loads(base64.b64decode(s, validate=False).decode())
         hc_diff = parsed['s']
         hc_data = parsed['d']
-        if data := json.loads(client.get(f"https://hcap.capbypass.com/api/fetchhsw?jwt={jwt}").content):
+        if data := json.load(open("hsw_types/discord.json", "r")):
             data["stamp"] = self.mint(hc_data, hc_diff)
             data["rand"] = [self.random_float()]
             data["href"] = f"https://{host}"
@@ -82,27 +82,24 @@ class HSW:
             rand = random.randint(1, 254)
             r = [rand, [rand, rand, rand, 255, rand, rand, rand, 255, rand, rand, rand, 255, rand, rand, rand, 255]]
             events = {x: y for x, y in data["events"]}
-            gpu_event = json.loads(events.get(405066441))
-            rand_event = json.loads(events.get(1491932711))[0]
-            timezone_event = json.loads(events.get(2679091159))
-            voices_event = json.loads(events.get(1085805568))
+            gpu_event = json.loads(events.get(1004633796))
+            rand_event = json.loads(events.get(3569888996))[0]
+            timezone_event = json.loads(events.get(2444897354))
             for event_id, event_value in events.items():
                 match event_id:
-                    case 2001712066:
-                        event_value = hash_json(voices_event)
-                    case 3349438585:
+                    case 2809130260:
                         event_value = json.dumps(self.encode(timezone_event), separators=(",", ":"))
-                    case 2979183504:
+                    case 382530556:
                         event_value = json.dumps(self.encode(str(rand_event)), separators=(",", ":"))
-                    case 3503035011:
+                    case 1303333220:
                         event_value = json.dumps([self.encode(gpu_event[0]), self.encode(gpu_event[1])], separators=(",", ":"))
-                    case 3485632643:
+                    case 1204159645:
                         var0 = json.loads(event_value)
                         var0[0] = r
                         event_value = json.dumps(var0, separators=(",", ":"))
-                    case 4148757807:
+                    case 1022788021:
                         event_value = str(round(time.time() * 1000, 1))
-                    case 1955609937:
+                    case 527778036:
                         event_value = hash_json([
                             [
                                 gpu_event[0], gpu_event[1]

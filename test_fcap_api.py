@@ -34,7 +34,7 @@ class fCaptcha:
         except Exception as e:
             log.captcha(f"Failed to solve -> {e}")
 
-proxy="golibal2022-zone-resi:Cockpitbender23@6a74976724304e24.ika.na.pyproxy.io:16666"
+proxy="669463d9b289acef7e51:ed0e6c25836cec90@gw.dataimpulse.com:11562"
 g = fCaptcha(
     api_key="fCap-DEXV-ADMIN-gak7gfms-LAgsdnm3",
     sitekey='4c672d35-0701-42b2-88c3-78380b0db560',
