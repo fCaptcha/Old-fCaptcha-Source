@@ -99,7 +99,7 @@ class Hcaptcha:
         #show(motion["mm"])
         try:
             return self.session.post( 
-                f'https://hcaptcha.com/checkcaptcha/{self.site_key}/{self.key}',
+                f'https://api.hcaptcha.com/checkcaptcha/{self.site_key}/{self.key}',
                 json={
                     'v': version,
                     'job_mode': self.job,
@@ -144,10 +144,10 @@ class Hcaptcha:
             'pst': 'false'
         }
         if self.rq_data is not None: data['rqdata'] = self.rq_data
-        return self.session.post(f'https://hcaptcha.com/getcaptcha/{self.site_key}', data=data).json()
+        return self.session.post(f'https://api.hcaptcha.com/getcaptcha/{self.site_key}', data=data).json()
 
     def siteconfig(self) -> dict:
-        return self.session.post("https://api.hcaptcha.com/checksiteconfig", params={
+        return self.session.post("https://api2.hcaptcha.com/checksiteconfig", params={
             'v': version,
             'host': self.host,
             'sitekey': self.site_key,
